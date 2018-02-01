@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 12345
+server:
+  port: 15010
+flyway:
+  baseline-on-migrate: true
