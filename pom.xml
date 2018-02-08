@@ -13,6 +13,7 @@
     <module>rest-api</module>
     <module>zuul</module>
       <module>eureka</module>
+    <module>spring-cloud-demo</module>
   </modules>
   <packaging>pom</packaging>
 
