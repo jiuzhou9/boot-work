@@ -11,6 +11,9 @@
     <module>common</module>
     <module>my-test</module>
     <module>rest-api</module>
+    <module>zuul</module>
+      <module>eureka</module>
+    <module>spring-cloud-demo</module>
   </modules>
   <packaging>pom</packaging>
 
@@ -20,9 +23,11 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.8.RELEASE</version>
+    <version>1.5.10.RELEASE</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
+
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,6 +37,7 @@
     <mybatis-spring-boot-starter.version>1.3.1</mybatis-spring-boot-starter.version>
     <springfox-swagger2.version>2.2.2</springfox-swagger2.version>
     <springfox-swagger-ui.version>2.2.2</springfox-swagger-ui.version>
+    <spring-cloud-starter-netflix-zuul.version>1.4.2.RELEASE</spring-cloud-starter-netflix-zuul.version>
   </properties>
 
 </project>
