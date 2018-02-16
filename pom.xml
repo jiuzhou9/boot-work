@@ -15,6 +15,7 @@
       <module>eureka</module>
     <module>spring-cloud-demo</module>
     <module>eureka-server</module>
+    <module>eureka-api</module>
   </modules>
   <packaging>pom</packaging>
 

@@ -5,13 +5,12 @@
         <groupId>com.jiuzhou.bootwork</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eureka-server</artifactId>
+    <artifactId>eureka-api</artifactId>
     <packaging>jar</packaging>
 
-    <name>eureka-server</name>
+    <name>eureka-api</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -24,39 +23,24 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-netflix-eureka-server</artifactId>-->
-            <!--<version>1.2.7.RELEASE</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <version>1.4.3.RELEASE</version>
         </dependency>
     </dependencies>
-<!---->
-    <!--依赖管理，用于管理spring-cloud的依赖，其中Camden.SR3是版本号-->
-    <dependencyManagement>
-        <!--<dependencies>-->
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.cloud</groupId>-->
-                <!--<artifactId>spring-cloud-dependencies</artifactId>-->
-                <!--<version>Camden.SR3</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-        <!--</dependencies>-->
 
-        <!--eureka 依赖-->
+    <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-netflix</artifactId>
+                <artifactId>spring-cloud-netflix-eureka</artifactId>
                 <version>1.4.3.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>
