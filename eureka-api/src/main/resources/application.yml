@@ -1,0 +1,11 @@
+server:
+  port: 15012
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:15011/eureka/
+spring:
+  application:
+    name: eureka-api
