@@ -2,10 +2,15 @@ server:
   port: 15012
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+#    register-with-eureka: false
+#    fetch-registry: false
     service-url:
       defaultZone: http://localhost:15011/eureka/
+#  instance:
+#    lease-renewal-interval-in-seconds: 1
+#    lease-expiration-duration-in-seconds: 2
 spring:
   application:
     name: eureka-api
+logging:
+  level: info
