@@ -1,14 +1,12 @@
 server:
-  port: 15012
+  port: 15021
 eureka:
   client:
+#  不进行注册的意思
 #    register-with-eureka: false
 #    fetch-registry: false
     service-url:
       defaultZone: http://localhost:15011/eureka/
-#  instance:
-#    lease-renewal-interval-in-seconds: 1
-#    lease-expiration-duration-in-seconds: 2
 spring:
   application:
     name: eureka-api
