@@ -38,8 +38,8 @@
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
             <version>${spring-cloud-starter-netflix-zuul.version}</version>
         </dependency>
-
     </dependencies>
+
 
     <build>
         <finalName>zuul</finalName>
