@@ -1,6 +1,6 @@
-# eureka-server
-
-## 服务注册中心，下面是时间记录
+<h1>eureka-server</h1>
+<h2>服务注册中心，下面是时间记录</h2>
+<h3>v1.0</h3>
 
 `2018-02-17：`
 
@@ -14,4 +14,9 @@
 
     1.实现了注册中心的高可用性。采用一个project，两个server部署的策略，实现一个小集群。
         这么做的目的就是两个serve中维护的是同一套服务列表，如果eureka-server(peer1)挂掉，那么peer2还可以继续提供服务。
-    2.
+    2.启动步骤如下：
+        命令：mvn clean package
+        命令：   java -jar xxx.jar --spring.profiles.active=peer1
+                java -jar xxx.jar --spring.profiles.active=peer2
+    3.访问：http://localhost:15011/；http://localhost:15012/
+            

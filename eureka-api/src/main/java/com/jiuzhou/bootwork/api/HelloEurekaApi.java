@@ -31,8 +31,6 @@ public class HelloEurekaApi {
     @GetMapping(value = "/hello")
     @ApiOperation(value = "hello 方法")
     public String hello(@RequestParam(required = false) String name){
-        ServiceInstance localServiceInstance = discoveryClient.getLocalServiceInstance();
-        log.info("/hello host = " + localServiceInstance.getHost() + ", serviceId = " + localServiceInstance.getServiceId());
         return "hello " + name;
     }
 }
