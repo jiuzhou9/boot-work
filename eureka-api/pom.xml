@@ -65,6 +65,13 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.jiuzhou.bootwork</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
+            <!--<scope>system</scope>-->
+            <!--<type>jar</type>-->
+        </dependency>
     </dependencies>
 
     <build>
@@ -75,7 +82,11 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <!--<version>${spring-boot-maven-plugin.version}</version>-->
                 <!--<version>1.5.10.RELEASE</version>-->
+                <!--<configuration>-->
+                    <!--<includeSystemScope>true</includeSystemScope>-->
+                <!--</configuration>-->
             </plugin>
         </plugins>
+
     </build>
 </project>

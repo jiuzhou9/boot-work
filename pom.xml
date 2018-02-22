@@ -12,7 +12,6 @@
         <module>my-test</module>
         <module>rest-api</module>
         <module>zuul</module>
-        <module>eureka</module>
         <module>spring-cloud-demo</module>
         <module>eureka-server</module>
         <module>eureka-api</module>
@@ -45,6 +44,7 @@
         <!--<spring-cloud-starter-netflix-eureka-server.version>1.4.3.RELEASE</spring-cloud-starter-netflix-eureka-server.version>-->
         <!--<spring-cloud-starter-netflix-zuul.version>1.4.3.RELEASE</spring-cloud-starter-netflix-zuul.version>-->
         <!--<spring-cloud-starter-netflix-ribbon.version>1.4.3.RELEASE</spring-cloud-starter-netflix-ribbon.version>-->
+        <common.version>1.0-SNAPSHOT</common.version>
     </properties>
 
     <!--依赖管理，用于管理spring-cloud的依赖，其中2.0.0.M6是版本号-->
