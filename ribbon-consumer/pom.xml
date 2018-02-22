@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eureka-api</artifactId>
+    <artifactId>ribbon-consumer</artifactId>
     <packaging>jar</packaging>
 
-    <name>eureka-api</name>
+    <name>ribbon-consumer</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -20,8 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -29,12 +28,19 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <!--<version>${spring-boot-starter-test.version}</version>-->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+            <!--<version>${spring-cloud-starter-netflix-ribbon.version}</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-            <!--<version>${spring-cloud-starter-netflix-eureka-client.version}</version>-->
+            <!--<version>1.4.3.RELEASE</version>-->
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
@@ -43,7 +49,18 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!--服务容错保护-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <!--<version>LATEST</version>-->
+        </dependency>
 
+        <dependency>
+            <groupId>com.jiuzhou.bootwork</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -54,39 +71,14 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-swagger-ui.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--<version>${spring-boot-maven-plugin.version}</version>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jiuzhou.bootwork</groupId>
-            <artifactId>common</artifactId>
-            <version>${common.version}</version>
-            <!--<scope>system</scope>-->
-            <!--<type>jar</type>-->
-        </dependency>
     </dependencies>
 
     <build>
-        <!--jar 中没有主清单？如果此处还是依然无法解决，那么干脆添加spring的 pluginRepositories-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--<version>${spring-boot-maven-plugin.version}</version>-->
-                <!--<version>1.5.10.RELEASE</version>-->
-                <!--<configuration>-->
-                    <!--<includeSystemScope>true</includeSystemScope>-->
-                <!--</configuration>-->
             </plugin>
         </plugins>
-
     </build>
 </project>
