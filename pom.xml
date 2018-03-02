@@ -16,6 +16,7 @@
         <module>eureka-server</module>
         <module>eureka-api</module>
         <module>ribbon-consumer</module>
+        <module>my-shiro</module>
     </modules>
     <packaging>pom</packaging>
 
