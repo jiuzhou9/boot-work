@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.uuid;
+package com.jiuzhou.bootwork.testuuid;
 
 import junit.framework.TestCase;
 

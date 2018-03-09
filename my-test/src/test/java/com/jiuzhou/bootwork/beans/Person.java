@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.testnull;
+package com.jiuzhou.bootwork.beans;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)

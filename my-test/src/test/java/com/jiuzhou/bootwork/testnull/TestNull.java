@@ -1,7 +1,7 @@
 package com.jiuzhou.bootwork.testnull;
 
 import com.alibaba.fastjson.JSON;
-import jdk.nashorn.internal.runtime.JSONFunctions;
+import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
 import org.springframework.beans.BeanUtils;
 

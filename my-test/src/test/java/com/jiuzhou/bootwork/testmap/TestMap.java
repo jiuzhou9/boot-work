@@ -1,7 +1,7 @@
 package com.jiuzhou.bootwork.testmap;
 
 import com.alibaba.fastjson.JSON;
-import com.jiuzhou.bootwork.testnull.Person;
+import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
