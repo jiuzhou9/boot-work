@@ -1,6 +1,6 @@
 package com.jiuzhou.bootwork.testreturn;
 
-import com.jiuzhou.bootwork.testnull.Person;
+import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
 
 /**

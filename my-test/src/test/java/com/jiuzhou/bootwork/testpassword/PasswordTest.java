@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.password;
+package com.jiuzhou.bootwork.testpassword;
 
 import junit.framework.TestCase;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
