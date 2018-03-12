@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 public class TestString extends TestCase{
 
     public void test(){
-        String s = "srn:unicorn:product:api::";
+        String s = "srn:unicorn:::api";
         String[] split = s.split(":");
         System.out.println(split.length);
 

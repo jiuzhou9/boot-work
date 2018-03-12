@@ -9,7 +9,7 @@ import junit.framework.TestCase;
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
  * @date 2018/03/08
  */
-public class TestJSon extends TestCase {
+public class TestJson extends TestCase {
 
     public void test(){
         Person person = new Person();
