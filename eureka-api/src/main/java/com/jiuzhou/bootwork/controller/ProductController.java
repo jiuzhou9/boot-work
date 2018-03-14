@@ -32,16 +32,17 @@ public class ProductController {
     @GetMapping("/info")
     @ApiOperation(value = "获取商品信息")
     public Result<ProductVO> getProductInfo(@RequestParam(required = false) Long id){
-        try {
-            int sleepTime = new Random().nextInt(3000);
-            Thread.sleep(sleepTime);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        log.info("获取商品信息 id:" + id);
+//        try {
+//            int sleepTime = new Random().nextInt(3000);
+//            Thread.sleep(sleepTime);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         Result<ProductVO> productVOResult = new Result<>();
         Result<ProductDTO> productDTOResult = productService.getInfo(id);
-        if (Result.SUCCESS_CODE.equals(productDTOResult.getCode())){
+        if (Result. SUCCESS_CODE.equals(productDTOResult.getCode())){
             ProductVO productVO = new ProductVO();
             BeanUtils.copyProperties(productDTOResult.getData(), productVO);
             productVOResult.setData(productVO);
