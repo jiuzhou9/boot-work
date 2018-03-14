@@ -19,8 +19,9 @@ public class TestEquals extends TestCase {
     }
 
     public void test_Byte(){
-        Byte b = 1;
-        System.out.println(b.byteValue() == 1);
+        Byte b = 0;
+        Byte a = 1;
+        System.out.println(b.byteValue() == a);
     }
 
 }

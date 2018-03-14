@@ -23,6 +23,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     @Autowired
     RestTemplate restTemplate;
 
+    //异常情况处理
     @HystrixCommand(fallbackMethod = "error")
     @Override
     public Result<ProductDTO> getProductInfo(Long productId) {
