@@ -31,9 +31,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -42,12 +41,18 @@
             <artifactId>spring-boot</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <!--<version>5.0.3.RELEASE</version>-->
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+        <!--<dependency>-->
+            <!--<groupId>commons-logging</groupId>-->
+            <!--<artifactId>commons-logging</artifactId>-->
+            <!--<version>1.2</version>-->
+        <!--</dependency>-->
 
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
@@ -61,6 +66,18 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.jiuzhou.bootwork</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
 
     </dependencies>
 </project>

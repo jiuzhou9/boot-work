@@ -31,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/info")
     @ApiOperation(value = "获取商品信息")
-    public Result<ProductVO> getProductInfo(@RequestParam(required = false) Long id){
+    public Result<ProductVO> getProductInfo(@RequestParam Long id){
         log.info("获取商品信息 id:" + id);
 //        try {
 //            int sleepTime = new Random().nextInt(3000);
