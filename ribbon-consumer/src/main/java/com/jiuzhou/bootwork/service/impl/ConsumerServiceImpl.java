@@ -24,17 +24,18 @@ public class ConsumerServiceImpl implements ConsumerService {
     RestTemplate restTemplate;
 
     //异常情况处理
-    @HystrixCommand(fallbackMethod = "error")
+//    @HystrixCommand(fallbackMethod = "error")
     @Override
     public Result<ProductDTO> getProductInfo(Long productId) {
+//        RestTemplate restTemplate = new RestTemplate();
 //        String body = restTemplate.getForEntity("http://EUREKA-API/api/v1/product/info", String.class).getBody();
         ResponseEntity<Result> responseEntity = restTemplate
-                        .getForEntity("http://EUREKA-API/api/v1/product/info", Result.class, productId);
+                        .getForEntity("http://EUREKA-API/api/v1/product/info?id="+productId, Result.class);
         Result<ProductDTO> result = responseEntity.getBody();
         return result;
     }
 
-    public Result<ProductDTO> error(Long productId){
+    public Result<ProductDTO> error(){
         Result result = new Result();
         result.setCode("1");
         result.setMessage("product信息获取失败！");
