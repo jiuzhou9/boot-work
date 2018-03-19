@@ -10,5 +10,5 @@ eureka:
 spring:
   application:
     name: eureka-api
-logging:
-  level: info
+#logging:
+#  level: info

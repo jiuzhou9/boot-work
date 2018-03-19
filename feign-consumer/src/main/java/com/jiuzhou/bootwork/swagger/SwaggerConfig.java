@@ -26,6 +26,6 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("ribbon-consumer").description("ribbon-consumer API文档").version("1.0").build();
+        return new ApiInfoBuilder().title("feign-consumer").description("feign-consumer API文档").version("1.0").build();
     }
 }
