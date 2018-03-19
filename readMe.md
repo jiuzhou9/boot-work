@@ -95,5 +95,5 @@ spring-boot-maven-plugin资源依赖，但是发现还是解决不了，总而�
   关于spring仓库、插件更多详细内容：https://repo.spring.io/webapp/#/home
   
 <h2>项目打包说明</h2>
-项目整体install，然后即可操作任何一个项目package操作。
+项目整体install，然后即可操作任何一个项目package操作，因为各个项目有依赖common项目，所以先install。
   

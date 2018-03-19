@@ -2,12 +2,10 @@ package com.jiuzhou.bootwork.testrest;
 
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.App;
-import com.jiuzhou.bootwork.result.Result;
-import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,10 +25,11 @@ import org.springframework.web.client.RestTemplate;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RestTest {
 
-
     /**
      * 返回值类型是json类型
+     * @Ignore 自动跳过
      */
+    @Ignore
     @Test
     public void test_json(){
 
