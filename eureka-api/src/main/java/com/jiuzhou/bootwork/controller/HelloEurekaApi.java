@@ -21,12 +21,9 @@ public class HelloEurekaApi {
 
     private final Logger logger = Logger.getLogger(HelloEurekaApi.class.getName());
 
-
     @GetMapping(value = "")
     @ApiOperation(value = "hello 方法")
     public String hello(){
-//        List<ServiceInstance> instances = discoveryClient.getInstances("EUREKA-API");
-//        log.info(JSON.toJSONString(instances));
-        return "hello ";
+        return "hello";
     }
 }

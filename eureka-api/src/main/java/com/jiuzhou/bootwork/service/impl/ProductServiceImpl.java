@@ -19,6 +19,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Result<ProductDTO> getInfo(Long id) {
         ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(id);
         productDTO.setName("手机");
         productDTO.setPrice(new BigDecimal(12.00));
         return Result.buildSuccess(productDTO);

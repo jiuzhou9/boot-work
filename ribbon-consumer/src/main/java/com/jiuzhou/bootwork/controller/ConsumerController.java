@@ -1,9 +1,9 @@
 package com.jiuzhou.bootwork.controller;
 
-import com.jiuzhou.bootwork.controller.vo.ProductVO;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.ConsumerService;
 import com.jiuzhou.bootwork.service.dto.ProductDTO;
+import com.jiuzhou.bootwork.vo.ProductVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
