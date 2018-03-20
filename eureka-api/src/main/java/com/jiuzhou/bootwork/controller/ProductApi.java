@@ -1,20 +1,20 @@
 package com.jiuzhou.bootwork.controller;
 
 import com.jiuzhou.bootwork.result.Result;
-import com.jiuzhou.bootwork.controller.vo.ProductVO;
 import com.jiuzhou.bootwork.service.ProductService;
 import com.jiuzhou.bootwork.service.dto.ProductDTO;
+import com.jiuzhou.bootwork.vo.ProductVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Random;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -24,21 +24,32 @@ import java.util.Random;
 @RequestMapping(value = "/api/v1/product")
 @Slf4j
 @Api(value = "商品管理")
-public class ProductController {
+public class ProductApi {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/info")
+    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "获取商品信息")
+    public Result<ProductVO> getProductInfoPath(@PathVariable("id") Long id){
+        return get(id);
+    }
+
+    @GetMapping(value = "/get-info")
+    @ApiOperation(value = "获取商品信息不是path的形式")
     public Result<ProductVO> getProductInfo(@RequestParam Long id){
+        return get(id);
+    }
+
+
+    private Result<ProductVO> get(Long id){
         log.info("获取商品信息 id:" + id);
-//        try {
-//            int sleepTime = new Random().nextInt(3000);
-//            Thread.sleep(sleepTime);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        //        try {
+        //            int sleepTime = new Random().nextInt(3000);
+        //            Thread.sleep(sleepTime);
+        //        } catch (InterruptedException e) {
+        //            e.printStackTrace();
+        //        }
 
         Result<ProductVO> productVOResult = new Result<>();
         Result<ProductDTO> productDTOResult = productService.getInfo(id);
