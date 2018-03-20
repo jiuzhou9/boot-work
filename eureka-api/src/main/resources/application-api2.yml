@@ -1,0 +1,14 @@
+server:
+  port: 15022
+eureka:
+  client:
+#  不进行注册的意思
+#    register-with-eureka: false
+#    fetch-registry: false
+    service-url:
+      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
+spring:
+  application:
+    name: eureka-api
+#logging:
+#  level: info
