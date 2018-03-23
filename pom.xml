@@ -20,6 +20,8 @@
         <module>my-postgresql</module>
         <module>feign-consumer</module>
         <module>beans</module>
+        <!--<module>auth-web</module>-->
+        <module>auth-dao</module>
     </modules>
     <packaging>pom</packaging>
 
