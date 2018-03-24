@@ -2,7 +2,7 @@ package com.jiuzhou.bootwork.dao.model;
 
 import java.io.Serializable;
 
-public class ResourceKey implements Serializable {
+public class ServerKey implements Serializable {
     private Long id;
 
     private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class ResourceKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ResourceKey other = (ResourceKey) that;
+        ServerKey other = (ServerKey) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()));
     }
 

@@ -1,9 +1,9 @@
 spring:
   application:
     name: feign-consumer
-  http:
-    converters:
-      preferred-json-mapper: fastjson
+#  http:
+#    converters:
+#      preferred-json-mapper: fastjson
 server:
   port: 15033
 eureka:
