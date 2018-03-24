@@ -22,6 +22,7 @@
         <module>beans</module>
         <!--<module>auth-web</module>-->
         <module>auth-dao</module>
+        <module>auth-service</module>
     </modules>
     <packaging>pom</packaging>
 

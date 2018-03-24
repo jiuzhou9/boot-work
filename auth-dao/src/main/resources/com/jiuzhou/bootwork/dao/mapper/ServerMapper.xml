@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiuzhou.bootwork.dao.mapper.ResourceMapper">
-  <resultMap id="BaseResultMap" type="com.jiuzhou.bootwork.dao.model.Resource">
+<mapper namespace="com.jiuzhou.bootwork.dao.mapper.ServerMapper">
+  <resultMap id="BaseResultMap" type="com.jiuzhou.bootwork.dao.model.Server">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="server_id" jdbcType="BIGINT" property="serverId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="available" jdbcType="BIT" property="available" />
@@ -71,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, description, url, type, server_id, create_time, update_time, available
+    id, name, description, create_time, update_time, available
   </sql>
-  <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.ResourceExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.ServerExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from resource
+    from server
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,34 +84,32 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.ResourceKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.ServerKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from resource
+    from server
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.ResourceKey">
-    delete from resource
+  <delete id="deleteByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.ServerKey">
+    delete from server
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.jiuzhou.bootwork.dao.model.ResourceExample">
-    delete from resource
+  <delete id="deleteByExample" parameterType="com.jiuzhou.bootwork.dao.model.ServerExample">
+    delete from server
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.Resource">
-    insert into resource (id, name, description, 
-      url, type, server_id, 
+  <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.Server">
+    insert into server (id, name, description, 
       create_time, update_time, available
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{serverId,jdbcType=BIGINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{available,jdbcType=BIT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Resource">
-    insert into resource
+  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Server">
+    insert into server
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -124,15 +119,6 @@
       </if>
       <if test="description != null">
         description,
-      </if>
-      <if test="url != null">
-        url,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="serverId != null">
-        server_id,
       </if>
       <if test="createTime != null">
         create_time,
@@ -154,15 +140,6 @@
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="serverId != null">
-        #{serverId,jdbcType=BIGINT},
-      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -174,14 +151,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.jiuzhou.bootwork.dao.model.ResourceExample" resultType="java.lang.Long">
-    select count(*) from resource
+  <select id="countByExample" parameterType="com.jiuzhou.bootwork.dao.model.ServerExample" resultType="java.lang.Long">
+    select count(*) from server
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update resource
+    update server
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -191,15 +168,6 @@
       </if>
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.url != null">
-        url = #{record.url,jdbcType=VARCHAR},
-      </if>
-      <if test="record.type != null">
-        type = #{record.type,jdbcType=VARCHAR},
-      </if>
-      <if test="record.serverId != null">
-        server_id = #{record.serverId,jdbcType=BIGINT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -216,13 +184,10 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update resource
+    update server
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR},
-      server_id = #{record.serverId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       available = #{record.available,jdbcType=BIT}
@@ -230,23 +195,14 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jiuzhou.bootwork.dao.model.Resource">
-    update resource
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiuzhou.bootwork.dao.model.Server">
+    update server
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="serverId != null">
-        server_id = #{serverId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -260,13 +216,10 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Resource">
-    update resource
+  <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Server">
+    update server
     set name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      server_id = #{serverId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       available = #{available,jdbcType=BIT}

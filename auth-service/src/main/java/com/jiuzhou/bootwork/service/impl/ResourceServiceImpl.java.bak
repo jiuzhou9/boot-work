@@ -1,0 +1,135 @@
+package com.jiuzhou.bootwork.service.impl;
+
+import com.jiuzhou.bootwork.common.CommonConstants;
+import com.jiuzhou.bootwork.dao.model.Resource;
+import com.jiuzhou.bootwork.dao.model.ResourceExample;
+import com.jiuzhou.bootwork.service.ResourceService;
+import com.jiuzhou.bootwork.service.dto.ResourceDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+/**
+ * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @date 2018/03/23
+ */
+@Service
+@Slf4j
+public class ResourceServiceImpl implements ResourceService {
+
+    private ResourceMapper resourceMapper;
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+    @Override
+    public ResourceDto insert(ResourceDto resourceDto) throws Exception {
+        if (resourceDto == null){
+            return null;
+        }
+
+        validateInsert(resourceDto);
+
+        resourceDto.setAvailable(CommonConstants.AVAILABLE);
+        resourceDto.setCreateTime(LocalDateTime.now());
+        resourceDto.setUpdateTime(LocalDateTime.now());
+
+        Resource resource = new Resource();
+        BeanUtils.copyProperties(resourceDto, resource);
+        int i = resourceMapper.insertSelective(resource);
+        return resourceDto;
+    }
+
+    /**
+     * 校验resource是否可以插入
+     * @param resourceDto
+     * @throws Exception
+     */
+    private void validateInsert(ResourceDto resourceDto) throws Exception {
+        String name = resourceDto.getName();
+        String url = resourceDto.getUrl();
+        String type = resourceDto.getType();
+
+        if (StringUtils.isEmpty(name)){
+            throw new Exception("资源名称为空");
+        }
+        if (StringUtils.isEmpty(url)){
+            throw new Exception("资源url为空");
+        }
+        if (StringUtils.isEmpty(type)){
+            throw new Exception("资源请求方式为空");
+        }else if (type != RequestMethod.GET.name()
+                        &&
+                        type != RequestMethod.DELETE.name()
+                        &&
+                        type != RequestMethod.HEAD.name()
+                        &&
+                        type != RequestMethod.OPTIONS.name()
+                        &&
+                        type != RequestMethod.PATCH.name()
+                        &&
+                        type != RequestMethod.POST.name()
+                        &&
+                        type != RequestMethod.PUT.name()
+                        &&
+                        type != RequestMethod.TRACE.name()){
+            throw new Exception("请求类型错误");
+        }
+
+        validateName(name);
+
+        validateUrlType(url, type);
+    }
+
+
+    /**
+     * 校验URL和type是否是已经存在
+     * @param url
+     * @param type
+     */
+    private void validateUrlType(String url, String type) throws Exception {
+        ResourceExample resourceExample = new ResourceExample();
+        ResourceExample.Criteria criteria = resourceExample.createCriteria();
+        criteria.andUrlEqualTo(url);
+        criteria.andTypeEqualTo(type);
+        List<Resource> resources = resourceMapper.selectByExample(resourceExample);
+        if (!CollectionUtils.isEmpty(resources)){
+            throw new Exception("资源url/type已经存在");
+        }
+    }
+
+    /**
+     * 校验资源名字是否已经存在
+     */
+    private void validateName(String name) throws Exception {
+        ResourceExample resourceExample = new ResourceExample();
+        ResourceExample.Criteria criteria = resourceExample.createCriteria();
+        criteria.andNameEqualTo(name);
+        List<Resource> resources = resourceMapper.selectByExample(resourceExample);
+        if (!CollectionUtils.isEmpty(resources)){
+            throw new Exception("资源名称重复");
+        }
+    }
+
+    @Override
+    public ResourceDto getByName(String name) {
+        return null;
+    }
+
+    @Override
+    public ResourceDto getByUrl(String url) {
+        return null;
+    }
+
+    @Override
+    public ResourceDto updateById(ResourceDto resourceDto, Integer id) {
+        return null;
+    }
+}

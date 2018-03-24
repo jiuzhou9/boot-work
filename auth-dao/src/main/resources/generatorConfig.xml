@@ -113,7 +113,11 @@
             <property name="rootInterface" value=""/>-->
         </javaClientGenerator>
 
-        <table tableName="resource">
+        <!--<table tableName="resource">-->
+            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
+            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
+        <!--</table>-->
+        <table tableName="server">
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
