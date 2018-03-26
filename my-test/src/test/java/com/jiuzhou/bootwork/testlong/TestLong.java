@@ -9,6 +9,12 @@ import junit.framework.TestCase;
 public class TestLong extends TestCase{
 
     public void test(){
+        Long l = 0L;
+        Long L = 0L;
+        System.out.println(l.equals(L));
+    }
+
+    public void test_toString(){
         long l = 100;
         long l1 = 2000;
         System.out.println(Long.toString(l1 - l));

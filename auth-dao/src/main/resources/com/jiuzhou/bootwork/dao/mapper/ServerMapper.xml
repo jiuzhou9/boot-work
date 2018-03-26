@@ -108,7 +108,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{available,jdbcType=BIT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Server">
+  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Server" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
     insert into server
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
