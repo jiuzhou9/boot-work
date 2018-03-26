@@ -117,18 +117,18 @@
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
-        <table tableName="server">
+        <!--<table tableName="server">-->
+            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
+            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
+        <!--</table>-->
+        <table tableName="role">
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
-        <!--<table tableName="role" schema="public">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
-        <!--<table tableName="role_resource" schema="public">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
+        <table tableName="role_resource">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
         <!--<table tableName="user" schema="public">-->
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->

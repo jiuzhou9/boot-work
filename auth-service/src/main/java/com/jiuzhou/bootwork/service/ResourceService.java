@@ -2,6 +2,8 @@ package com.jiuzhou.bootwork.service;
 
 import com.jiuzhou.bootwork.service.dto.ResourceDto;
 
+import java.util.List;
+
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
  * @date 2018/03/23
@@ -38,4 +40,6 @@ public interface ResourceService {
     boolean updateById(ResourceDto resourceDto, Long id) throws Exception;
 
     ResourceDto selectById(Long id) throws Exception;
+
+    List<ResourceDto> selectByIds(List<Long> ids) throws Exception;
 }
