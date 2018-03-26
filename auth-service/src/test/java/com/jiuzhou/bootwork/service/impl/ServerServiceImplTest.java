@@ -58,7 +58,12 @@ public class ServerServiceImplTest {
 
     @Test
     public void selectByPrimaryKey() {
-        ServerDto serverDto = serverService.selectByPrimaryKey(7L);
+        ServerDto serverDto = null;
+        try {
+            serverDto = serverService.selectByPrimaryKey(7L);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         log.info(JSON.toJSONString(serverDto));
     }
 

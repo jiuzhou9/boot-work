@@ -14,11 +14,13 @@ public class ResourceDto {
 
     private String name;
 
-    private String desc;
+    private String description;
 
     private String url;
 
     private String type;
+
+    private Long serverId;
 
     private LocalDateTime createTime;
 

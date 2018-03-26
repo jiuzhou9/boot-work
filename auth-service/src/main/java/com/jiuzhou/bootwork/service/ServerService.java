@@ -31,7 +31,7 @@ public interface ServerService {
      * @param key
      * @return
      */
-    ServerDto selectByPrimaryKey(Long key);
+    ServerDto selectByPrimaryKey(Long key) throws Exception;
 
     boolean updateByKey(ServerDto serverDto) throws Exception;
 
