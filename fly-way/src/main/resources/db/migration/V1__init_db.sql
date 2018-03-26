@@ -1,5 +1,9 @@
 drop table if exists resource;
 
+drop table if exists role;
+
+drop table if exists role_resource;
+
 drop table if exists server;
 
 /*==============================================================*/
@@ -16,6 +20,33 @@ create table resource
    create_time          timestamp not null,
    update_time          timestamp not null default CURRENT_TIMESTAMP,
    available            tinyint(1) default 1 comment '0否1是',
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: role                                                  */
+/*==============================================================*/
+create table role
+(
+   id                   bigint(11) not null auto_increment,
+   name                 varchar(20) not null,
+   create_time          timestamp not null default CURRENT_TIMESTAMP,
+   update_time          timestamp not null default CURRENT_TIMESTAMP,
+   available            tinyint(1) default 1,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: role_resource                                         */
+/*==============================================================*/
+create table role_resource
+(
+   id                   bigint(11) not null auto_increment,
+   role_id              bigint(11) not null,
+   resource_id          bigint(11) not null,
+   create_time          timestamp not null default CURRENT_TIMESTAMP,
+   update_time          timestamp not null default CURRENT_TIMESTAMP,
+   available            tinyint(1) default 1,
    primary key (id)
 );
 

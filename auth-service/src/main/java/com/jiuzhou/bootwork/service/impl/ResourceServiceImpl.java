@@ -19,6 +19,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.text.CollationElementIterator;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -154,7 +156,7 @@ public class ResourceServiceImpl implements ResourceService {
             BeanUtils.copyProperties(resources.get(0), resourceDto);
             return resourceDto;
         }else {
-            throw new Exception("查询结果为多条");
+            throw new Exception("url查询到多条数据");
         }
     }
 
@@ -170,6 +172,7 @@ public class ResourceServiceImpl implements ResourceService {
         return dealList(resources);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean updateById(ResourceDto resourceDto, Long id) throws Exception {
         ResourceDto dto = selectById(id);
@@ -202,5 +205,23 @@ public class ResourceServiceImpl implements ResourceService {
         ResourceDto resourceDto = new ResourceDto();
         BeanUtils.copyProperties(resource, resourceDto);
         return resourceDto;
+    }
+
+    @Override
+    public List<ResourceDto> selectByIds(List<Long> ids) throws Exception {
+        if (CollectionUtils.isEmpty(ids)){
+            throw new Exception("ids为空");
+        }
+        ResourceExample resourceExample = new ResourceExample();
+        ResourceExample.Criteria criteria = resourceExample.createCriteria();
+        criteria.andIdIn(ids);
+        List<Resource> resources = resourceMapper.selectByExample(resourceExample);
+        List<ResourceDto> dtos = new ArrayList<>();
+        resources.forEach( resource -> {
+            ResourceDto resourceDto = new ResourceDto();
+            BeanUtils.copyProperties(resource, resourceDto);
+            dtos.add(resourceDto);
+        });
+        return dtos;
     }
 }

@@ -114,12 +114,12 @@ public class ServerServiceImpl implements ServerService {
         return serverDto;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean updateByKey(ServerDto serverDto) throws Exception {
         validateUpdate(serverDto);
         Server server = new Server();
         BeanUtils.copyProperties(serverDto, server);
-        ServerExample serverExample = new ServerExample();
         int i = serverMapper.updateByPrimaryKeySelective(server);
         if (i == 1){
             return true;
