@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
  * @date 2018/03/25
@@ -26,15 +28,51 @@ public class ServerServiceImplTest {
     @Test
     public void insert() {
         ServerDto serverDto = new ServerDto();
-        serverDto.setName("eureka-api1");
+        serverDto.setName("eureka-api3");
         serverDto.setDescription("测试api");
         serverDto.setAvailable(true);
-        ServerDto insert = null;
+        Long insert = null;
         try {
             insert = serverService.insert(serverDto);
         } catch (Exception e) {
             e.printStackTrace();
         }
         log.info(JSON.toJSONString(insert));
+    }
+
+    @Test
+    public void selectByName() {
+        List<ServerDto> serverDtos = serverService.selectByName("eureka-api");
+        log.info(JSON.toJSONString(serverDtos));
+    }
+
+    @Test
+    public void selectOne() {
+        try {
+            ServerDto serverDto = serverService.selectOne("eureka-api");
+            log.info(JSON.toJSONString(serverDto));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void selectByPrimaryKey() {
+        ServerDto serverDto = serverService.selectByPrimaryKey(7L);
+        log.info(JSON.toJSONString(serverDto));
+    }
+
+    @Test
+    public void updateByKey() {
+        ServerDto serverDto = new ServerDto();
+        serverDto.setId(7L);
+        serverDto.setAvailable(false);
+        boolean b = false;
+        try {
+            b = serverService.updateByKey(serverDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.info(JSON.toJSONString(b));
     }
 }
