@@ -13,21 +13,21 @@ public interface ResourceService {
      * @param resourceDto
      * @return
      */
-    ResourceDto insert(ResourceDto resourceDto) throws Exception;
+    Long insert(ResourceDto resourceDto) throws Exception;
 
     /**
      * 条件查询(绝对查询)
      * @param name
      * @return
      */
-    ResourceDto getByName(String name);
+    ResourceDto selectOneByName(String name) throws Exception;
 
     /**
      * 根据URL插叙（绝对查询）
      * @param url
      * @return
      */
-    ResourceDto getByUrl(String url);
+    ResourceDto selectOneByUrl(String url) throws Exception;
 
     /**
      * 根据id更新
@@ -35,5 +35,7 @@ public interface ResourceService {
      * @param id
      * @return
      */
-    ResourceDto updateById(ResourceDto resourceDto, Integer id);
+    boolean updateById(ResourceDto resourceDto, Long id) throws Exception;
+
+    ResourceDto selectById(Long id) throws Exception;
 }

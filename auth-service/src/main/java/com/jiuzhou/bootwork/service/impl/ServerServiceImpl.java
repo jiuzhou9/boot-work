@@ -99,10 +99,16 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public ServerDto selectByPrimaryKey(Long key) {
+    public ServerDto selectByPrimaryKey(Long key) throws Exception {
+        if (key == null || key.equals(0L)){
+            throw new Exception("ID为空");
+        }
         ServerKey serverKey = new ServerKey();
         serverKey.setId(key);
         Server server = serverMapper.selectByPrimaryKey(serverKey);
+        if (server == null){
+            return null;
+        }
         ServerDto serverDto = new ServerDto();
         BeanUtils.copyProperties(server, serverDto);
         return serverDto;
