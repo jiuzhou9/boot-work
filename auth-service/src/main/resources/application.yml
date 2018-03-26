@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/20180301?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 12345
+server:
+  port: 15050
+
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:com/jiuzhou/bootwork/dao/mapper/*.xml
+#  type-aliases-package: com.jiuzhou.bootwork.dao.model

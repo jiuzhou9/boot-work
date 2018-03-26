@@ -15,7 +15,7 @@ create table resource
    server_id            bigint(11) not null,
    create_time          timestamp not null,
    update_time          timestamp not null default CURRENT_TIMESTAMP,
-   available            tinyint(1) not null default 1 comment '0否1是',
+   available            tinyint(1) default 1 comment '0否1是',
    primary key (id)
 );
 
@@ -29,7 +29,7 @@ create table server
    description          varchar(250) not null,
    create_time          timestamp not null default CURRENT_TIMESTAMP,
    update_time          timestamp not null default CURRENT_TIMESTAMP,
-   available            tinyint(1) not null default 1,
+   available            tinyint(1) default 1,
    primary key (id)
 );
 

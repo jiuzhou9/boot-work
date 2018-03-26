@@ -1,12 +1,9 @@
 package com.jiuzhou.bootwork.service.impl;
 
-import com.jiuzhou.bootwork.AuthService;
-import com.jiuzhou.bootwork.service.ResourceService;
-import com.jiuzhou.bootwork.service.dto.ResourceDto;
+import com.jiuzhou.bootwork.AuthServiceApp;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = AuthService.class)
+@SpringBootTest(classes = AuthServiceApp.class)
 public class ResourceServiceImplTest {
 
 //    @Autowired
