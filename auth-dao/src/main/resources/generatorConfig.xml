@@ -121,22 +121,22 @@
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
-        <table tableName="role">
-            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
-            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
-        </table>
-        <table tableName="role_resource">
-            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
-            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
-        </table>
-        <!--<table tableName="user" schema="public">-->
+        <!--<table tableName="role">-->
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
-        <!--<table tableName="user_role" schema="public">-->
+        <!--<table tableName="role_resource">-->
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
+        <table tableName="user">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
+        <table tableName="user_role">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
         <!--<table tableName="user_app" schema="public">-->
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->

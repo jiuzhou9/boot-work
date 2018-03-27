@@ -200,6 +200,13 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
         Long resourceId = roleResourceDto.getResourceId();
         Long roleId = roleResourceDto.getRoleId();
+        if (resourceId != null && resourceId.equals(0L)){
+            throw new Exception("资源ID不能为0");
+        }
+        if (roleId != null && roleId.equals(0L)){
+            throw new Exception("角色ID不能为0");
+        }
+
         if (resourceId != null){
             ResourceDto resourceDto = resourceService.selectById(resourceId);
             if (resourceDto == null){
