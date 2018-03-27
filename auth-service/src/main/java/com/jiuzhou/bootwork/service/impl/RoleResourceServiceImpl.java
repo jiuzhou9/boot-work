@@ -169,6 +169,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         return roleDtos;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean updateById(RoleResourceDto roleResourceDto) throws Exception {
         validateUpdate(roleResourceDto);

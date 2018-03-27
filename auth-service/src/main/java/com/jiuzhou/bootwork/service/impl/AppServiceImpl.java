@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -32,6 +35,7 @@ public class AppServiceImpl implements AppService {
     @Autowired
     private UserService userService;
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public Long insert(AppDto appDto) throws Exception {
         validateInsert(appDto);
@@ -90,6 +94,7 @@ public class AppServiceImpl implements AppService {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean updateById(AppDto appDto) throws Exception {
         validateUpdate(appDto);
