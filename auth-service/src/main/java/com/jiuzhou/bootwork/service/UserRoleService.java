@@ -23,4 +23,6 @@ public interface UserRoleService {
 
     UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws Exception;
 
+    UserRoleDto selectById(Long id) throws Exception;
+
 }

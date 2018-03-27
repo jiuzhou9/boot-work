@@ -3,6 +3,7 @@ package com.jiuzhou.bootwork.service.impl;
 import com.jiuzhou.bootwork.dao.mapper.UserRoleMapper;
 import com.jiuzhou.bootwork.dao.model.UserRole;
 import com.jiuzhou.bootwork.dao.model.UserRoleExample;
+import com.jiuzhou.bootwork.dao.model.UserRoleKey;
 import com.jiuzhou.bootwork.service.RoleService;
 import com.jiuzhou.bootwork.service.UserRoleService;
 import com.jiuzhou.bootwork.service.UserService;
@@ -86,7 +87,67 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public boolean updateById(UserRoleDto userRoleDto) throws Exception {
-        return false;
+        validateUpdate(userRoleDto);
+        UserRole userRole = new UserRole();
+        BeanUtils.copyProperties(userRoleDto, userRole);
+        int i = userRoleMapper.updateByPrimaryKeySelective(userRole);
+        if (i == 1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private void validateUpdate(UserRoleDto userRoleDto) throws Exception {
+        if (userRoleDto == null){
+            throw new Exception("用户角色信息为空");
+        }
+        Long id = userRoleDto.getId();
+        if (id == null || id.equals(0L)){
+            throw new Exception("用户角色ID为空");
+        }
+        UserRoleDto dto = selectById(id);
+        if (dto == null){
+            throw new Exception("ID不存在");
+        }
+        Long roleId = userRoleDto.getRoleId();
+        Long userId = userRoleDto.getUserId();
+        if (roleId != null && roleId.equals(0L)){
+            throw new Exception("角色ID为0");
+        }
+        if (userId != null && userId.equals(0L)){
+            throw new Exception("用户ID为0");
+        }
+        if (userId != null){
+            UserDto userDto = userService.selectById(userId);
+            if (userDto == null){
+                throw new Exception("用户ID不存在");
+            }
+        }
+        if (roleId != null){
+            RoleDto roleDto = roleService.selectById(roleId);
+            if (roleDto == null){
+                throw new Exception("角色ID不存在");
+            }
+        }
+        if (roleId == null && userId != null){
+            UserRoleDto userRoleDtoResult = selectByUserIdRoleId(userId, dto.getRoleId());
+            if (userRoleDtoResult != null){
+                throw new Exception("该用户角色映射已经存在");
+            }
+        }
+        if (roleId != null && userId == null){
+            UserRoleDto userRoleDtoResult = selectByUserIdRoleId(dto.getUserId(), roleId);
+            if (userRoleDtoResult != null){
+                throw new Exception("该用户角色映射已经存在");
+            }
+        }
+        if (roleId != null && userId != null){
+            UserRoleDto userRoleDtoResult = selectByUserIdRoleId(dto.getUserId(), dto.getRoleId());
+            if (userRoleDtoResult != null){
+                throw new Exception("该用户角色映射已经存在");
+            }
+        }
     }
 
     @Override
@@ -148,5 +209,21 @@ public class UserRoleServiceImpl implements UserRoleService {
         }else {
             throw new Exception("查询到多条数据");
         }
+    }
+
+    @Override
+    public UserRoleDto selectById(Long id) throws Exception {
+        if (id == null || id.equals(0L)){
+            throw new Exception("id为空");
+        }
+        UserRoleKey userRoleKey = new UserRoleKey();
+        userRoleKey.setId(id);
+        UserRole userRole = userRoleMapper.selectByPrimaryKey(userRoleKey);
+        if (userRole == null){
+            return null;
+        }
+        UserRoleDto userRoleDto = new UserRoleDto();
+        BeanUtils.copyProperties(userRole, userRoleDto);
+        return userRoleDto;
     }
 }
