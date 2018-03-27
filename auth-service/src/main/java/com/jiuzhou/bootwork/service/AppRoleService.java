@@ -1,6 +1,8 @@
 package com.jiuzhou.bootwork.service;
 
-import com.jiuzhou.bootwork.service.dto.UserDto;
+import com.jiuzhou.bootwork.service.dto.AppRoleDto;
+
+import java.util.List;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -8,14 +10,14 @@ import com.jiuzhou.bootwork.service.dto.UserDto;
  */
 public interface AppRoleService {
 
-    Long insert(UserDto userDto) throws Exception;
+    Long insert(AppRoleDto appRoleDto) throws Exception;
 
-    UserDto selectOneByUsername(String username) throws Exception;
+    boolean updateById(AppRoleDto appRoleDto) throws Exception;
 
-    boolean updateById(UserDto userDto) throws Exception;
+    List<AppRoleDto> selectByAppId(Long appId) throws Exception;
 
-    UserDto selectOneByMobile(String mobile) throws Exception;
+    AppRoleDto selectById(Long id) throws Exception;
 
-    UserDto selectById(Long id) throws Exception;
+    AppRoleDto selectOneByAppIdRoleId(Long appId, Long roleId) throws Exception;
 
 }
