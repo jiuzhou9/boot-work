@@ -16,6 +16,7 @@ public class PasswordTest extends TestCase {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode("12345");
         System.out.println(encode);
+        System.out.println(encode.length());
         boolean b = bCryptPasswordEncoder
                         .matches("12345", encode);
         System.out.println(b);
