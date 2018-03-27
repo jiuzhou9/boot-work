@@ -85,6 +85,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         return selectByUserId(userDto.getId());
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean updateById(UserRoleDto userRoleDto) throws Exception {
         validateUpdate(userRoleDto);
