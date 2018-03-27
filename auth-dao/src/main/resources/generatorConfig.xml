@@ -129,21 +129,21 @@
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
-        <table tableName="user">
-            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
-            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
-        </table>
-        <table tableName="user_role">
-            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
-            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
-        </table>
-        <!--<table tableName="user_app" schema="public">-->
+        <!--<table tableName="user">-->
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
-        <!--<table tableName="app_role" schema="public">-->
+        <!--<table tableName="user_role">-->
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
+        <table tableName="app">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
+        <table tableName="app_role">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
     </context>
 </generatorConfiguration>
