@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
         String mobile = userDto.getMobile();
         String username = userDto.getUsername();
         String password = userDto.getPassword();
+        String nickName = userDto.getNickName();
+        if (StringUtils.isEmpty(nickName)){
+            userDto.setNickName(username);
+        }
+
         if (StringUtils.isEmpty(mobile)){
             throw new Exception("手机号为空");
         }
@@ -165,5 +170,12 @@ public class UserServiceImpl implements UserService {
         UserDto dto = new UserDto();
         BeanUtils.copyProperties(user, dto);
         return dto;
+    }
+
+    @Override
+    public Long register(UserDto userDto) throws Exception {
+        validateInsert(userDto);
+        Long insert = insert(userDto);
+        return insert;
     }
 }
