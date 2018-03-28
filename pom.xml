@@ -23,6 +23,8 @@
         <!--<module>auth-web</module>-->
         <module>auth-dao</module>
         <module>auth-service</module>
+        <module>auth-server</module>
+        <module>permission-server</module>
     </modules>
     <packaging>pom</packaging>
 

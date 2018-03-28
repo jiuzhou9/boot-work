@@ -12,7 +12,6 @@ import com.jiuzhou.bootwork.service.dto.RoleDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -77,6 +76,7 @@ public class AppRoleServiceImpl implements AppRoleService {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public boolean updateById(AppRoleDto appRoleDto) throws Exception {
         return false;

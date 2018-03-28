@@ -18,4 +18,6 @@ public interface UserService {
 
     UserDto selectById(Long id) throws Exception;
 
+    Long register(UserDto userDto) throws Exception;
+
 }
