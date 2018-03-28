@@ -14,11 +14,11 @@ public class PasswordTest extends TestCase {
      */
     public void test() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String encode = bCryptPasswordEncoder.encode("12345");
+        String encode = bCryptPasswordEncoder.encode("abc");
         System.out.println(encode);
         System.out.println(encode.length());
         boolean b = bCryptPasswordEncoder
-                        .matches("12345", encode);
+                        .matches("abc", encode);
         System.out.println(b);
     }
 }
