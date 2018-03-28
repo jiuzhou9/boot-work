@@ -4,11 +4,14 @@ import com.jiuzhou.bootwork.dao.mapper.UserMapper;
 import com.jiuzhou.bootwork.dao.model.User;
 import com.jiuzhou.bootwork.dao.model.UserExample;
 import com.jiuzhou.bootwork.dao.model.UserKey;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -31,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public Long insert(UserDto userDto) throws Exception {
+    public Long insert(UserDto userDto) throws ServiceException {
         validateInsert(userDto);
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
@@ -39,9 +42,9 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
 
-    private void validateInsert(UserDto userDto) throws Exception {
+    private void validateInsert(UserDto userDto) throws ServiceException {
         if (userDto == null){
-            throw new Exception("用户信息为空");
+            throw new ServiceException(HttpErrorEnum.USER_PARAMETERS_ARE_EMPTY);
         }
         String mobile = userDto.getMobile();
         String username = userDto.getUsername();
@@ -52,29 +55,29 @@ public class UserServiceImpl implements UserService {
         }
 
         if (StringUtils.isEmpty(mobile)){
-            throw new Exception("手机号为空");
+            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_ARE_EMPTY);
         }
         if (StringUtils.isEmpty(username)){
-            throw new Exception("用户名为空");
+            throw new ServiceException(HttpErrorEnum.USERNAME_PARAMETER_ARE_EMPTY);
         }
         if (StringUtils.isEmpty(password)){
-            throw new Exception("密码为空");
+            throw new ServiceException(HttpErrorEnum.PASSWORD_PARAMETER_ARE_EMPTY);
         }
 
         UserDto dto = null;
         dto = selectOneByUsername(username);
         if (dto != null){
-            throw new Exception("用户名已经存在");
+            throw new ServiceException(HttpErrorEnum.USERNAME_HAS_ALREADY_EXISTED);
         }
 
         dto = selectOneByMobile(mobile);
         if (dto != null){
-            throw new Exception("手机号码已经存在");
+            throw new ServiceException(HttpErrorEnum.MOBILE_HAS_ALREADY_EXISTED);
         }
     }
 
     @Override
-    public UserDto selectOneByUsername(String username) throws Exception {
+    public UserDto selectOneByUsername(String username) throws ServiceException {
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
         criteria.andUsernameEqualTo(username);
@@ -86,7 +89,7 @@ public class UserServiceImpl implements UserService {
             BeanUtils.copyProperties(users.get(0), dto);
             return dto;
         }else {
-            throw new Exception("该用户名查询到多条数据");
+            throw new ServiceException(HttpErrorEnum.USERNAME_PARAMETER_QUERY_MANY_RESULTS);
         }
     }
 
@@ -137,9 +140,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto selectOneByMobile(String mobile) throws Exception {
+    public UserDto selectOneByMobile(String mobile) throws ServiceException {
         if (StringUtils.isEmpty(mobile)){
-            throw new Exception("mobile为空");
+            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_ARE_EMPTY);
         }
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
@@ -152,7 +155,7 @@ public class UserServiceImpl implements UserService {
             BeanUtils.copyProperties(users.get(0), dto);
             return dto;
         }else {
-            throw new Exception("查询到多条数据");
+            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_QUERY_MANY_RESULTS);
         }
     }
 
@@ -173,8 +176,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long register(UserDto userDto) throws Exception {
+    public Long register(UserDto userDto) throws ServiceException {
         validateInsert(userDto);
+        String password = userDto.getPassword();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        password = bCryptPasswordEncoder.encode(password);
+        userDto.setPassword(password);
         Long insert = insert(userDto);
         return insert;
     }
