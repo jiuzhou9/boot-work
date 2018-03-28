@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.service;
 
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.UserDto;
 
 /**
@@ -18,6 +19,6 @@ public interface UserService {
 
     UserDto selectById(Long id) throws Exception;
 
-    Long register(UserDto userDto) throws Exception;
+    Long register(UserDto userDto) throws ServiceException;
 
 }

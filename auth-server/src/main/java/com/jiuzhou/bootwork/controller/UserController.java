@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.controller.vo.UserVo;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
@@ -41,18 +42,15 @@ public class UserController {
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
 
-        String password = userVo.getPassword();
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        password = bCryptPasswordEncoder.encode(password);
-        userVo.setPassword(password);
-
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userVo, userDto);
         try {
             userService.register(userDto);
-        } catch (Exception e) {
+        } catch (ServiceException e) {
             e.printStackTrace();
             log.info(JSON.toJSONString("用户注册失败："+e.getMessage()));
+            result.setCode(e.getHttpError().getCode());
+            result.setMessage(e.getHttpError().getMessage());
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         result = Result.buildSuccess(userVo);
