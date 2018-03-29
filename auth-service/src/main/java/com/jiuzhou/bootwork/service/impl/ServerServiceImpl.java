@@ -55,7 +55,7 @@ public class ServerServiceImpl implements ServerService {
         }
         String description = serverDto.getDescription();
         if (StringUtils.isEmpty(description)){
-            throw new ServiceException(HttpErrorEnum.SERVER_DESCRIpTION_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.SERVER_DESCRIPTION_IS_EMPTY);
         }
 
         ServerExample serverExample = new ServerExample();
@@ -91,7 +91,7 @@ public class ServerServiceImpl implements ServerService {
         if (CollectionUtils.isEmpty(servers)){
             return null;
         }else if (servers.size() > 1){
-            throw new ServiceException(HttpErrorEnum.PARAMETER_QUERY_MANY_RESULTS);
+            throw new ServiceException(HttpErrorEnum.SERVER_NAME_QUERY_MANY_RESULTS);
         }else {
             Server server = servers.get(0);
             ServerDto serverDto = new ServerDto();

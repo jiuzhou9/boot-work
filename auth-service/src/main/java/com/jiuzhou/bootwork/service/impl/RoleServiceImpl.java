@@ -135,14 +135,14 @@ public class RoleServiceImpl implements RoleService {
         Long id = roleDto.getId();
         RoleDto dto = selectById(id);
         if (dto == null){
-            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
         }
     }
 
     @Override
     public List<RoleDto> selectByIds(List<Long> ids) throws ServiceException {
         if (CollectionUtils.isEmpty(ids)){
-            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
         }
         RoleExample roleExample = new RoleExample();
         RoleExample.Criteria criteria = roleExample.createCriteria();

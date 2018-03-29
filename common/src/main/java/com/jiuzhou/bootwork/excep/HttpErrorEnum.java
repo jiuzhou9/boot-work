@@ -16,12 +16,10 @@ public enum HttpErrorEnum implements HttpError {
     USERNAME_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010007", "用户名参数查询到多条数据结果"),
     MOBILE_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010008", "手机号参数查询到多条数据结果"),
     USER_ROLE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010009", "用户-角色ID参数为空或者为0"),
-    @Deprecated
-    ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010010", "ID不存在"),
+    USER_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010010", "用户ID不存在"),
     USER_ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010011", "用户角色信息为空"),
     USER_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010012", "该用户角色映射已经存在"),
-    @Deprecated
-    PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010013", "参数查询到多条数据结果"),
+    SERVER_NAME_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010013", "服务名参数查询到多条数据结果"),
     ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010014", "角色信息为空"),
     ROLE_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010015", "角色名称为空"),
     ROLE_NAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010016", "角色名称已经存在，请更换新名称"),
@@ -49,6 +47,13 @@ public enum HttpErrorEnum implements HttpError {
     ROLE_RESOURCE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010038", "角色资源id参数为空"),
     ROLE_RESOURCE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010039", "角色资源ID不存在"),
     ROLE_ID_RESOURCE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010040", "角色ID、资源ID参数查询到多条数据结果"),
+    USER_ROLE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010041", "用户角色ID不存在"),
+    USER_ID_ROLE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010042", "用户ID、角色ID参数查询到多条数据结果"),
+
+
+
+
+
 
     ;
 
