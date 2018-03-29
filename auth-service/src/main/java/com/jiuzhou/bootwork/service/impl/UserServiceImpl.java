@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
         UserDto dto = null;
         dto = selectById(id);
         if (dto == null){
-            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_NOT_EXIST);
         }
 
         dto = null;
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
         userKey.setId(id);
         User user = userMapper.selectByPrimaryKey(userKey);
         if (user == null){
-            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_NOT_EXIST);
         }
         UserDto dto = new UserDto();
         BeanUtils.copyProperties(user, dto);

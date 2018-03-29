@@ -109,7 +109,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
         UserRoleDto dto = selectById(id);
         if (dto == null){
-            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
+            throw new ServiceException(HttpErrorEnum.USER_ROLE_ID_IS_NOT_EXIST);
         }
         Long roleId = userRoleDto.getRoleId();
         Long userId = userRoleDto.getUserId();
@@ -125,13 +125,13 @@ public class UserRoleServiceImpl implements UserRoleService {
         if (userId != null){
             UserDto userDto = userService.selectById(userId);
             if (userDto == null){
-                throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
+                throw new ServiceException(HttpErrorEnum.USER_ID_IS_NOT_EXIST);
             }
         }
         if (roleId != null){
             RoleDto roleDto = roleService.selectById(roleId);
             if (roleDto == null){
-                throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
+                throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
             }
         }
         if (roleId == null && userId != null){
@@ -211,7 +211,7 @@ public class UserRoleServiceImpl implements UserRoleService {
             BeanUtils.copyProperties(userRoles.get(0), userRoleDto);
             return userRoleDto;
         }else {
-            throw new ServiceException(HttpErrorEnum.PARAMETER_QUERY_MANY_RESULTS);
+            throw new ServiceException(HttpErrorEnum.USER_ID_ROLE_ID_QUERY_MANY_RESULTS);
         }
     }
 
