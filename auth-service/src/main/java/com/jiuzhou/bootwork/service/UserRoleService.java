@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.service;
 
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 import com.jiuzhou.bootwork.service.dto.UserRoleDto;
 
@@ -11,18 +12,18 @@ import java.util.List;
  */
 public interface UserRoleService {
 
-    Long insert(UserRoleDto userRoleDto) throws Exception;
+    Long insert(UserRoleDto userRoleDto) throws ServiceException;
 
-    List<RoleDto> selectOneByUsername(String username) throws Exception;
+    List<RoleDto> selectOneByUsername(String username) throws ServiceException;
 
-    boolean updateById(UserRoleDto userRoleDto) throws Exception;
+    boolean updateById(UserRoleDto userRoleDto) throws ServiceException;
 
-    List<RoleDto> selectOneByMobile(String mobile) throws Exception;
+    List<RoleDto> selectOneByMobile(String mobile) throws ServiceException;
 
-    List<RoleDto> selectByUserId(Long userId) throws Exception;
+    List<RoleDto> selectByUserId(Long userId) throws ServiceException;
 
-    UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws Exception;
+    UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws ServiceException;
 
-    UserRoleDto selectById(Long id) throws Exception;
+    UserRoleDto selectById(Long id) throws ServiceException;
 
 }

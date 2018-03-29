@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.service;
 
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 
 import java.util.List;
@@ -10,30 +11,30 @@ import java.util.List;
  */
 public interface RoleService {
 
-    Long insert(RoleDto roleDto) throws Exception;
+    Long insert(RoleDto roleDto) throws ServiceException;
 
     /**
      * name查询，模糊查询
      * @param name
      * @return
      */
-    List<RoleDto> selectByName(String name) throws Exception;
+    List<RoleDto> selectByName(String name) throws ServiceException;
 
     /**
      * name的绝对查询，如果查询到多条将抛异常
      * @param name
      * @return
      */
-    RoleDto selectOneByName(String name) throws Exception;
+    RoleDto selectOneByName(String name) throws ServiceException;
 
     /**
      * 主键查询
      * @param key
      * @return
      */
-    RoleDto selectById(Long key) throws Exception;
+    RoleDto selectById(Long key) throws ServiceException;
 
-    boolean updateByKey(RoleDto roleDto) throws Exception;
+    boolean updateByKey(RoleDto roleDto) throws ServiceException;
 
-    List<RoleDto> selectByIds(List<Long> ids) throws Exception;
+    List<RoleDto> selectByIds(List<Long> ids) throws ServiceException;
 }

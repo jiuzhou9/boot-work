@@ -1,5 +1,7 @@
 package com.jiuzhou.bootwork.result;
 
+import com.jiuzhou.bootwork.excep.HttpError;
+
 import java.io.Serializable;
 
 /**
@@ -85,5 +87,10 @@ public class Result<T> implements Serializable {
         r.setMessage(msg);
         r.setData(obj);
         return r;
+    }
+
+//    --------------
+    public static <T> Result<T> buildFailed(HttpError httpError){
+        return buildFailed(httpError.getCode(), httpError.getMessage());
     }
 }

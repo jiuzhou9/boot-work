@@ -4,6 +4,8 @@ import com.jiuzhou.bootwork.dao.mapper.RoleMapper;
 import com.jiuzhou.bootwork.dao.model.Role;
 import com.jiuzhou.bootwork.dao.model.RoleExample;
 import com.jiuzhou.bootwork.dao.model.RoleKey;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.RoleService;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +32,9 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = ServiceException.class)
     @Override
-    public Long insert(RoleDto roleDto) throws Exception {
+    public Long insert(RoleDto roleDto) throws ServiceException {
         validateInsert(roleDto);
         Role role = new Role();
         BeanUtils.copyProperties(roleDto, role);
@@ -40,13 +42,13 @@ public class RoleServiceImpl implements RoleService {
         return role.getId();
     }
 
-    private void validateInsert(RoleDto roleDto) throws Exception {
+    private void validateInsert(RoleDto roleDto) throws ServiceException {
         if (roleDto == null){
-            throw new Exception("角色信息为空");
+            throw new ServiceException(HttpErrorEnum.ROLE_IS_EMPTY);
         }
         String name = roleDto.getName();
         if (StringUtils.isEmpty(name)){
-            throw new Exception("角色名称为空");
+            throw new ServiceException(HttpErrorEnum.ROLE_NAME_IS_EMPTY);
         }
 
         RoleExample roleExample = new RoleExample();
@@ -54,14 +56,14 @@ public class RoleServiceImpl implements RoleService {
         criteria.andNameEqualTo(name);
         List<Role> roles = roleMapper.selectByExample(roleExample);
         if (!CollectionUtils.isEmpty(roles)){
-            throw new Exception("角色名称已存在");
+            throw new ServiceException(HttpErrorEnum.ROLE_NAME_HAS_ALREADY_EXISTED);
         }
     }
 
     @Override
-    public List<RoleDto> selectByName(String name) throws Exception {
+    public List<RoleDto> selectByName(String name) throws ServiceException {
         if (StringUtils.isEmpty(name)){
-            throw new Exception("name为空");
+            throw new ServiceException(HttpErrorEnum.ROLE_NAME_IS_EMPTY);
         }
         RoleExample roleExample = new RoleExample();
         RoleExample.Criteria criteria = roleExample.createCriteria();
@@ -77,9 +79,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDto selectOneByName(String name) throws Exception {
+    public RoleDto selectOneByName(String name) throws ServiceException {
         if (StringUtils.isEmpty(name)){
-            throw new Exception("name为空");
+            throw new ServiceException(HttpErrorEnum.ROLE_NAME_IS_EMPTY);
         }
         RoleExample roleExample = new RoleExample();
         RoleExample.Criteria criteria = roleExample.createCriteria();
@@ -92,14 +94,14 @@ public class RoleServiceImpl implements RoleService {
             BeanUtils.copyProperties(roles.get(0), roleDto);
             return roleDto;
         }else {
-            throw new Exception("该角色名字对应多条数据");
+            throw new ServiceException(HttpErrorEnum.ROLENAME_PARAMETER_QUERY_MANY_RESULTS);
         }
     }
 
     @Override
-    public RoleDto selectById(Long key) throws Exception {
+    public RoleDto selectById(Long key) throws ServiceException {
         if (key == null || key.equals(0L)){
-            throw new Exception("ID为空");
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         RoleKey roleKey = new RoleKey();
         roleKey.setId(key);
@@ -114,7 +116,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public boolean updateByKey(RoleDto roleDto) throws Exception {
+    public boolean updateByKey(RoleDto roleDto) throws ServiceException {
         validateUpdate(roleDto);
         Role role = new Role();
         BeanUtils.copyProperties(roleDto, role);
@@ -126,21 +128,21 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
-    private void validateUpdate(RoleDto roleDto) throws Exception {
+    private void validateUpdate(RoleDto roleDto) throws ServiceException {
         if (roleDto == null){
-            throw new Exception("角色信息为空");
+            throw new ServiceException(HttpErrorEnum.ROLE_IS_EMPTY);
         }
         Long id = roleDto.getId();
         RoleDto dto = selectById(id);
         if (dto == null){
-            throw new Exception("角色信息不存在");
+            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
         }
     }
 
     @Override
-    public List<RoleDto> selectByIds(List<Long> ids) throws Exception {
+    public List<RoleDto> selectByIds(List<Long> ids) throws ServiceException {
         if (CollectionUtils.isEmpty(ids)){
-            throw new Exception("ids为空");
+            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
         }
         RoleExample roleExample = new RoleExample();
         RoleExample.Criteria criteria = roleExample.createCriteria();

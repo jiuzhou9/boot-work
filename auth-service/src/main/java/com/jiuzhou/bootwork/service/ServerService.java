@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.service;
 
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.ServerDto;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface ServerService {
 
-    Long insert(ServerDto serverDto) throws Exception;
+    Long insert(ServerDto serverDto) throws ServiceException;
 
     /**
      * name查询，模糊查询
@@ -24,15 +25,15 @@ public interface ServerService {
      * @param name
      * @return
      */
-    ServerDto selectOne(String name) throws Exception;
+    ServerDto selectOne(String name) throws ServiceException;
 
     /**
      * 主键查询
      * @param key
      * @return
      */
-    ServerDto selectByPrimaryKey(Long key) throws Exception;
+    ServerDto selectByPrimaryKey(Long key) throws ServiceException;
 
-    boolean updateByKey(ServerDto serverDto) throws Exception;
+    boolean updateByKey(ServerDto serverDto) throws ServiceException;
 
 }

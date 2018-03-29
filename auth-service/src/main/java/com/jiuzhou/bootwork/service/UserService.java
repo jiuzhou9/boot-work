@@ -9,15 +9,15 @@ import com.jiuzhou.bootwork.service.dto.UserDto;
  */
 public interface UserService {
 
-    Long insert(UserDto userDto) throws Exception;
+    Long insert(UserDto userDto) throws ServiceException;
 
-    UserDto selectOneByUsername(String username) throws Exception;
+    UserDto selectOneByUsername(String username) throws ServiceException;
 
-    boolean updateById(UserDto userDto) throws Exception;
+    boolean updateById(UserDto userDto) throws ServiceException;
 
-    UserDto selectOneByMobile(String mobile) throws Exception;
+    UserDto selectOneByMobile(String mobile) throws ServiceException;
 
-    UserDto selectById(Long id) throws Exception;
+    UserDto selectById(Long id) throws ServiceException;
 
     Long register(UserDto userDto) throws ServiceException;
 
