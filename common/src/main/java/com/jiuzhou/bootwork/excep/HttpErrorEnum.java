@@ -23,7 +23,11 @@ public enum HttpErrorEnum implements HttpError {
     ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010014", "角色信息为空"),
     ROLE_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010015", "角色名称为空"),
     ROLE_NAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010016", "角色名称已经存在，请更换新名称"),
-    ROLENAME_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010017", "角色名称参数查询到多条数据结果"),
+    ROLE_NAME_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010017", "角色名称参数查询到多条数据结果"),
+    SERVER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010018", "服务信息为空"),
+    SERVER_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010019", "服务名为空"),
+    SERVER_DESCRIBTION_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010020", "服务描述空"),
+    SERVER_NAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010021", "服务名已经存在"),
     ;
 
     private HttpStatus httpStatus;

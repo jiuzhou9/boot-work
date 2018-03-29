@@ -4,6 +4,7 @@ import com.jiuzhou.bootwork.dao.mapper.ServerMapper;
 import com.jiuzhou.bootwork.dao.model.Server;
 import com.jiuzhou.bootwork.dao.model.ServerExample;
 import com.jiuzhou.bootwork.dao.model.ServerKey;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.ServerService;
 import com.jiuzhou.bootwork.service.dto.ServerDto;
@@ -46,15 +47,15 @@ public class ServerServiceImpl implements ServerService {
      */
     private void validateInsert(ServerDto serverDto) throws ServiceException {
         if (serverDto == null){
-            throw new ServiceException("服务信息为空");
+            throw new ServiceException(HttpErrorEnum.SERVER_IS_EMPTY);
         }
         String name = serverDto.getName();
         if (StringUtils.isEmpty(name)){
-            throw new ServiceException("服务name为空");
+            throw new ServiceException(HttpErrorEnum.SERVER_NAME_IS_EMPTY);
         }
         String description = serverDto.getDescription();
         if (StringUtils.isEmpty(description)){
-            throw new ServiceException("服务描述为空");
+            throw new ServiceException(HttpErrorEnum.SERVER_DESCRIBTION_IS_EMPTY);
         }
 
         ServerExample serverExample = new ServerExample();
@@ -62,7 +63,7 @@ public class ServerServiceImpl implements ServerService {
         criteria.andNameEqualTo(name);
         List<Server> servers = serverMapper.selectByExample(serverExample);
         if (!CollectionUtils.isEmpty(servers)){
-            throw new ServiceException("服务name已经存在");
+            throw new ServiceException(HttpErrorEnum.SERVER_NAME_HAS_ALREADY_EXISTED);
         }
     }
 
@@ -90,7 +91,7 @@ public class ServerServiceImpl implements ServerService {
         if (CollectionUtils.isEmpty(servers)){
             return null;
         }else if (servers.size() > 1){
-            throw new ServiceException("该name存在多条数据");
+            throw new ServiceException(HttpErrorEnum.PARAMETER_QUERY_MANY_RESULTS);
         }else {
             Server server = servers.get(0);
             ServerDto serverDto = new ServerDto();
@@ -102,7 +103,7 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public ServerDto selectByPrimaryKey(Long key) throws ServiceException {
         if (key == null || key.equals(0L)){
-            throw new ServiceException("ID为空");
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         ServerKey serverKey = new ServerKey();
         serverKey.setId(key);
@@ -131,14 +132,11 @@ public class ServerServiceImpl implements ServerService {
 
     private void validateUpdate(ServerDto serverDto) throws ServiceException {
         if (serverDto == null){
-            throw new ServiceException("server信息为空");
+            throw new ServiceException(HttpErrorEnum.SERVER_IS_EMPTY);
         }
         Long id = serverDto.getId();
-        if (id == null){
-            throw new ServiceException("id为空");
-        }
-        if (id.equals(0L)){
-            throw new ServiceException("ID为零");
+        if (id == null || id.equals(0L)){
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
     }
 }
