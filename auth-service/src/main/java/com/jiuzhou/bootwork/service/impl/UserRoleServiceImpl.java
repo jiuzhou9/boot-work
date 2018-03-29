@@ -4,6 +4,8 @@ import com.jiuzhou.bootwork.dao.mapper.UserRoleMapper;
 import com.jiuzhou.bootwork.dao.model.UserRole;
 import com.jiuzhou.bootwork.dao.model.UserRoleExample;
 import com.jiuzhou.bootwork.dao.model.UserRoleKey;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.RoleService;
 import com.jiuzhou.bootwork.service.UserRoleService;
 import com.jiuzhou.bootwork.service.UserService;
@@ -42,7 +44,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public Long insert(UserRoleDto userRoleDto) throws Exception {
+    public Long insert(UserRoleDto userRoleDto) throws ServiceException {
         validateInsert(userRoleDto);
         UserRole userRole = new UserRole();
         BeanUtils.copyProperties(userRoleDto, userRole);
@@ -50,32 +52,29 @@ public class UserRoleServiceImpl implements UserRoleService {
         return userRole.getId();
     }
 
-    private void validateInsert(UserRoleDto userRoleDto) throws Exception {
+    private void validateInsert(UserRoleDto userRoleDto) throws ServiceException {
         if (userRoleDto == null){
-            throw new Exception("用户角色信息为空");
+            throw new ServiceException(HttpErrorEnum.USER_ROLE_IS_EMPTY);
         }
 
         Long roleId = userRoleDto.getRoleId();
         Long userId = userRoleDto.getUserId();
-        if (roleId == null || roleId.equals(0L)){
-            throw new Exception("角色ID为空");
-        }
-        if (userId == null || userId.equals(0L)){
-            throw new Exception("用户ID为空");
+        if (roleId == null || roleId.equals(0L) || userId == null || userId.equals(0L)){
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
 
         UserRoleDto dto = null;
         dto = selectByUserIdRoleId(userId, roleId);
         if (dto != null){
-            throw new Exception("该用户角色映射已经存在");
+            throw new ServiceException(HttpErrorEnum.USER_ROLE_HAS_ALREADY_EXISTED);
         }
 
     }
 
     @Override
-    public List<RoleDto> selectOneByUsername(String username) throws Exception {
+    public List<RoleDto> selectOneByUsername(String username) throws ServiceException {
         if (StringUtils.isEmpty(username)){
-            throw new Exception("用户名为空");
+            throw new ServiceException(HttpErrorEnum.USERNAME_PARAMETER_IS_EMPTY);
         }
 
         UserDto userDto = userService.selectOneByUsername(username);
@@ -87,7 +86,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public boolean updateById(UserRoleDto userRoleDto) throws Exception {
+    public boolean updateById(UserRoleDto userRoleDto) throws ServiceException {
         validateUpdate(userRoleDto);
         UserRole userRole = new UserRole();
         BeanUtils.copyProperties(userRoleDto, userRole);
@@ -99,62 +98,57 @@ public class UserRoleServiceImpl implements UserRoleService {
         }
     }
 
-    private void validateUpdate(UserRoleDto userRoleDto) throws Exception {
+    private void validateUpdate(UserRoleDto userRoleDto) throws ServiceException {
         if (userRoleDto == null){
-            throw new Exception("用户角色信息为空");
+            throw new ServiceException(HttpErrorEnum.USER_ROLE_IS_EMPTY);
         }
         Long id = userRoleDto.getId();
-        if (id == null || id.equals(0L)){
-            throw new Exception("用户角色ID为空");
-        }
+
         UserRoleDto dto = selectById(id);
         if (dto == null){
-            throw new Exception("ID不存在");
+            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
         }
         Long roleId = userRoleDto.getRoleId();
         Long userId = userRoleDto.getUserId();
-        if (roleId != null && roleId.equals(0L)){
-            throw new Exception("角色ID为0");
-        }
-        if (userId != null && userId.equals(0L)){
-            throw new Exception("用户ID为0");
+        if (id == null || id.equals(0L) || (roleId != null && roleId.equals(0L)) || (userId != null && userId.equals(0L))){
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         if (userId != null){
             UserDto userDto = userService.selectById(userId);
             if (userDto == null){
-                throw new Exception("用户ID不存在");
+                throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
             }
         }
         if (roleId != null){
             RoleDto roleDto = roleService.selectById(roleId);
             if (roleDto == null){
-                throw new Exception("角色ID不存在");
+                throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
             }
         }
         if (roleId == null && userId != null){
             UserRoleDto userRoleDtoResult = selectByUserIdRoleId(userId, dto.getRoleId());
             if (userRoleDtoResult != null){
-                throw new Exception("该用户角色映射已经存在");
+                throw new ServiceException(HttpErrorEnum.USER_ROLE_HAS_ALREADY_EXISTED);
             }
         }
         if (roleId != null && userId == null){
             UserRoleDto userRoleDtoResult = selectByUserIdRoleId(dto.getUserId(), roleId);
             if (userRoleDtoResult != null){
-                throw new Exception("该用户角色映射已经存在");
+                throw new ServiceException(HttpErrorEnum.USER_ROLE_HAS_ALREADY_EXISTED);
             }
         }
         if (roleId != null && userId != null){
             UserRoleDto userRoleDtoResult = selectByUserIdRoleId(dto.getUserId(), dto.getRoleId());
             if (userRoleDtoResult != null){
-                throw new Exception("该用户角色映射已经存在");
+                throw new ServiceException(HttpErrorEnum.USER_ROLE_HAS_ALREADY_EXISTED);
             }
         }
     }
 
     @Override
-    public List<RoleDto> selectOneByMobile(String mobile) throws Exception {
+    public List<RoleDto> selectOneByMobile(String mobile) throws ServiceException {
         if (StringUtils.isEmpty(mobile)){
-            throw new Exception("手机号码为空");
+            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_IS_EMPTY);
         }
         UserDto userDto = userService.selectOneByMobile(mobile);
         if (userDto == null){
@@ -166,9 +160,9 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public List<RoleDto> selectByUserId(Long userId) throws Exception {
+    public List<RoleDto> selectByUserId(Long userId) throws ServiceException {
         if (userId == null || userId.equals(0L)){
-            throw new Exception("userID为空");
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         UserRoleExample userRoleExample = new UserRoleExample();
         UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
@@ -189,12 +183,9 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws Exception {
-        if (userId == null || userId.equals(0L)){
-            throw new Exception("用户ID为空");
-        }
-        if (userId == null || userId.equals(0L)){
-            throw new Exception("用户ID为空");
+    public UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws ServiceException {
+        if (userId == null || userId.equals(0L) || userId == null || userId.equals(0L)){
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         UserRoleExample userRoleExample = new UserRoleExample();
         UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
@@ -208,14 +199,14 @@ public class UserRoleServiceImpl implements UserRoleService {
             BeanUtils.copyProperties(userRoles.get(0), userRoleDto);
             return userRoleDto;
         }else {
-            throw new Exception("查询到多条数据");
+            throw new ServiceException(HttpErrorEnum.PARAMETER_QUERY_MANY_RESULTS);
         }
     }
 
     @Override
-    public UserRoleDto selectById(Long id) throws Exception {
+    public UserRoleDto selectById(Long id) throws ServiceException {
         if (id == null || id.equals(0L)){
-            throw new Exception("id为空");
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         UserRoleKey userRoleKey = new UserRoleKey();
         userRoleKey.setId(id);

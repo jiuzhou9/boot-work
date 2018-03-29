@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.controller.vo.UserVo;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.UserService;
@@ -13,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,8 +37,7 @@ public class UserController {
     public ResponseEntity<Result<UserVo>> register(@RequestBody UserVo userVo) {
         Result<UserVo> result = new Result<>();
         if (userVo == null){
-            result.setCode("1");
-            result.setMessage("用户信息为空");
+            result = Result.buildFailed(HttpErrorEnum.USER_PARAMETERS_IS_EMPTY);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
 

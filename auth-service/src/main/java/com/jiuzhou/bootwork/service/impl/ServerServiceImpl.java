@@ -4,6 +4,7 @@ import com.jiuzhou.bootwork.dao.mapper.ServerMapper;
 import com.jiuzhou.bootwork.dao.model.Server;
 import com.jiuzhou.bootwork.dao.model.ServerExample;
 import com.jiuzhou.bootwork.dao.model.ServerKey;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.ServerService;
 import com.jiuzhou.bootwork.service.dto.ServerDto;
 import org.springframework.beans.BeanUtils;
@@ -30,7 +31,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public Long insert(ServerDto serverDto) throws Exception {
+    public Long insert(ServerDto serverDto) throws ServiceException {
         Server server = new Server();
         BeanUtils.copyProperties(serverDto, server);
         validateInsert(serverDto);
@@ -41,19 +42,19 @@ public class ServerServiceImpl implements ServerService {
     /**
      * 插入规则校验
      * @param serverDto
-     * @throws Exception
+     * @throws ServiceException
      */
-    private void validateInsert(ServerDto serverDto) throws Exception {
+    private void validateInsert(ServerDto serverDto) throws ServiceException {
         if (serverDto == null){
-            throw new Exception("服务信息为空");
+            throw new ServiceException("服务信息为空");
         }
         String name = serverDto.getName();
         if (StringUtils.isEmpty(name)){
-            throw new Exception("服务name为空");
+            throw new ServiceException("服务name为空");
         }
         String description = serverDto.getDescription();
         if (StringUtils.isEmpty(description)){
-            throw new Exception("服务描述为空");
+            throw new ServiceException("服务描述为空");
         }
 
         ServerExample serverExample = new ServerExample();
@@ -61,7 +62,7 @@ public class ServerServiceImpl implements ServerService {
         criteria.andNameEqualTo(name);
         List<Server> servers = serverMapper.selectByExample(serverExample);
         if (!CollectionUtils.isEmpty(servers)){
-            throw new Exception("服务name已经存在");
+            throw new ServiceException("服务name已经存在");
         }
     }
 
@@ -81,7 +82,7 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public ServerDto selectOne(String name) throws Exception {
+    public ServerDto selectOne(String name) throws ServiceException {
         ServerExample serverExample = new ServerExample();
         ServerExample.Criteria criteria = serverExample.createCriteria();
         criteria.andNameEqualTo(name);
@@ -89,7 +90,7 @@ public class ServerServiceImpl implements ServerService {
         if (CollectionUtils.isEmpty(servers)){
             return null;
         }else if (servers.size() > 1){
-            throw new Exception("该name存在多条数据");
+            throw new ServiceException("该name存在多条数据");
         }else {
             Server server = servers.get(0);
             ServerDto serverDto = new ServerDto();
@@ -99,9 +100,9 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public ServerDto selectByPrimaryKey(Long key) throws Exception {
+    public ServerDto selectByPrimaryKey(Long key) throws ServiceException {
         if (key == null || key.equals(0L)){
-            throw new Exception("ID为空");
+            throw new ServiceException("ID为空");
         }
         ServerKey serverKey = new ServerKey();
         serverKey.setId(key);
@@ -116,7 +117,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public boolean updateByKey(ServerDto serverDto) throws Exception {
+    public boolean updateByKey(ServerDto serverDto) throws ServiceException {
         validateUpdate(serverDto);
         Server server = new Server();
         BeanUtils.copyProperties(serverDto, server);
@@ -128,16 +129,16 @@ public class ServerServiceImpl implements ServerService {
         }
     }
 
-    private void validateUpdate(ServerDto serverDto) throws Exception {
+    private void validateUpdate(ServerDto serverDto) throws ServiceException {
         if (serverDto == null){
-            throw new Exception("server信息为空");
+            throw new ServiceException("server信息为空");
         }
         Long id = serverDto.getId();
         if (id == null){
-            throw new Exception("id为空");
+            throw new ServiceException("id为空");
         }
         if (id.equals(0L)){
-            throw new Exception("ID为零");
+            throw new ServiceException("ID为零");
         }
     }
 }

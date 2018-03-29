@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     private void validateInsert(UserDto userDto) throws ServiceException {
         if (userDto == null){
-            throw new ServiceException(HttpErrorEnum.USER_PARAMETERS_ARE_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_PARAMETERS_IS_EMPTY);
         }
         String mobile = userDto.getMobile();
         String username = userDto.getUsername();
@@ -55,13 +55,13 @@ public class UserServiceImpl implements UserService {
         }
 
         if (StringUtils.isEmpty(mobile)){
-            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_ARE_EMPTY);
+            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_IS_EMPTY);
         }
         if (StringUtils.isEmpty(username)){
-            throw new ServiceException(HttpErrorEnum.USERNAME_PARAMETER_ARE_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USERNAME_PARAMETER_IS_EMPTY);
         }
         if (StringUtils.isEmpty(password)){
-            throw new ServiceException(HttpErrorEnum.PASSWORD_PARAMETER_ARE_EMPTY);
+            throw new ServiceException(HttpErrorEnum.PASSWORD_PARAMETER_IS_EMPTY);
         }
 
         UserDto dto = null;
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public boolean updateById(UserDto userDto) throws Exception {
+    public boolean updateById(UserDto userDto) throws ServiceException {
         validateUpdate(userDto);
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
@@ -107,18 +107,18 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void validateUpdate(UserDto userDto) throws Exception {
+    private void validateUpdate(UserDto userDto) throws ServiceException {
         if (userDto == null){
-            throw new Exception("用户信息为空");
+            throw new ServiceException(HttpErrorEnum.USER_PARAMETERS_IS_EMPTY);
         }
         Long id = userDto.getId();
         if (id == null || id.equals(0L)){
-            throw new Exception("ID为空");
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         UserDto dto = null;
         dto = selectById(id);
         if (dto == null){
-            throw new Exception("ID信息不存在");
+            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
         }
 
         dto = null;
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(mobile)){
             dto = selectOneByMobile(mobile);
             if (dto != null){
-                throw new Exception("手机号已存在");
+                throw new ServiceException(HttpErrorEnum.MOBILE_HAS_ALREADY_EXISTED);
             }
         }
 
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(username)){
             dto = selectOneByUsername(username);
             if (dto != null){
-                throw new Exception("用户名已存在");
+                throw new ServiceException(HttpErrorEnum.USERNAME_HAS_ALREADY_EXISTED);
             }
         }
     }
@@ -142,7 +142,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto selectOneByMobile(String mobile) throws ServiceException {
         if (StringUtils.isEmpty(mobile)){
-            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_ARE_EMPTY);
+            throw new ServiceException(HttpErrorEnum.MOBILE_PARAMETER_IS_EMPTY);
         }
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
@@ -160,15 +160,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto selectById(Long id) throws Exception {
+    public UserDto selectById(Long id) throws ServiceException {
         if (id == null || id.equals(0L)){
-            throw new Exception("ID为空");
+            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
         }
         UserKey userKey = new UserKey();
         userKey.setId(id);
         User user = userMapper.selectByPrimaryKey(userKey);
         if (user == null){
-            throw new Exception("ID不存在");
+            throw new ServiceException(HttpErrorEnum.ID_IS_NOT_EXIST);
         }
         UserDto dto = new UserDto();
         BeanUtils.copyProperties(user, dto);
