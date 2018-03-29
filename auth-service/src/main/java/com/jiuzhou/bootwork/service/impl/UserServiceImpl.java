@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
         }
         Long id = userDto.getId();
         if (id == null || id.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
         }
         UserDto dto = null;
         dto = selectById(id);
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto selectById(Long id) throws ServiceException {
         if (id == null || id.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
         }
         UserKey userKey = new UserKey();
         userKey.setId(id);

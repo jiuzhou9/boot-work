@@ -15,10 +15,12 @@ public enum HttpErrorEnum implements HttpError {
     PASSWORD_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010006", "密码参数为空"),
     USERNAME_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010007", "用户名参数查询到多条数据结果"),
     MOBILE_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010008", "手机号参数查询到多条数据结果"),
-    ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010009", "ID参数为空或者为0"),
+    USER_ROLE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010009", "用户-角色ID参数为空或者为0"),
+    @Deprecated
     ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010010", "ID不存在"),
     USER_ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010011", "用户角色信息为空"),
     USER_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010012", "该用户角色映射已经存在"),
+    @Deprecated
     PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010013", "参数查询到多条数据结果"),
     ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010014", "角色信息为空"),
     ROLE_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010015", "角色名称为空"),
@@ -26,8 +28,28 @@ public enum HttpErrorEnum implements HttpError {
     ROLE_NAME_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010017", "角色名称参数查询到多条数据结果"),
     SERVER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010018", "服务信息为空"),
     SERVER_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010019", "服务名为空"),
-    SERVER_DESCRIBTION_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010020", "服务描述空"),
+    SERVER_DESCRIPTION_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010020", "服务描述空"),
     SERVER_NAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010021", "服务名已经存在"),
+    ROLE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010022", "角色ID不存在"),
+    RESOURCE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010023", "资源ID不存在"),
+    ROLE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010024", "角色ID参数为空或者为0"),
+    RESOURCE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010025", "资源ID参数为空或者为0"),
+    USER_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010026", "用户ID参数为空或者为0"),
+    SERVER_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010027", "服务ID参数为空或者为0"),
+    RESOURCE_NAME_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010028", "资源名称参数为空"),
+    RESOURCE_URL_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010029", "资源url参数为空"),
+    RESOURCE_TYPE_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010030", "资源请求方式参数为空"),
+    RESOURCE_TYPE_PARAMETER_IS_ERROR(HttpStatus.BAD_REQUEST, "10010031", "资源请求方式参数类型错误"),
+    SERVER_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010032", "服务ID不存在"),
+    SERVER_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010033", "该服务已经存在"),
+    RESOURCE_URL_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010034", "资源URL参数查询到多条数据结果"),
+    ROLE_RESOURCE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010035", "该角色资源映射已经存在"),
+    ROLE_NAME_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010036", "该角色名字不存在"),
+    ROLE_RESOURCE_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010037", "角色资源参数为空"),
+    ROLE_RESOURCE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010038", "角色资源id参数为空"),
+    ROLE_RESOURCE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010039", "角色资源ID不存在"),
+    ROLE_ID_RESOURCE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010040", "角色ID、资源ID参数查询到多条数据结果"),
+
     ;
 
     private HttpStatus httpStatus;
@@ -55,6 +77,8 @@ public enum HttpErrorEnum implements HttpError {
         return message;
     }
 
+
+    @Deprecated
     public static HttpError getError(String msg){
         for (HttpErrorEnum httpErrorEnum:HttpErrorEnum.values()){
             if (httpErrorEnum.getMessage().equals(msg)){

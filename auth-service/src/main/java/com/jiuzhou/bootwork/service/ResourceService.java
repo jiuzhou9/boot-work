@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.service;
 
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.ResourceDto;
 
 import java.util.List;
@@ -15,21 +16,21 @@ public interface ResourceService {
      * @param resourceDto
      * @return
      */
-    Long insert(ResourceDto resourceDto) throws Exception;
+    Long insert(ResourceDto resourceDto) throws ServiceException;
 
     /**
      * 条件查询(绝对查询)
      * @param name
      * @return
      */
-    ResourceDto selectOneByName(String name) throws Exception;
+    ResourceDto selectOneByName(String name) throws ServiceException;
 
     /**
      * 根据URL插叙（绝对查询）
      * @param url
      * @return
      */
-    ResourceDto selectOneByUrl(String url) throws Exception;
+    ResourceDto selectOneByUrl(String url) throws ServiceException;
 
     /**
      * 根据id更新
@@ -37,9 +38,9 @@ public interface ResourceService {
      * @param id
      * @return
      */
-    boolean updateById(ResourceDto resourceDto, Long id) throws Exception;
+    boolean updateById(ResourceDto resourceDto, Long id) throws ServiceException;
 
-    ResourceDto selectById(Long id) throws Exception;
+    ResourceDto selectById(Long id) throws ServiceException;
 
-    List<ResourceDto> selectByIds(List<Long> ids) throws Exception;
+    List<ResourceDto> selectByIds(List<Long> ids) throws ServiceException;
 }

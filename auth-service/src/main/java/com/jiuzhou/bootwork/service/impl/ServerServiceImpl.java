@@ -55,7 +55,7 @@ public class ServerServiceImpl implements ServerService {
         }
         String description = serverDto.getDescription();
         if (StringUtils.isEmpty(description)){
-            throw new ServiceException(HttpErrorEnum.SERVER_DESCRIBTION_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.SERVER_DESCRIpTION_IS_EMPTY);
         }
 
         ServerExample serverExample = new ServerExample();
@@ -103,7 +103,7 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public ServerDto selectByPrimaryKey(Long key) throws ServiceException {
         if (key == null || key.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.SERVER_ID_PARAMETER_IS_EMPTY);
         }
         ServerKey serverKey = new ServerKey();
         serverKey.setId(key);
@@ -136,7 +136,7 @@ public class ServerServiceImpl implements ServerService {
         }
         Long id = serverDto.getId();
         if (id == null || id.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.SERVER_ID_PARAMETER_IS_EMPTY);
         }
     }
 }

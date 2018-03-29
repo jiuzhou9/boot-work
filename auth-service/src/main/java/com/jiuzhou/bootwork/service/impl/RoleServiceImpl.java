@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = ServiceException.class)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
     public Long insert(RoleDto roleDto) throws ServiceException {
         validateInsert(roleDto);
@@ -101,7 +101,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto selectById(Long key) throws ServiceException {
         if (key == null || key.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
         }
         RoleKey roleKey = new RoleKey();
         roleKey.setId(key);

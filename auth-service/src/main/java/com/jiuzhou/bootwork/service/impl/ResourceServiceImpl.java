@@ -4,6 +4,8 @@ import com.jiuzhou.bootwork.dao.mapper.ResourceMapper;
 import com.jiuzhou.bootwork.dao.model.Resource;
 import com.jiuzhou.bootwork.dao.model.ResourceExample;
 import com.jiuzhou.bootwork.dao.model.ResourceKey;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.ResourceService;
 import com.jiuzhou.bootwork.service.ServerService;
 import com.jiuzhou.bootwork.service.dto.ResourceDto;
@@ -19,7 +21,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public Long insert(ResourceDto resourceDto) throws Exception {
+    public Long insert(ResourceDto resourceDto) throws ServiceException {
         if (resourceDto == null){
             return null;
         }
@@ -55,25 +56,25 @@ public class ResourceServiceImpl implements ResourceService {
     /**
      * 校验resource是否可以插入
      * @param resourceDto
-     * @throws Exception
+     * @throws ServiceException
      */
-    private void validateInsert(ResourceDto resourceDto) throws Exception {
+    private void validateInsert(ResourceDto resourceDto) throws ServiceException {
         String name = resourceDto.getName();
         String url = resourceDto.getUrl();
         String type = resourceDto.getType();
         Long serverId = resourceDto.getServerId();
 
         if (StringUtils.isEmpty(name)){
-            throw new Exception("资源名称为空");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_NAME_PARAMETER_IS_EMPTY);
         }
         if (StringUtils.isEmpty(url)){
-            throw new Exception("资源url为空");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_URL_PARAMETER_IS_EMPTY);
         }
         if (serverId == null || serverId.equals(0L)){
-            throw new Exception("serverId为空");
+            throw new ServiceException(HttpErrorEnum.SERVER_ID_PARAMETER_IS_EMPTY);
         }
         if (StringUtils.isEmpty(type)){
-            throw new Exception("资源请求方式为空");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_TYPE_PARAMETER_IS_EMPTY);
         }else if (type != RequestMethod.GET.name()
                         &&
                         type != RequestMethod.DELETE.name()
@@ -89,7 +90,7 @@ public class ResourceServiceImpl implements ResourceService {
                         type != RequestMethod.PUT.name()
                         &&
                         type != RequestMethod.TRACE.name()){
-            throw new Exception("请求类型错误");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_TYPE_PARAMETER_IS_ERROR);
         }
 
         validateName(name);
@@ -99,10 +100,10 @@ public class ResourceServiceImpl implements ResourceService {
         validateUrlType(url, type, serverId);
     }
 
-    private void validateServerId(Long serverId) throws Exception {
+    private void validateServerId(Long serverId) throws ServiceException {
         ServerDto serverDto = serverService.selectByPrimaryKey(serverId);
         if (serverDto == null){
-            throw new Exception("serverId不存在");
+            throw new ServiceException(HttpErrorEnum.SERVER_ID_IS_NOT_EXIST);
         }
     }
 
@@ -111,7 +112,7 @@ public class ResourceServiceImpl implements ResourceService {
      * @param url
      * @param type
      */
-    private void validateUrlType(String url, String type, Long serverId) throws Exception {
+    private void validateUrlType(String url, String type, Long serverId) throws ServiceException {
         ResourceExample resourceExample = new ResourceExample();
         ResourceExample.Criteria criteria = resourceExample.createCriteria();
         criteria.andUrlEqualTo(url);
@@ -119,25 +120,25 @@ public class ResourceServiceImpl implements ResourceService {
         criteria.andServerIdEqualTo(serverId);
         List<Resource> resources = resourceMapper.selectByExample(resourceExample);
         if (!CollectionUtils.isEmpty(resources)){
-            throw new Exception("资源已经存在");
+            throw new ServiceException(HttpErrorEnum.SERVER_HAS_ALREADY_EXISTED);
         }
     }
 
     /**
      * 校验资源名字是否已经存在
      */
-    private void validateName(String name) throws Exception {
+    private void validateName(String name) throws ServiceException {
         ResourceExample resourceExample = new ResourceExample();
         ResourceExample.Criteria criteria = resourceExample.createCriteria();
         criteria.andNameEqualTo(name);
         List<Resource> resources = resourceMapper.selectByExample(resourceExample);
         if (!CollectionUtils.isEmpty(resources)){
-            throw new Exception("资源名称重复");
+            throw new ServiceException(HttpErrorEnum.SERVER_NAME_HAS_ALREADY_EXISTED);
         }
     }
 
     @Override
-    public ResourceDto selectOneByName(String name) throws Exception {
+    public ResourceDto selectOneByName(String name) throws ServiceException {
         if (StringUtils.isEmpty(name)){
             return null;
         }
@@ -148,7 +149,7 @@ public class ResourceServiceImpl implements ResourceService {
         return dealList(resources);
     }
 
-    private ResourceDto dealList(List resources) throws Exception {
+    private ResourceDto dealList(List resources) throws ServiceException {
         if (CollectionUtils.isEmpty(resources)){
             return null;
         }else if (resources.size() == 1){
@@ -156,12 +157,12 @@ public class ResourceServiceImpl implements ResourceService {
             BeanUtils.copyProperties(resources.get(0), resourceDto);
             return resourceDto;
         }else {
-            throw new Exception("url查询到多条数据");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_URL_PARAMETER_QUERY_MANY_RESULTS);
         }
     }
 
     @Override
-    public ResourceDto selectOneByUrl(String url) throws Exception {
+    public ResourceDto selectOneByUrl(String url) throws ServiceException {
         if (StringUtils.isEmpty(url)){
             return null;
         }
@@ -174,10 +175,10 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public boolean updateById(ResourceDto resourceDto, Long id) throws Exception {
+    public boolean updateById(ResourceDto resourceDto, Long id) throws ServiceException {
         ResourceDto dto = selectById(id);
         if (dto == null){
-            throw new Exception("资源不存在");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_IS_NOT_EXIST);
         }
         Resource resource = new Resource();
         BeanUtils.copyProperties(resourceDto, resource);
@@ -191,9 +192,9 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public ResourceDto selectById(Long id) throws Exception {
+    public ResourceDto selectById(Long id) throws ServiceException {
         if (id == null || id.equals(0L)){
-            throw new Exception("ID为空");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
         }
 
         ResourceKey resourceKey = new ResourceKey();
@@ -208,9 +209,9 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<ResourceDto> selectByIds(List<Long> ids) throws Exception {
+    public List<ResourceDto> selectByIds(List<Long> ids) throws ServiceException {
         if (CollectionUtils.isEmpty(ids)){
-            throw new Exception("ids为空");
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
         }
         ResourceExample resourceExample = new ResourceExample();
         ResourceExample.Criteria criteria = resourceExample.createCriteria();
