@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     private void validateInsert(UserDto userDto) throws ServiceException {
         if (userDto == null){
-            throw new ServiceException(HttpErrorEnum.USER_PARAMETERS_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_IS_EMPTY);
         }
         String mobile = userDto.getMobile();
         String username = userDto.getUsername();
@@ -109,11 +109,11 @@ public class UserServiceImpl implements UserService {
 
     private void validateUpdate(UserDto userDto) throws ServiceException {
         if (userDto == null){
-            throw new ServiceException(HttpErrorEnum.USER_PARAMETERS_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_IS_EMPTY);
         }
         Long id = userDto.getId();
         if (id == null || id.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
         UserDto dto = null;
         dto = selectById(id);
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto selectById(Long id) throws ServiceException {
         if (id == null || id.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
         UserKey userKey = new UserKey();
         userKey.setId(id);

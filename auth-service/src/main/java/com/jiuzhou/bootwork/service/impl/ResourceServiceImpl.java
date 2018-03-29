@@ -65,7 +65,7 @@ public class ResourceServiceImpl implements ResourceService {
         Long serverId = resourceDto.getServerId();
 
         if (StringUtils.isEmpty(name)){
-            throw new ServiceException(HttpErrorEnum.RESOURCE_NAME_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.RESOURCE_NAME_IS_EMPTY);
         }
         if (StringUtils.isEmpty(url)){
             throw new ServiceException(HttpErrorEnum.RESOURCE_URL_PARAMETER_IS_EMPTY);
