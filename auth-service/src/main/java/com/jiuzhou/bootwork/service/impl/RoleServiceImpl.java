@@ -94,7 +94,7 @@ public class RoleServiceImpl implements RoleService {
             BeanUtils.copyProperties(roles.get(0), roleDto);
             return roleDto;
         }else {
-            throw new ServiceException(HttpErrorEnum.ROLENAME_PARAMETER_QUERY_MANY_RESULTS);
+            throw new ServiceException(HttpErrorEnum.ROLE_NAME_PARAMETER_QUERY_MANY_RESULTS);
         }
     }
 
