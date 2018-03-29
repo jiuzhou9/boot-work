@@ -37,7 +37,7 @@ public class UserController {
     public ResponseEntity<Result<UserVo>> register(@RequestBody UserVo userVo) {
         Result<UserVo> result = new Result<>();
         if (userVo == null){
-            result = Result.buildFailed(HttpErrorEnum.USER_PARAMETERS_IS_EMPTY);
+            result = Result.buildFailed(HttpErrorEnum.USER_IS_EMPTY);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
 

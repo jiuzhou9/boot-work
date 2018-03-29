@@ -60,7 +60,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
         }
         if (roleId == null || roleId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ROLE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
         }
         RoleDto roleDto = roleService.selectById(roleId);
         if (roleDto == null){
@@ -207,7 +207,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
         }
         if (roleId != null && roleId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ROLE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
         }
 
         if (resourceId != null){
@@ -248,7 +248,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     private RoleResource selectRoleResource(Long roleId, Long resourceId) throws ServiceException {
         if (roleId == null || roleId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ROLE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
         }
         if (resourceId == null || resourceId.equals(0L)){
             throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);

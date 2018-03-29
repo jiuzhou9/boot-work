@@ -3,6 +3,8 @@ package com.jiuzhou.bootwork.service.impl;
 import com.jiuzhou.bootwork.dao.mapper.AppRoleMapper;
 import com.jiuzhou.bootwork.dao.model.AppRole;
 import com.jiuzhou.bootwork.dao.model.AppRoleExample;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.AppRoleService;
 import com.jiuzhou.bootwork.service.AppService;
 import com.jiuzhou.bootwork.service.RoleService;
@@ -39,7 +41,7 @@ public class AppRoleServiceImpl implements AppRoleService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public Long insert(AppRoleDto appRoleDto) throws Exception {
+    public Long insert(AppRoleDto appRoleDto) throws ServiceException {
         validateInsert(appRoleDto);
         AppRole appRole = new AppRole();
         BeanUtils.copyProperties(appRoleDto, appRole);
@@ -47,58 +49,58 @@ public class AppRoleServiceImpl implements AppRoleService {
         return appRole.getId();
     }
 
-    private void validateInsert(AppRoleDto appRoleDto) throws Exception {
+    private void validateInsert(AppRoleDto appRoleDto) throws ServiceException {
         if (appRoleDto == null){
-            throw new Exception("app 角色信息为空");
+            throw new ServiceException(HttpErrorEnum.APP_ROLE_IS_EMPTY);
         }
         Long appId = appRoleDto.getAppId();
         Long roleId = appRoleDto.getRoleId();
         if (appId == null || appId.equals(0L)){
-            throw new Exception("APPID为空");
+            throw new ServiceException(HttpErrorEnum.APP_ID_IS_EMPTY);
         }
         if (roleId == null || roleId.equals(0L)){
-            throw new Exception("角色ID为空");
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
         }
 
         AppDto appDto = appService.selectById(appId);
         if (appDto == null){
-            throw new Exception("APPID信息不存在");
+            throw new ServiceException(HttpErrorEnum.APP_ID_IS_NOT_EXIST);
         }
 
         RoleDto roleDto = roleService.selectById(roleId);
         if (roleDto == null){
-            throw new Exception("roleID信息不存在");
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
         }
 
         AppRoleDto dto = selectOneByAppIdRoleId(appId, roleId);
         if (dto != null){
-            throw new Exception("该APP角色映射关系已经存在");
+            throw new ServiceException(HttpErrorEnum.APP_ROLE_HAS_ALREADY_EXISTED);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public boolean updateById(AppRoleDto appRoleDto) throws Exception {
+    public boolean updateById(AppRoleDto appRoleDto) throws ServiceException {
         return false;
     }
 
     @Override
-    public List<AppRoleDto> selectByAppId(Long appId) throws Exception {
+    public List<AppRoleDto> selectByAppId(Long appId) throws ServiceException {
         return null;
     }
 
     @Override
-    public AppRoleDto selectById(Long id) throws Exception {
+    public AppRoleDto selectById(Long id) throws ServiceException {
         return null;
     }
 
     @Override
-    public AppRoleDto selectOneByAppIdRoleId(Long appId, Long roleId) throws Exception {
+    public AppRoleDto selectOneByAppIdRoleId(Long appId, Long roleId) throws ServiceException {
         if (appId == null || appId.equals(0L)){
-            throw new Exception("APPID信息为空");
+            throw new ServiceException(HttpErrorEnum.APP_ID_IS_EMPTY);
         }
         if (roleId == null || roleId.equals(0L)){
-            throw new Exception("角色ID信息为空");
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
         }
 
         AppRoleExample appRoleExample = new AppRoleExample();
@@ -113,7 +115,7 @@ public class AppRoleServiceImpl implements AppRoleService {
             BeanUtils.copyProperties(appRoles.get(0), appRoleDto);
             return appRoleDto;
         }else {
-            throw new Exception("查询到多条数据");
+            throw new ServiceException(HttpErrorEnum.APP_ID_ROLE_ID_QUERY_MANY_RESULTS);
         }
     }
 }

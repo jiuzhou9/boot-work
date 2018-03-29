@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum HttpErrorEnum implements HttpError {
     USERNAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010001", "用户名已经存在"),
     MOBILE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010002", "手机号码已经存在"),
-    USER_PARAMETERS_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010003", "用户参数为空"),
+    USER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010003", "用户参数为空"),
     MOBILE_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010004", "手机参数为空"),
     USERNAME_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010005", "用户名参数为空"),
     PASSWORD_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010006", "密码参数为空"),
@@ -30,11 +30,11 @@ public enum HttpErrorEnum implements HttpError {
     SERVER_NAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010021", "服务名已经存在"),
     ROLE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010022", "角色ID不存在"),
     RESOURCE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010023", "资源ID不存在"),
-    ROLE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010024", "角色ID参数为空或者为0"),
+    ROLE_ID_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010024", "角色ID参数为空或者为0"),
     RESOURCE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010025", "资源ID参数为空或者为0"),
-    USER_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010026", "用户ID参数为空或者为0"),
+    USER_ID_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010026", "用户ID参数为空或者为0"),
     SERVER_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010027", "服务ID参数为空或者为0"),
-    RESOURCE_NAME_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010028", "资源名称参数为空"),
+    RESOURCE_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010028", "资源名称参数为空"),
     RESOURCE_URL_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010029", "资源url参数为空"),
     RESOURCE_TYPE_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010030", "资源请求方式参数为空"),
     RESOURCE_TYPE_PARAMETER_IS_ERROR(HttpStatus.BAD_REQUEST, "10010031", "资源请求方式参数类型错误"),
@@ -49,11 +49,15 @@ public enum HttpErrorEnum implements HttpError {
     ROLE_ID_RESOURCE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010040", "角色ID、资源ID参数查询到多条数据结果"),
     USER_ROLE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010041", "用户角色ID不存在"),
     USER_ID_ROLE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010042", "用户ID、角色ID参数查询到多条数据结果"),
-
-
-
-
-
+    APP_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010043", "APP参数为空"),
+    APP_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010044", "APP名字参数为空"),
+    USER_ID_APP_NAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010045", "该用户下APP名字已经存在，请重新定义"),
+    USER_ID_APP_NAME_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST,"10010046", "该用户、APP名字参数查询到多条数据"),
+    APP_ID_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010047", "APP id参数为空"),
+    APP_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010048", "APP id参数不存在"),
+    APP_ID_ROLE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST,"10010049", "APP ID、角色ID参数查询到多条数据结果"),
+    APP_ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010050", "app角色参数为空"),
+    APP_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010051", "该APP角色已经存在，请重新定义"),
 
     ;
 

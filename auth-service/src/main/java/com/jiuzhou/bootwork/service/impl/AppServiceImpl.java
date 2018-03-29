@@ -4,6 +4,8 @@ import com.jiuzhou.bootwork.dao.mapper.AppMapper;
 import com.jiuzhou.bootwork.dao.model.App;
 import com.jiuzhou.bootwork.dao.model.AppExample;
 import com.jiuzhou.bootwork.dao.model.AppKey;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.AppService;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.AppDto;
@@ -37,7 +39,7 @@ public class AppServiceImpl implements AppService {
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public Long insert(AppDto appDto) throws Exception {
+    public Long insert(AppDto appDto) throws ServiceException {
         validateInsert(appDto);
         App app = new App();
         BeanUtils.copyProperties(appDto, app);
@@ -45,37 +47,37 @@ public class AppServiceImpl implements AppService {
         return app.getId();
     }
 
-    private void validateInsert(AppDto appDto) throws Exception {
+    private void validateInsert(AppDto appDto) throws ServiceException {
         if (appDto == null){
-            throw new Exception("APP信息为空");
+            throw new ServiceException(HttpErrorEnum.APP_IS_EMPTY);
         }
         String name = appDto.getName();
         Long userId = appDto.getUserId();
         if (StringUtils.isEmpty(name)){
-            throw new Exception("APP名字为空");
+            throw new ServiceException(HttpErrorEnum.APP_NAME_IS_EMPTY);
         }
         if (userId == null || userId.equals(0L)){
-            throw new Exception("userId为空");
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
 
         AppDto appDtoResult = selectOneByNameUserId(name, userId);
         if (appDtoResult != null){
-            throw new Exception("该用户下APP名字重复");
+            throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
         }
     }
 
     @Override
-    public AppDto selectOneByNameUserId(String name, Long userId) throws Exception {
+    public AppDto selectOneByNameUserId(String name, Long userId) throws ServiceException {
         if (StringUtils.isEmpty(name)){
-            throw new Exception("名字为空");
+            throw new ServiceException(HttpErrorEnum.APP_NAME_IS_EMPTY);
         }
         if (userId == null || userId.equals(0L)){
-            throw new Exception("用户ID为空");
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
 
         UserDto userDto = userService.selectById(userId);
         if (userDto == null){
-            throw new Exception("userID信息为空");
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_NOT_EXIST);
         }
 
         AppExample appExample = new AppExample();
@@ -90,13 +92,13 @@ public class AppServiceImpl implements AppService {
             BeanUtils.copyProperties(apps.get(0), appDto);
             return appDto;
         }else {
-            throw new Exception("查询到多条数据");
+            throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_QUERY_MANY_RESULTS);
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
-    public boolean updateById(AppDto appDto) throws Exception {
+    public boolean updateById(AppDto appDto) throws ServiceException {
         validateUpdate(appDto);
         App app = new App();
         BeanUtils.copyProperties(appDto, app);
@@ -108,49 +110,49 @@ public class AppServiceImpl implements AppService {
         }
     }
 
-    private void validateUpdate(AppDto appDto) throws Exception {
+    private void validateUpdate(AppDto appDto) throws ServiceException {
         if (appDto == null){
-            throw new Exception("APP信息为空");
+            throw new ServiceException(HttpErrorEnum.APP_IS_EMPTY);
         }
         Long id = appDto.getId();
         String name = appDto.getName();
         Long userId = appDto.getUserId();
         if (id == null || id.equals(0L)){
-            throw new Exception("ID为空");
+            throw new ServiceException(HttpErrorEnum.APP_ID_IS_EMPTY);
         }
         if (userId != null && userId.equals(0L)){
-            throw new Exception("用户ID为0");
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
 
 
         AppDto appDtoResult = selectById(id);
         if (appDtoResult == null){
-            throw new Exception("ID信息不存在");
+            throw new ServiceException(HttpErrorEnum.APP_ID_IS_NOT_EXIST);
         }
         if (!StringUtils.isEmpty(name) && userId == null){
             AppDto dto = selectOneByNameUserId(name, appDtoResult.getUserId());
             if (dto != null){
-                throw new Exception("该用户下已经存在这个APP名字了，请更换新名字");
+                throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
             }
         }
         if (StringUtils.isEmpty(name) && userId != null){
             AppDto dto = selectOneByNameUserId(appDtoResult.getName(), userId);
             if (dto != null){
-                throw new Exception("该用户下已经存在这个APP名字了，请更换新名字");
+                throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
             }
         }
         if (!StringUtils.isEmpty(name) && userId != null){
             AppDto dto = selectOneByNameUserId(name, userId);
             if (dto != null){
-                throw new Exception("该用户下已经存在这个APP名字了，请更换新名字");
+                throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
             }
         }
     }
 
     @Override
-    public AppDto selectById(Long id) throws Exception {
+    public AppDto selectById(Long id) throws ServiceException {
         if (id == null || id.equals(0L)){
-            throw new Exception("id为空");
+            throw new ServiceException(HttpErrorEnum.APP_ID_IS_EMPTY);
         }
         AppKey appKey = new AppKey();
         appKey.setId(id);
@@ -165,13 +167,13 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public List<AppDto> selectByUserId(Long userId) throws Exception {
+    public List<AppDto> selectByUserId(Long userId) throws ServiceException {
         if (userId == null || userId.equals(0L)){
-            throw new Exception("用户ID为空");
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
         UserDto userDto = userService.selectById(userId);
         if (userDto == null){
-            throw new Exception("用户ID信息不存在");
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_NOT_EXIST);
         }
         Long userDtoId = userDto.getId();
         AppExample appExample = new AppExample();

@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.service;
 
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.AppDto;
 
 import java.util.List;
@@ -10,14 +11,14 @@ import java.util.List;
  */
 public interface AppService {
 
-    Long insert(AppDto appDto) throws Exception;
+    Long insert(AppDto appDto) throws ServiceException;
 
-    AppDto selectOneByNameUserId(String name, Long userId) throws Exception;
+    AppDto selectOneByNameUserId(String name, Long userId) throws ServiceException;
 
-    boolean updateById(AppDto appDto) throws Exception;
+    boolean updateById(AppDto appDto) throws ServiceException;
 
-    AppDto selectById(Long id) throws Exception;
+    AppDto selectById(Long id) throws ServiceException;
 
-    List<AppDto> selectByUserId(Long userId) throws Exception;
+    List<AppDto> selectByUserId(Long userId) throws ServiceException;
 
 }

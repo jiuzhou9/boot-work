@@ -63,7 +63,7 @@ public class UserRoleServiceImpl implements UserRoleService {
             throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
         }
         if (userId == null || userId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
 
         UserRoleDto dto = null;
@@ -120,7 +120,7 @@ public class UserRoleServiceImpl implements UserRoleService {
             throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
         }
         if (userId != null && userId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
         if (userId != null){
             UserDto userDto = userService.selectById(userId);
@@ -171,7 +171,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public List<RoleDto> selectByUserId(Long userId) throws ServiceException {
         if (userId == null || userId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
         UserRoleExample userRoleExample = new UserRoleExample();
         UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
@@ -194,10 +194,10 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws ServiceException {
         if (roleId == null || roleId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.ROLE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
         }
         if (userId == null || userId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.USER_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
         UserRoleExample userRoleExample = new UserRoleExample();
         UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
