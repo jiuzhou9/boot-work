@@ -31,7 +31,7 @@ public enum HttpErrorEnum implements HttpError {
     ROLE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010022", "角色ID不存在"),
     RESOURCE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010023", "资源ID不存在"),
     ROLE_ID_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010024", "角色ID参数为空或者为0"),
-    RESOURCE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010025", "资源ID参数为空或者为0"),
+    RESOURCE_ID_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010025", "资源ID参数为空或者为0"),
     USER_ID_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010026", "用户ID参数为空或者为0"),
     SERVER_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010027", "服务ID参数为空或者为0"),
     RESOURCE_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010028", "资源名称参数为空"),
@@ -40,7 +40,7 @@ public enum HttpErrorEnum implements HttpError {
     RESOURCE_TYPE_PARAMETER_IS_ERROR(HttpStatus.BAD_REQUEST, "10010031", "资源请求方式参数类型错误"),
     SERVER_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010032", "服务ID不存在"),
     SERVER_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010033", "该服务已经存在"),
-    RESOURCE_URL_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010034", "资源URL参数查询到多条数据结果"),
+    RESOURCE_URL_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010034", "资源URL参数查询到多条数据结果"),
     ROLE_RESOURCE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010035", "该角色资源映射已经存在"),
     ROLE_NAME_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010036", "该角色名字不存在"),
     ROLE_RESOURCE_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010037", "角色资源参数为空"),
@@ -58,7 +58,7 @@ public enum HttpErrorEnum implements HttpError {
     APP_ID_ROLE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST,"10010049", "APP ID、角色ID参数查询到多条数据结果"),
     APP_ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010050", "app角色参数为空"),
     APP_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010051", "该APP角色已经存在，请重新定义"),
-
+    PASSWORD_IS_NOT_RIGHT(HttpStatus.BAD_REQUEST,"10010052", "密码错误，请重新登录认证"),
     ;
 
     private HttpStatus httpStatus;

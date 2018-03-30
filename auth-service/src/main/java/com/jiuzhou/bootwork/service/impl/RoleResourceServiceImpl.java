@@ -57,7 +57,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         Long resourceId = roleResourceDto.getResourceId();
         Long roleId = roleResourceDto.getRoleId();
         if (resourceId == null || resourceId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_IS_EMPTY);
         }
         if (roleId == null || roleId.equals(0L)){
             throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
@@ -204,7 +204,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         Long resourceId = roleResourceDto.getResourceId();
         Long roleId = roleResourceDto.getRoleId();
         if (resourceId != null && resourceId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_IS_EMPTY);
         }
         if (roleId != null && roleId.equals(0L)){
             throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
@@ -251,7 +251,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_EMPTY);
         }
         if (resourceId == null || resourceId.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_IS_EMPTY);
         }
         RoleResourceExample roleResourceExample = new RoleResourceExample();
         RoleResourceExample.Criteria criteria = roleResourceExample.createCriteria();

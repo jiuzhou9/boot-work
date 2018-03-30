@@ -205,7 +205,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserTokenDto login(String username, String password) throws ServiceException {
-
-        return null;
+        UserDto userDto = selectOneByUsername(username);
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        boolean matches = bCryptPasswordEncoder.matches(password, userDto.getPassword());
+        if (matches){
+            UserTokenDto userToken = createUserToken(username);
+            return userToken;
+        }else {
+            throw new ServiceException(HttpErrorEnum.PASSWORD_IS_NOT_RIGHT);
+        }
     }
 }

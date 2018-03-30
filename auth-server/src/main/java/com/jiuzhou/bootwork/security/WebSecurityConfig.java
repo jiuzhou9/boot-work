@@ -77,7 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * api 白名单
      */
     private static final String[] AUTH_WHITELIST_API = {
-                    "/api/v1/user/register"
+                    "/api/v1/user/register",
+                    "/api/v1/user/create-user-token"
     };
 
     /**
