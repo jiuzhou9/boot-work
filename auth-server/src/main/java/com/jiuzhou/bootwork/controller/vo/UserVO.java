@@ -1,6 +1,7 @@
 package com.jiuzhou.bootwork.controller.vo;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -22,9 +23,11 @@ public class UserVo {
 
     private Boolean available;
 
-    private LocalDateTime createTime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
 
     private static final long serialVersionUID = 1L;
 

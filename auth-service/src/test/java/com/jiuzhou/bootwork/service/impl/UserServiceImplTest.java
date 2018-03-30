@@ -1,8 +1,10 @@
 package com.jiuzhou.bootwork.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.AuthServiceApp;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
+import com.jiuzhou.bootwork.service.dto.UserTokenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,8 +32,8 @@ public class UserServiceImplTest {
         userDto.setUsername("abc");
         userDto.setPassword(userDto.getUsername());
         try {
-            Long register = userService.register(userDto);
-            System.out.println(register);
+            UserTokenDto userTokenDto = userService.register(userDto);
+            log.info(JSON.toJSONString(userTokenDto));
         } catch (Exception e) {
             e.printStackTrace();
         }

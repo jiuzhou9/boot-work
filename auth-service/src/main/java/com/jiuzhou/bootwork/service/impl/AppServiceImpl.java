@@ -184,7 +184,7 @@ public class AppServiceImpl implements AppService {
             return null;
         }
 
-        List<AppDto> appDtos = new ArrayList<>();
+        List<AppDto> appDtos = new ArrayList();
         apps.forEach(app -> {
             AppDto appDto = new AppDto();
             BeanUtils.copyProperties(app, appDto);

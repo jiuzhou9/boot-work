@@ -6,8 +6,10 @@ import com.jiuzhou.bootwork.dao.model.UserExample;
 import com.jiuzhou.bootwork.dao.model.UserKey;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
+import com.jiuzhou.bootwork.jwt.JwtTokenUtil;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
+import com.jiuzhou.bootwork.service.dto.UserTokenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,13 +178,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long register(UserDto userDto) throws ServiceException {
+    public UserTokenDto register(UserDto userDto) throws ServiceException {
         validateInsert(userDto);
         String password = userDto.getPassword();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         password = bCryptPasswordEncoder.encode(password);
         userDto.setPassword(password);
         Long insert = insert(userDto);
-        return insert;
+
+        //生成jwttoken
+        UserTokenDto userToken = createUserToken(userDto.getUsername());
+        return userToken;
+    }
+
+    /**
+     * 可以根据用户名直接生成用户的令牌，一般此方法被登录调用
+     * @param username
+     * @return
+     */
+    protected UserTokenDto createUserToken(String username) {
+        String userToken = JwtTokenUtil.generateUserToken(username);
+        UserTokenDto userTokenDto = new UserTokenDto();
+        userTokenDto.setUserToken(userToken);
+        return userTokenDto;
+    }
+
+    @Override
+    public UserTokenDto login(String username, String password) throws ServiceException {
+
+        return null;
     }
 }

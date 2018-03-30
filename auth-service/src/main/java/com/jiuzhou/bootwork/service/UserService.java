@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.service;
 
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.UserDto;
+import com.jiuzhou.bootwork.service.dto.UserTokenDto;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -19,6 +20,7 @@ public interface UserService {
 
     UserDto selectById(Long id) throws ServiceException;
 
-    Long register(UserDto userDto) throws ServiceException;
+    UserTokenDto register(UserDto userDto) throws ServiceException;
 
+    UserTokenDto login(String username, String password) throws ServiceException;
 }
