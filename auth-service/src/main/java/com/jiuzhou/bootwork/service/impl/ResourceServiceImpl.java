@@ -157,7 +157,7 @@ public class ResourceServiceImpl implements ResourceService {
             BeanUtils.copyProperties(resources.get(0), resourceDto);
             return resourceDto;
         }else {
-            throw new ServiceException(HttpErrorEnum.RESOURCE_URL_PARAMETER_QUERY_MANY_RESULTS);
+            throw new ServiceException(HttpErrorEnum.RESOURCE_URL_QUERY_MANY_RESULTS);
         }
     }
 
@@ -194,7 +194,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public ResourceDto selectById(Long id) throws ServiceException {
         if (id == null || id.equals(0L)){
-            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_IS_EMPTY);
         }
 
         ResourceKey resourceKey = new ResourceKey();
@@ -211,7 +211,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public List<ResourceDto> selectByIds(List<Long> ids) throws ServiceException {
         if (CollectionUtils.isEmpty(ids)){
-            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_PARAMETER_IS_EMPTY);
+            throw new ServiceException(HttpErrorEnum.RESOURCE_ID_IS_EMPTY);
         }
         ResourceExample resourceExample = new ResourceExample();
         ResourceExample.Criteria criteria = resourceExample.createCriteria();

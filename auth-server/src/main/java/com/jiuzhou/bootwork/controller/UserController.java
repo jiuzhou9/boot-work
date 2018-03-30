@@ -35,7 +35,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ApiOperation(value = "用户注册")
+    @ApiOperation(value = "用户注册，注册成功后返回用户临时令牌，该令牌有效时间为3600秒")
     public ResponseEntity<Result<UserTokenVo>> register(@RequestBody UserVo userVo) {
         Result<UserTokenVo> result = new Result<>();
         if (userVo == null){
@@ -56,6 +56,24 @@ public class UserController {
             log.info(JSON.toJSONString("用户注册失败："+e.getMessage()));
             result.setCode(e.getHttpError().getCode());
             result.setMessage(e.getHttpError().getMessage());
+            return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
+        }
+    }
+
+    @RequestMapping(value = "/create-user-token", method = RequestMethod.POST)
+    @ApiOperation(value = "返回用户临时令牌，该令牌有效时间为3600秒")
+    public ResponseEntity<Result<UserTokenVo>> createUserToken(@RequestBody UserVo userVo){
+        Result<UserTokenVo> result;
+        try {
+            UserTokenDto userTokenDto = userService.login(userVo.getUsername(), userVo.getPassword());
+            UserTokenVo userTokenVo = new UserTokenVo();
+            BeanUtils.copyProperties(userTokenDto, userTokenVo);
+            result = Result.buildSuccess(userTokenVo);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            log.info(e.getMessage());
+            result = Result.buildFailed(e.getHttpError());
             return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
         }
     }
