@@ -1,12 +1,14 @@
 package com.jiuzhou.bootwork.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.jiuzhou.bootwork.controller.vo.UserTokenVo;
 import com.jiuzhou.bootwork.controller.vo.UserVo;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
+import com.jiuzhou.bootwork.service.dto.UserTokenDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +36,8 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ApiOperation(value = "用户注册")
-    public ResponseEntity<Result<UserVo>> register(@RequestBody UserVo userVo) {
-        Result<UserVo> result = new Result<>();
+    public ResponseEntity<Result<UserTokenVo>> register(@RequestBody UserVo userVo) {
+        Result<UserTokenVo> result = new Result<>();
         if (userVo == null){
             result = Result.buildFailed(HttpErrorEnum.USER_IS_EMPTY);
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -44,15 +46,17 @@ public class UserController {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(userVo, userDto);
         try {
-            userService.register(userDto);
+            UserTokenDto userTokenDto = userService.register(userDto);
+            UserTokenVo userTokenVo = new UserTokenVo();
+            BeanUtils.copyProperties(userTokenDto, userTokenVo);
+            result = Result.buildSuccess(userTokenVo);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (ServiceException e) {
             e.printStackTrace();
             log.info(JSON.toJSONString("用户注册失败："+e.getMessage()));
             result.setCode(e.getHttpError().getCode());
             result.setMessage(e.getHttpError().getMessage());
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
         }
-        result = Result.buildSuccess(userVo);
-        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

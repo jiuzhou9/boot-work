@@ -32,7 +32,7 @@ public class AccessFilter extends ZuulFilter{
     }
 
     @Override
-    public Object run() throws ZuulException {
+    public Object run() {
         RequestContext currentContext = RequestContext.getCurrentContext();
         Map<String, String> zuulRequestHeaders = currentContext.getZuulRequestHeaders();
         //        URL routeHost = currentContext.getRouteHost();
