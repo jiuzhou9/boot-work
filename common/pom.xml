@@ -23,11 +23,6 @@
             <artifactId>spring-web</artifactId>
             <!--<version>5.0.4.BUILD-SNAPSHOT</version>-->
         </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.6.0</version>
-        </dependency>
     </dependencies>
 
     <!--<build>-->
