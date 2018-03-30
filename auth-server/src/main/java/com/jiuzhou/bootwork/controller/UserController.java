@@ -9,6 +9,7 @@ import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
 import com.jiuzhou.bootwork.service.dto.UserTokenDto;
+import io.jsonwebtoken.SignatureException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -77,4 +78,24 @@ public class UserController {
             return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
         }
     }
+
+    @RequestMapping(value = "/check-user-token", method = RequestMethod.GET)
+    @ApiOperation(value = "校验用户token")
+    public ResponseEntity<Result<Boolean>> checkUserToken(String userToken){
+        Result result;
+        try {
+            boolean b = userService.checkUserToken(userToken);
+            result = Result.buildSuccess(b);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            result = Result.buildFailed(e.getHttpError());
+            return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
+        } catch (SignatureException e){
+            e.printStackTrace();
+            result = Result.buildFailed(HttpErrorEnum.USER_TOKEN_IS_NOT_RIGHT);
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

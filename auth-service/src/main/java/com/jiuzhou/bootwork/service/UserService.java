@@ -23,4 +23,13 @@ public interface UserService {
     UserTokenDto register(UserDto userDto) throws ServiceException;
 
     UserTokenDto login(String username, String password) throws ServiceException;
+
+    /**
+     * 校验userToken是否是可用的，如果token正确，但是过期，那么用户重新刷新；
+     * 如果token不正确那么抛异常；
+     * @return
+     * @throws ServiceException
+     * @param userToken
+     */
+    boolean checkUserToken(String userToken) throws ServiceException;
 }

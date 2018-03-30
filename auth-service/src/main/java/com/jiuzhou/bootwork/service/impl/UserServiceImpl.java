@@ -1,12 +1,12 @@
 package com.jiuzhou.bootwork.service.impl;
 
+import com.jiuzhou.bootwork.common.jwt.JwtTokenUtil;
 import com.jiuzhou.bootwork.dao.mapper.UserMapper;
 import com.jiuzhou.bootwork.dao.model.User;
 import com.jiuzhou.bootwork.dao.model.UserExample;
 import com.jiuzhou.bootwork.dao.model.UserKey;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
-import com.jiuzhou.bootwork.jwt.JwtTokenUtil;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
 import com.jiuzhou.bootwork.service.dto.UserTokenDto;
@@ -214,5 +214,20 @@ public class UserServiceImpl implements UserService {
         }else {
             throw new ServiceException(HttpErrorEnum.PASSWORD_IS_NOT_RIGHT);
         }
+    }
+
+    @Override
+    public boolean checkUserToken(String userToken) throws ServiceException {
+        String userName = JwtTokenUtil.getUserName(userToken);
+        UserDto userDto = selectOneByUsername(userName);
+        if (userDto == null){
+            throw new ServiceException(HttpErrorEnum.USERNAME_NOT_EXITED);
+        }
+
+        Boolean flag = JwtTokenUtil.checkUserTokenExpired(userToken);
+        if (flag){
+            throw new ServiceException(HttpErrorEnum.USER_TOKEN_IS_EXPIRED);
+        }
+        return true;
     }
 }
