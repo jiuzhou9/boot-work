@@ -10,15 +10,12 @@ import com.jiuzhou.bootwork.service.dto.UserTokenDto;
  */
 public interface UserService {
 
-    Long insert(UserDto userDto) throws ServiceException;
-
-    UserDto selectOneByUsername(String username) throws ServiceException;
-
-    boolean updateById(UserDto userDto) throws ServiceException;
-
-    UserDto selectOneByMobile(String mobile) throws ServiceException;
-
-    UserDto selectById(Long id) throws ServiceException;
+    //    出于安全考虑接口不提供以下方法的暴露----start
+    //    Long insert(UserDto userDto) throws ServiceException;
+    //
+    //    boolean updateById(UserDto userDto) throws ServiceException;
+    //
+    //    出于安全考虑接口不提供以下方法的暴露----end
 
     UserTokenDto register(UserDto userDto) throws ServiceException;
 
@@ -31,5 +28,17 @@ public interface UserService {
      * @throws ServiceException
      * @param userToken
      */
-    boolean checkUserToken(String userToken) throws ServiceException;
+    UserDto checkUserToken(String userToken) throws ServiceException;
+
+    /**
+     * @param id
+     * @return
+     * @throws ServiceException
+     */
+    UserDto selectById(Long id) throws ServiceException;
+
+    UserDto selectOneByUsername(String username) throws ServiceException;
+
+    UserDto selectOneByMobile(String mobile) throws ServiceException;
+
 }

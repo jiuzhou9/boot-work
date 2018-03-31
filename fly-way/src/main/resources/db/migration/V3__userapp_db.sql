@@ -7,7 +7,7 @@ create table app
 (
    id                   bigint(11) not null auto_increment,
    name                 varchar(20) not null,
-   code                 varchar(32) not null,
+   code                 varchar(18) not null,
    user_id              bigint(11) not null,
    available            tinyint(1) default 1,
    secret               varchar(36) not null,

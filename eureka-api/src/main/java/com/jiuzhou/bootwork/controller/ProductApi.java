@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.ProductService;
 import com.jiuzhou.bootwork.service.dto.ProductDTO;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
  * @date 2018/02/22
@@ -31,7 +34,10 @@ public class ProductApi {
 
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "获取商品信息")
-    public Result<ProductVO> getProductInfoPath(@PathVariable("id") Long id){
+    public Result<ProductVO> getProductInfoPath(@PathVariable("id") Long id, HttpServletRequest request){
+        System.out.println("客户端端口："+request.getRemotePort());
+        System.out.println("服务端端口："+request.getLocalPort());
+        log.info(JSON.toJSONString(request.getHeader("User-Agent")));
         return get(id);
     }
 

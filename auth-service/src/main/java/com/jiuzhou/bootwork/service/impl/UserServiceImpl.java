@@ -35,8 +35,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    @Override
-    public Long insert(UserDto userDto) throws ServiceException {
+    protected Long insert(UserDto userDto) throws ServiceException {
         validateInsert(userDto);
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
@@ -96,8 +95,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
-    @Override
-    public boolean updateById(UserDto userDto) throws ServiceException {
+    protected boolean updateById(UserDto userDto) throws ServiceException {
         validateUpdate(userDto);
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
@@ -217,7 +215,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkUserToken(String userToken) throws ServiceException {
+    public UserDto checkUserToken(String userToken) throws ServiceException {
+        if (StringUtils.isEmpty(userToken)){
+            throw new ServiceException(HttpErrorEnum.USER_TOKEN_IS_EMPTY);
+        }
         String userName = JwtTokenUtil.getUserName(userToken);
         UserDto userDto = selectOneByUsername(userName);
         if (userDto == null){
@@ -228,6 +229,7 @@ public class UserServiceImpl implements UserService {
         if (flag){
             throw new ServiceException(HttpErrorEnum.USER_TOKEN_IS_EXPIRED);
         }
-        return true;
+        return userDto;
     }
+
 }
