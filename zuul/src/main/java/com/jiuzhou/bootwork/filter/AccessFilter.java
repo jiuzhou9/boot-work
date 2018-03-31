@@ -1,15 +1,16 @@
 package com.jiuzhou.bootwork.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.jiuzhou.bootwork.constants.WhiteList;
+import com.jiuzhou.bootwork.excep.ServiceException;
+import com.jiuzhou.bootwork.service.AuthService;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URL;
-import java.util.Map;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -18,6 +19,9 @@ import java.util.Map;
 @Component
 @Slf4j
 public class AccessFilter extends ZuulFilter{
+
+    @Autowired
+    private AuthService authService;
 
     @Override
     public String filterType() {
@@ -37,13 +41,37 @@ public class AccessFilter extends ZuulFilter{
     @Override
     public Object run() {
         RequestContext currentContext = RequestContext.getCurrentContext();
-        Map<String, String> zuulRequestHeaders = currentContext.getZuulRequestHeaders();
-        //        URL routeHost = currentContext.getRouteHost();
         HttpServletRequest request = currentContext.getRequest();
-        log.info(JSON.toJSONString(request.getRemotePort()));
-        log.info(JSON.toJSONString(request.getLocalPort()));
-        log.info(JSON.toJSONString(request.getHeader("User-Agent")));
-        log.info(JSON.toJSONString(zuulRequestHeaders));
+        String servletPath = request.getServletPath();
+        String appToken = request.getHeader("x-access-token");
+        String code = request.getHeader("code");
+
+        boolean contain = WhiteList.contain(servletPath);
+
+
+        if (contain){
+            return null;
+        }else {
+            //检测如果是其他那么需要校验身份信息正确性
+            //校验权限
+            try {
+                boolean b = authService.checkAuthAndPermission(appToken, code);
+                log.info(JSON.toJSONString(b));
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+        //
+//        Map<String, String> zuulRequestHeaders = currentContext.getZuulRequestHeaders();
+//        //        URL routeHost = currentContext.getRouteHost();
+//
+//        log.info(JSON.toJSONString(request.getRemotePort()));
+//        log.info(JSON.toJSONString(request.getLocalPort()));
+//        log.info(JSON.toJSONString(request.getHeader("User-Agent")));
+//        log.info(JSON.toJSONString(zuulRequestHeaders));
         return null;
     }
 }

@@ -34,8 +34,7 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     public Result<ProductDTO> error(){
         Result result = new Result();
-        result.setCode("1");
-        result.setMessage("product信息获取失败！");
+        //失败 fixme
         return result;
     }
 
