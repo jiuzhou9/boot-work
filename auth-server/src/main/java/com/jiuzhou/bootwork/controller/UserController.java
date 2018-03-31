@@ -3,7 +3,6 @@ package com.jiuzhou.bootwork.controller;
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.controller.vo.UserTokenVo;
 import com.jiuzhou.bootwork.controller.vo.UserVo;
-import com.jiuzhou.bootwork.excep.HttpError;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.result.Result;
@@ -28,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2018/03/28
  */
 @RestController
-@RequestMapping(value = "api/v1/user")
+@RequestMapping(value = "/api/v1/user")
 @Slf4j
 @Api(value = "用户管理")
 public class UserController {
@@ -40,14 +39,15 @@ public class UserController {
     @ApiOperation(value = "用户注册，注册成功后返回用户临时令牌，该令牌有效时间为3600秒")
     public ResponseEntity<Result<UserTokenVo>> register(@RequestBody UserVo userVo) {
         Result<UserTokenVo> result = new Result<>();
-        if (userVo == null){
-            result = Result.buildFailed(HttpErrorEnum.USER_IS_EMPTY);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
 
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userVo, userDto);
         try {
+            if (userVo == null){
+                throw new ServiceException(HttpErrorEnum.USER_IS_EMPTY);
+            }
+
+            UserDto userDto = new UserDto();
+            BeanUtils.copyProperties(userVo, userDto);
+
             UserTokenDto userTokenDto = userService.register(userDto);
             UserTokenVo userTokenVo = new UserTokenVo();
             BeanUtils.copyProperties(userTokenDto, userTokenVo);
@@ -56,8 +56,7 @@ public class UserController {
         } catch (ServiceException e) {
             e.printStackTrace();
             log.info(JSON.toJSONString("用户注册失败："+e.getMessage()));
-            result.setCode(e.getHttpError().getCode());
-            result.setMessage(e.getHttpError().getMessage());
+            result.setHttpError(e.getHttpError());
             return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
         }
     }
@@ -65,7 +64,7 @@ public class UserController {
     @RequestMapping(value = "/create-user-token", method = RequestMethod.POST)
     @ApiOperation(value = "返回用户临时令牌，该令牌有效时间为3600秒,username/password必须非空")
     public ResponseEntity<Result<UserTokenVo>> createUserToken(@RequestBody UserVo userVo){
-        Result<UserTokenVo> result;
+        Result<UserTokenVo> result = new Result<>();
         String username = userVo.getUsername();
         String password = userVo.getPassword();
         try {
@@ -83,7 +82,7 @@ public class UserController {
         } catch (ServiceException e) {
             e.printStackTrace();
             log.info(e.getMessage());
-            result = Result.buildFailed(e.getHttpError());
+            result.setHttpError(e.getHttpError());
             return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
         }
     }

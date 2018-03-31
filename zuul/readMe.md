@@ -5,4 +5,9 @@ http://localhost:15040/eureka-api/api/v1/hello
 http://localhost:15040/eureka-api/api/v1/product/info/1
 http://网关地址:网关端口/注册中心服务name/服务接口映射。
 
+Caused by: java.lang.ClassNotFoundException: feign.Feign$Builder 解决方法
 
+    <dependency>
+       <groupId>org.springframework.cloud</groupId>
+       <artifactId>spring-cloud-starter-feign</artifactId>
+    </dependency>
