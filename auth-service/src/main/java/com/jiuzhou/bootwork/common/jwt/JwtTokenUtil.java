@@ -18,7 +18,12 @@ public class JwtTokenUtil {
     /**
      * 单位毫秒
      */
-    private static final Long userExpiration = (3600L * 1000);
+    private static final Long USER_EXPIRATION = (3600L * 1000);
+
+    /**
+     * 单位毫秒
+     */
+    private static final Long APP_EXPIRATION = (3600L * 1000 * 24 * 30);
 
     /**
      * claims
@@ -26,12 +31,52 @@ public class JwtTokenUtil {
     private static Map<String, Object> claims = new HashMap<>();
 
     private static final String CLAIM_USERNAME = "username";
+    private static final String CLAIM_APP_NAME = "appname";
 
     /**
      * todo
      * 后面需要迁移到配置文件
      */
     private static String userSecret = "67cd9e77-b62a-40ab-b67a-8d416cec5f25";
+
+
+    /**
+     * 校验APP令牌是否过期,如果过期返回true
+     *
+     * @param token
+     *
+     * @return
+     */
+    public static Boolean checkAppTokenExpired(String token, String appSecret) {
+        final Date expiration = getExpirationDateFromToken(token, appSecret);
+        if (expiration == null){
+            return true;
+        }
+        return expiration.before(new Date());
+    }
+
+    /**
+     * APP 令牌解析
+     * @param token
+     * @param appSecret
+     * @return
+     */
+    public static String getAppName(String token, String appSecret){
+        Claims claims = getClaimsFromToken(token, appSecret);
+        String appname = (String) claims.get(CLAIM_APP_NAME);
+        return appname;
+    }
+
+    /**
+     * 根据APP名,APP secret获取token
+     * @param appName
+     * @return
+     */
+    public static String generateAppToken(String appName, String appSecret) {
+        claims.put(CLAIM_APP_NAME, appName);
+        return Jwts.builder().setClaims(claims).setExpiration(generateAppExpirationDate())
+                        .signWith(SignatureAlgorithm.HS512, appSecret).compact();
+    }
 
     /**
      * 根据用户名获取token
@@ -45,13 +90,10 @@ public class JwtTokenUtil {
     }
 
     /**
-     * usertoken有效期
+     * 获取用户令牌的用户名
+     * @param token
      * @return
      */
-    private static Date generateUserExpirationDate() {
-        return new Date(System.currentTimeMillis() + userExpiration );
-    }
-
     public static String getUserName(String token){
         Claims claims = getClaimsFromToken(token, userSecret);
         String username = (String) claims.get(CLAIM_USERNAME);
@@ -59,19 +101,18 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 解析token中的信息
+     * 校验用户令牌是否过期,如果过期返回true
+     *
      * @param token
-     * @param secret
+     *
      * @return
      */
-    private static Claims getClaimsFromToken(String token, String secret) {
-        Claims claims;
-        try {
-            claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        } catch (ExpiredJwtException e) {
-            claims = e.getClaims();
+    public static Boolean checkUserTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token, userSecret);
+        if (expiration == null){
+            return true;
         }
-        return claims;
+        return expiration.before(new Date());
     }
 
     /**
@@ -91,20 +132,38 @@ public class JwtTokenUtil {
         return expiration;
     }
 
-
     /**
-     * 校验用户令牌是否过期,如果过期返回true
-     *
-     * @param token
-     *
+     * usertoken有效期
      * @return
      */
-    public static Boolean checkUserTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token, userSecret);
-        if (expiration == null){
-            return true;
+    private static Date generateAppExpirationDate() {
+        return new Date(System.currentTimeMillis() + APP_EXPIRATION);
+    }
+
+    /**
+     * usertoken有效期
+     * @return
+     */
+    private static Date generateUserExpirationDate() {
+        return new Date(System.currentTimeMillis() + USER_EXPIRATION );
+    }
+
+//    ---------------------------------------------------------
+
+    /**
+     * 解析token中的信息
+     * @param token
+     * @param secret
+     * @return
+     */
+    private static Claims getClaimsFromToken(String token, String secret) {
+        Claims claims;
+        try {
+            claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            claims = e.getClaims();
         }
-        return expiration.before(new Date());
+        return claims;
     }
 
 }
