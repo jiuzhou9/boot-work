@@ -1,6 +1,12 @@
 spring:
   application:
     name: api-gateway
+#    规定编码utf-8
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
 server:
   port: 15040
 eureka:

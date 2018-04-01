@@ -26,19 +26,32 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkAuthAndPermission(String appToken, String code) throws ServiceException {
+        boolean b = checkAuth(appToken, code);
+        if (b){
+            //权限校验
+        }
+        return true;
+    }
+
+    /**
+     * 校验APP令牌
+     * @param appToken
+     * @param code
+     * @return
+     * @throws ServiceException
+     */
+    private boolean checkAuth(String appToken, String code) throws ServiceException {
         AppTokenDto appTokenDto = new AppTokenDto();
         appTokenDto.setAppToken(appToken);
         appTokenDto.setCode(code);
         ResponseEntity<Result<AppTokenDto>> resultResponseEntity = authServerClient.checkAppToken(appTokenDto);
-        log.info(JSON.toJSONString(resultResponseEntity));
-        HttpStatus statusCode = resultResponseEntity.getStatusCode();
-        if (HttpStatus.OK.equals(statusCode)){
-            //权限校验
-            Result<AppTokenDto> body = resultResponseEntity.getBody();
-            log.info(JSON.toJSONString(body));
+        Result<AppTokenDto> body = resultResponseEntity.getBody();
+        if (body != null && Result.SUCCESS_CODE.equals(body.getCode())){
+            return true;
         }else {
+            log.info("app 令牌身份认证失败："+JSON.toJSONString(body));
+            log.info("app 令牌身份认证失败参数appToken："+appToken + " code参数：" + code);
             throw new ServiceException(HttpErrorEnum.APP_TOKEN_CHECK_FAILED);
         }
-        return true;
     }
 }
