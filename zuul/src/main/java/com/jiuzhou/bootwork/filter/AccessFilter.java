@@ -2,7 +2,9 @@ package com.jiuzhou.bootwork.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.constants.WhiteList;
+import com.jiuzhou.bootwork.excep.HttpError;
 import com.jiuzhou.bootwork.excep.ServiceException;
+import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.AuthService;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -58,10 +60,14 @@ public class AccessFilter extends ZuulFilter{
                 b = authService.checkAuthAndPermission(appToken, code);
             } catch (ServiceException e) {
                 e.printStackTrace();
-                currentContext.setResponseStatusCode(e.getHttpError().getHttpStatus().value());
-                currentContext.setResponseBody(JSON.toJSONString(e.getHttpError()));
+                HttpError httpError = e.getHttpError();
+                int value = httpError.getHttpStatus().value();
+                currentContext.setResponseStatusCode(value);
+                Result result = new Result();
+                result.setHttpError(e.getHttpError());
+                currentContext.setResponseBody(JSON.toJSONString(result));
                 currentContext.setSendZuulResponse(false);
-                return currentContext;
+                return null;
             }
         }
 
