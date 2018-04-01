@@ -28,6 +28,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -402,7 +403,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             Long serverId = resourceDto.getServerId();
             ServerDto serverDto = serverDtoMap.get(serverId);
             PermissionDto permissionDto = new PermissionDto();
-            permissionDto.setServerResource(resourceDto.getUrl() + serverDto.getName());
+            permissionDto.setServerResource(serverDto.getName() + resourceDto.getUrl());
             permissionDto.setResourceId(resourceDto.getId());
             permissionDto.setMethodType(resourceDto.getType());
             permissionDtos.add(permissionDto);
@@ -426,5 +427,23 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             roleResourceDtos.add(roleResourceDto);
         });
         return roleResourceDtos;
+    }
+
+    @Override
+    public Collection<String> getAttributes(String serverResource, String method) {
+        String serverResourceMethod = serverResource + "," + method;
+        if (map == null || map.size() == 0) {
+            loadPermission();
+        }
+
+        String resUrl;
+        for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
+            resUrl = iter.next();
+            if (resUrl.equals(serverResourceMethod)) {
+                return map.get(resUrl);
+            }
+        }
+        //TODO 此处将来可以根据需求改进，如果数据库里没有资源角色映射的话，那么就抛异常不进行放行,现在是数据库中没有资源角色映射那么说明这个资源是不需要权限控制的
+        return null;
     }
 }
