@@ -16,7 +16,7 @@ public interface AppService {
     //
     //    boolean updateById(AppDto appDto) throws ServiceException;
     //
-    //    List<AppDto> selectByUserId(Long userId) throws ServiceException;
+    //    List<AppDto> selectAvailableByUserId(Long userId) throws ServiceException;
     //    出于安全考虑接口不提供以下方法的暴露----end
 
     /**

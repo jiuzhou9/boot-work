@@ -72,6 +72,7 @@ public enum HttpErrorEnum implements HttpError {
     APP_TOKEN_IS_EXPIRED(HttpStatus.BAD_REQUEST,"10010063", "app令牌过期，请重新获取"),
     APP_TOKEN_CHECK_FAILED(HttpStatus.BAD_REQUEST,"10010064", "app令牌身份认证失败"),
     APP_CODE_IS_NOT_EXIT(HttpStatus.BAD_REQUEST, "10010065", "APPcode不存在"),
+    USER_IS_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "10010066", "用户为无效用户"),
     ;
 
     private HttpStatus httpStatus;

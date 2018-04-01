@@ -84,7 +84,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         if (userDto == null){
             return null;
         }
-        return selectByUserId(userDto.getId());
+        return selectAvailableByUserId(userDto.getId());
     }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
@@ -165,17 +165,18 @@ public class UserRoleServiceImpl implements UserRoleService {
         }
 
         Long userId = userDto.getId();
-        return selectByUserId(userId);
+        return selectAvailableByUserId(userId);
     }
 
     @Override
-    public List<RoleDto> selectByUserId(Long userId) throws ServiceException {
+    public List<RoleDto> selectAvailableByUserId(Long userId) throws ServiceException {
         if (userId == null || userId.equals(0L)){
             throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
         UserRoleExample userRoleExample = new UserRoleExample();
         UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
         criteria.andUserIdEqualTo(userId);
+        criteria.andAvailableEqualTo(true);
         List<UserRole> userRoles = userRoleMapper.selectByExample(userRoleExample);
         if (CollectionUtils.isEmpty(userRoles)){
             return null;
@@ -187,7 +188,7 @@ public class UserRoleServiceImpl implements UserRoleService {
             roleIds.add(roleId);
         });
 
-        List<RoleDto> roleDtos = roleService.selectByIds(roleIds);
+        List<RoleDto> roleDtos = roleService.selectAvailableByIds(roleIds);
         return roleDtos;
     }
 
