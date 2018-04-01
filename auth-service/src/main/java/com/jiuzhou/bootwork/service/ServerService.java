@@ -36,4 +36,6 @@ public interface ServerService {
 
     boolean updateByKey(ServerDto serverDto) throws ServiceException;
 
+    List<ServerDto> selectAvailable();
+
 }

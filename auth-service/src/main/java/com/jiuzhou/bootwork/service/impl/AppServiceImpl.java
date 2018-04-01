@@ -291,4 +291,10 @@ public class AppServiceImpl implements AppService {
         }
     }
 
+    @Override
+    public boolean decide(AppTokenDto appTokenDto) throws ServiceException {
+        String serverResource = appTokenDto.getServerResource();
+
+        return false;
+    }
 }

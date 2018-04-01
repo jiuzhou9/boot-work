@@ -43,4 +43,6 @@ public interface ResourceService {
     ResourceDto selectById(Long id) throws ServiceException;
 
     List<ResourceDto> selectByIds(List<Long> ids) throws ServiceException;
+
+    List<ResourceDto> selectAvailable();
 }

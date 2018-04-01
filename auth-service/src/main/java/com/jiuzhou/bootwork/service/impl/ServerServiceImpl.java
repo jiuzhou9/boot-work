@@ -139,4 +139,22 @@ public class ServerServiceImpl implements ServerService {
             throw new ServiceException(HttpErrorEnum.SERVER_ID_PARAMETER_IS_EMPTY);
         }
     }
+
+    @Override
+    public List<ServerDto> selectAvailable() {
+        ServerExample serverExample = new ServerExample();
+        ServerExample.Criteria criteria = serverExample.createCriteria();
+        criteria.andAvailableEqualTo(true);
+        List<Server> servers = serverMapper.selectByExample(serverExample);
+        if (CollectionUtils.isEmpty(servers)){
+            return null;
+        }
+        List<ServerDto> serverDtos = new ArrayList<>();
+        servers.forEach( server -> {
+            ServerDto serverDto = new ServerDto();
+            BeanUtils.copyProperties(server, serverDto);
+            serverDtos.add(serverDto);
+        });
+        return serverDtos;
+    }
 }

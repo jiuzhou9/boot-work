@@ -37,4 +37,6 @@ public interface RoleService {
     boolean updateByKey(RoleDto roleDto) throws ServiceException;
 
     List<RoleDto> selectByIds(List<Long> ids) throws ServiceException;
+
+    List<RoleDto> selectAvilable();
 }

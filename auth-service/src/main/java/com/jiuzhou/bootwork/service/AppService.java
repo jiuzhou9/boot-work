@@ -45,4 +45,6 @@ public interface AppService {
     AppTokenDto checkAppToken(String appToken, String code) throws ServiceException;
 
     AppDto selectById(Long id) throws ServiceException;
+
+    boolean decide(AppTokenDto appTokenDto) throws ServiceException;
 }

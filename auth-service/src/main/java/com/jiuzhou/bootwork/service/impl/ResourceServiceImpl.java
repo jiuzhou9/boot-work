@@ -225,4 +225,22 @@ public class ResourceServiceImpl implements ResourceService {
         });
         return dtos;
     }
+
+    @Override
+    public List<ResourceDto> selectAvailable() {
+        ResourceExample resourceExample = new ResourceExample();
+        ResourceExample.Criteria criteria = resourceExample.createCriteria();
+        criteria.andAvailableEqualTo(true);
+        List<Resource> resources = resourceMapper.selectByExample(resourceExample);
+        if (CollectionUtils.isEmpty(resources)){
+            return null;
+        }
+        List<ResourceDto> resourceDtos = new ArrayList<>();
+        resources.forEach( resource -> {
+            ResourceDto resourceDto = new ResourceDto();
+            BeanUtils.copyProperties(resource, resourceDto);
+            resourceDtos.add(resourceDto);
+        });
+        return resourceDtos;
+    }
 }
