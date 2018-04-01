@@ -1,6 +1,7 @@
 package com.jiuzhou.bootwork.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.AuthServerClient;
@@ -33,9 +34,10 @@ public class AuthServiceImpl implements AuthService {
         HttpStatus statusCode = resultResponseEntity.getStatusCode();
         if (HttpStatus.OK.equals(statusCode)){
             //权限校验
-        }else {
             Result<AppTokenDto> body = resultResponseEntity.getBody();
-            throw new ServiceException(body.getHttpError());
+            log.info(JSON.toJSONString(body));
+        }else {
+            throw new ServiceException(HttpErrorEnum.APP_TOKEN_CHECK_FAILED);
         }
         return true;
     }

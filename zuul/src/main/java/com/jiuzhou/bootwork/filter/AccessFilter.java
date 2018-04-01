@@ -48,17 +48,20 @@ public class AccessFilter extends ZuulFilter{
 
         boolean contain = WhiteList.contain(servletPath);
 
-
         if (contain){
             return null;
         }else {
             //检测如果是其他那么需要校验身份信息正确性
             //校验权限
+            boolean b = false;
             try {
-                boolean b = authService.checkAuthAndPermission(appToken, code);
-                log.info(JSON.toJSONString(b));
+                b = authService.checkAuthAndPermission(appToken, code);
             } catch (ServiceException e) {
                 e.printStackTrace();
+                currentContext.setResponseStatusCode(e.getHttpError().getHttpStatus().value());
+                currentContext.setResponseBody(JSON.toJSONString(e.getHttpError()));
+                currentContext.setSendZuulResponse(false);
+                return currentContext;
             }
         }
 

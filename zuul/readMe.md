@@ -11,3 +11,5 @@ Caused by: java.lang.ClassNotFoundException: feign.Feign$Builder 解决方法
        <groupId>org.springframework.cloud</groupId>
        <artifactId>spring-cloud-starter-feign</artifactId>
     </dependency>
+    
+网关调用认证服务，一定不能抛异常，否则没办法捕获异常。

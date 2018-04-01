@@ -95,7 +95,7 @@ public class AppController {
             e.printStackTrace();
             log.info(JSON.toJSONString(e.getHttpError()));
             result.setHttpError(e.getHttpError());
-            return new ResponseEntity<>(result, e.getHttpError().getHttpStatus());
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
 
     }
