@@ -5,6 +5,7 @@ import com.jiuzhou.bootwork.service.dto.ResourceDto;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 import com.jiuzhou.bootwork.service.dto.RoleResourceDto;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -67,5 +68,13 @@ public interface RoleResourceService {
      * @return
      */
     List<RoleResourceDto> selectAvailable();
+
+    /**
+     * 查询资源所需要的角色
+     * @param serverResource
+     * @param method
+     * @return
+     */
+    Collection<String> getAttributes(String serverResource, String method);
 
 }
