@@ -14,8 +14,8 @@ public class Result<T> implements Serializable {
     public static final String SUCCESS_CODE = "0";
 
     private String code;
+    private String message;
     private T data;
-    private HttpError httpError;
 
     public T getData() {
         return data;
@@ -34,6 +34,14 @@ public class Result<T> implements Serializable {
      */
     private void setCode(String code) {
         this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    private void setMessage(String message) {
+        this.message = message;
     }
 
     public static long getSerialVersionUID() {
@@ -57,13 +65,10 @@ public class Result<T> implements Serializable {
 
 //    --------------
     public void setHttpError(HttpError httpError) {
-        this.httpError = httpError;
         if (httpError != null){
             this.code = httpError.getCode();
+            this.message = httpError.getMessage();
         }
     }
 
-    public HttpError getHttpError() {
-        return httpError;
-    }
 }

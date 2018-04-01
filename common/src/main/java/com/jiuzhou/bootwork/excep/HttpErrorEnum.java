@@ -70,6 +70,8 @@ public enum HttpErrorEnum implements HttpError {
     APP_CODE_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010061", "APPcode参数参数查询到多条数据"),
     APP_TOKEN_IS_NOT_RIGHT(HttpStatus.BAD_REQUEST,"10010062", "app令牌不正确"),
     APP_TOKEN_IS_EXPIRED(HttpStatus.BAD_REQUEST,"10010063", "app令牌过期，请重新获取"),
+    APP_TOKEN_CHECK_FAILED(HttpStatus.BAD_REQUEST,"10010064", "app令牌校验失败"),
+    APP_CODE_IS_NOT_EXIT(HttpStatus.BAD_REQUEST, "10010065", "APPcode不存在"),
     ;
 
     private HttpStatus httpStatus;
