@@ -156,4 +156,22 @@ public class RoleServiceImpl implements RoleService {
         });
         return roleDtos;
     }
+
+    @Override
+    public List<RoleDto> selectAvilable() {
+        RoleExample roleExample = new RoleExample();
+        RoleExample.Criteria criteria = roleExample.createCriteria();
+        criteria.andAvailableEqualTo(true);
+        List<Role> roles = roleMapper.selectByExample(roleExample);
+        if (CollectionUtils.isEmpty(roles)){
+            return null;
+        }
+        List<RoleDto> roleDtos = new ArrayList<>();
+        roles.forEach( role -> {
+            RoleDto roleDto = new RoleDto();
+            BeanUtils.copyProperties(role, roleDto);
+            roleDtos.add(roleDto);
+        });
+        return roleDtos;
+    }
 }

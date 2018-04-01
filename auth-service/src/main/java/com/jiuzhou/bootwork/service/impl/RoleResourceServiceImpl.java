@@ -9,9 +9,12 @@ import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.ResourceService;
 import com.jiuzhou.bootwork.service.RoleResourceService;
 import com.jiuzhou.bootwork.service.RoleService;
+import com.jiuzhou.bootwork.service.ServerService;
+import com.jiuzhou.bootwork.service.dto.PermissionDto;
 import com.jiuzhou.bootwork.service.dto.ResourceDto;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 import com.jiuzhou.bootwork.service.dto.RoleResourceDto;
+import com.jiuzhou.bootwork.service.dto.ServerDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +26,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -42,6 +47,14 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     @Autowired
     private ResourceService resourceService;
+
+    @Autowired
+    private ServerService serverService;
+
+    @Autowired
+    private RoleResourceService roleResourceService;
+
+    private HashMap<String, Collection<String>> map = null;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override
@@ -266,5 +279,152 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         }else {
             throw new ServiceException(HttpErrorEnum.ROLE_ID_RESOURCE_ID_QUERY_MANY_RESULTS);
         }
+    }
+
+    @Override
+    public void loadPermission(){
+        //查询server列表（true）
+        List<ServerDto> serverDtos = serverService.selectAvailable();
+        if (CollectionUtils.isEmpty(serverDtos)){
+            return;
+        }
+        //查询server Resource列表（true）
+        List<ResourceDto> resourceDtos = resourceService.selectAvailable();
+        if (CollectionUtils.isEmpty(resourceDtos)){
+            return;
+        }
+
+        //查询有效的role
+        List<RoleDto> roleDtos = roleService.selectAvilable();
+        if (CollectionUtils.isEmpty(roleDtos)){
+            return;
+        }
+
+        List<RoleResourceDto> roleResourceDtos = roleResourceService.selectAvailable();
+        if (CollectionUtils.isEmpty(roleResourceDtos)){
+            return;
+        }
+        List<PermissionDto> permissionDtos = dealPermission(serverDtos, resourceDtos, roleDtos, roleResourceDtos);
+        map = new HashMap<>();
+
+        permissionDtos.forEach( permissionDto -> {
+            map.put(permissionDto.getServerResource() + "," + permissionDto.getMethodType(), permissionDto.getRoleNames());
+        });
+    }
+
+    /**
+     * 构建Permission集合
+     * @param serverDtos
+     * @param resourceDtos
+     * @param roleDtos
+     * @param roleResourceDtos
+     * @return
+     */
+    private List<PermissionDto> dealPermission(List<ServerDto> serverDtos, List<ResourceDto> resourceDtos,
+                                               List<RoleDto> roleDtos, List<RoleResourceDto> roleResourceDtos) {
+
+        List<PermissionDto> permissionDtos = buildPermission(serverDtos, resourceDtos);
+
+        Map<Long, List<String>> resourceIdRoleNameMap = buildResourceIdRoleNameMap(roleDtos, roleResourceDtos);
+
+        buildPermission(permissionDtos, resourceIdRoleNameMap);
+
+        return permissionDtos;
+    }
+
+    /**
+     * 构建Permission集合
+     * @param permissionDtos
+     * @param resourceIdRoleNameMap
+     * @return
+     */
+    private List<PermissionDto> buildPermission(List<PermissionDto> permissionDtos, Map<Long, List<String>> resourceIdRoleNameMap){
+        Map<Long, PermissionDto> permissionMap = new HashMap<>();
+        permissionDtos.forEach( permissionDto -> {
+            permissionMap.put(permissionDto.getResourceId(), permissionDto);
+        });
+        permissionDtos.clear();
+//        List<PermissionDto> permissions = new ArrayList<>();
+        permissionMap.forEach((resourceId, permissionDto) -> {
+            List<String> list = resourceIdRoleNameMap.get(resourceId);
+            permissionDto.setRoleNames(list);
+            permissionDtos.add(permissionDto);
+        });
+        return permissionDtos;
+    }
+
+    /**
+     * 构建map key resourceId value roleName
+     * @param roleDtos
+     * @param roleResourceDtos
+     * @return
+     */
+    private Map<Long, List<String>> buildResourceIdRoleNameMap(List<RoleDto> roleDtos, List<RoleResourceDto> roleResourceDtos){
+        Map<Long, RoleDto> roleDtoMap = new HashMap<>();
+        roleDtos.forEach( roleDto -> {
+            roleDtoMap.put(roleDto.getId(), roleDto);
+        });
+
+        Map<Long, List<String>> resourceIdRoleNameMap = new HashMap<>();
+        List<String> roleNames;
+        for (RoleResourceDto roleResourceDto : roleResourceDtos) {
+            Long resourceId = roleResourceDto.getResourceId();
+            Long roleId = roleResourceDto.getRoleId();
+            RoleDto roleDto = roleDtoMap.get(roleId);
+            String roleName = roleDto.getName();
+            if (resourceIdRoleNameMap.containsKey(resourceId)){
+                List<String> list = resourceIdRoleNameMap.get(resourceId);
+                list.add(roleName);
+            }else {
+                roleNames = new ArrayList<>();
+                roleNames.add(roleName);
+                resourceIdRoleNameMap.put(resourceId, roleNames);
+            }
+        }
+        return resourceIdRoleNameMap;
+    }
+
+
+    /**
+     * 构建Permission ResourceId serverResource
+     * @param serverDtos
+     * @param resourceDtos
+     * @return
+     */
+    private List<PermissionDto> buildPermission(List<ServerDto> serverDtos, List<ResourceDto> resourceDtos){
+        List<PermissionDto> permissionDtos = new ArrayList<>();
+        Map<Long, ServerDto> serverDtoMap = new HashMap<>();
+        serverDtos.forEach( serverDto -> {
+            serverDtoMap.put(serverDto.getId(), serverDto);
+        });
+
+        resourceDtos.forEach( resourceDto -> {
+            Long serverId = resourceDto.getServerId();
+            ServerDto serverDto = serverDtoMap.get(serverId);
+            PermissionDto permissionDto = new PermissionDto();
+            permissionDto.setServerResource(resourceDto.getUrl() + serverDto.getName());
+            permissionDto.setResourceId(resourceDto.getId());
+            permissionDto.setMethodType(resourceDto.getType());
+            permissionDtos.add(permissionDto);
+        });
+        return permissionDtos;
+    }
+
+    @Override
+    public List<RoleResourceDto> selectAvailable() {
+        RoleResourceExample roleResourceExample = new RoleResourceExample();
+        RoleResourceExample.Criteria criteria = roleResourceExample.createCriteria();
+        criteria.andAvailableEqualTo(true);
+        List<RoleResource> roleResources = roleResourceMapper.selectByExample(roleResourceExample);
+        if (CollectionUtils.isEmpty(roleResources)){
+            return null;
+        }
+        List<RoleResourceDto> roleResourceDtos = new ArrayList<>();
+        roleResources.forEach( roleResource -> {
+            RoleResourceDto roleResourceDto = new RoleResourceDto();
+            BeanUtils.copyProperties(roleResource, roleResourceDto);
+            roleResourceDtos.add(roleResourceDto);
+        });
+        return roleResourceDtos;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -26,11 +27,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean checkAuthAndPermission(String appToken, String code) throws ServiceException {
-        boolean b = checkAuth(appToken, code);
-        if (b){
+        AppTokenDto appTokenDto = checkAuth(appToken, code);
+        String appName = appTokenDto.getAppName();
+        String userName = appTokenDto.getUserName();
+        if (!StringUtils.isEmpty(appName) && !StringUtils.isEmpty(userName)){
             //权限校验
         }
-        return true;
+        return false;
     }
 
     /**
@@ -40,18 +43,20 @@ public class AuthServiceImpl implements AuthService {
      * @return
      * @throws ServiceException
      */
-    private boolean checkAuth(String appToken, String code) throws ServiceException {
+    private AppTokenDto checkAuth(String appToken, String code) throws ServiceException {
         AppTokenDto appTokenDto = new AppTokenDto();
         appTokenDto.setAppToken(appToken);
         appTokenDto.setCode(code);
         ResponseEntity<Result<AppTokenDto>> resultResponseEntity = authServerClient.checkAppToken(appTokenDto);
         Result<AppTokenDto> body = resultResponseEntity.getBody();
         if (body != null && Result.SUCCESS_CODE.equals(body.getCode())){
-            return true;
+            appTokenDto = body.getData();
+            return appTokenDto;
         }else {
             log.info("app 令牌身份认证失败："+JSON.toJSONString(body));
             log.info("app 令牌身份认证失败参数appToken："+appToken + " code参数：" + code);
             throw new ServiceException(HttpErrorEnum.APP_TOKEN_CHECK_FAILED);
         }
     }
+
 }

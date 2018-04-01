@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.service.dto;
+package com.jiuzhou.bootwork.controller.vo;
 
 import lombok.Data;
 
@@ -7,11 +7,12 @@ import lombok.Data;
  * @date 2018/03/30
  */
 @Data
-public class AppTokenDto {
+public class AppTokenVo {
 
     private String appToken;
     private String code;
-    private String appName;
+    private String userToken;
     private String userName;
+    private String appName;
     private String serverResource;
 }

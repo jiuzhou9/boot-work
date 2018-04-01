@@ -3,6 +3,7 @@ package com.jiuzhou.bootwork.filter;
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.constants.WhiteList;
 import com.jiuzhou.bootwork.excep.HttpError;
+import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.AuthService;
@@ -53,26 +54,20 @@ public class AccessFilter extends ZuulFilter{
         if (contain){
             return null;
         }else {
-            //检测如果是其他那么需要校验身份信息正确性
-            //校验权限
-            boolean b = false;
+            boolean b;
             try {
                 b = authService.checkAuthAndPermission(appToken, code);
+                if (b){
+                    return null;
+                }else {
+                    throw new ServiceException(HttpErrorEnum.APP_TOKEN_CHECK_FAILED);
+                }
             } catch (ServiceException e) {
                 e.printStackTrace();
-                HttpError httpError = e.getHttpError();
-                int value = httpError.getHttpStatus().value();
-                currentContext.setResponseStatusCode(value);
-                Result result = new Result();
-                result.setHttpError(e.getHttpError());
-                currentContext.setResponseBody(JSON.toJSONString(result));
-                currentContext.setSendZuulResponse(false);
+                returnFalse(currentContext, e.getHttpError());
                 return null;
             }
         }
-
-
-
         //
 //        Map<String, String> zuulRequestHeaders = currentContext.getZuulRequestHeaders();
 //        //        URL routeHost = currentContext.getRouteHost();
@@ -81,6 +76,18 @@ public class AccessFilter extends ZuulFilter{
 //        log.info(JSON.toJSONString(request.getLocalPort()));
 //        log.info(JSON.toJSONString(request.getHeader("User-Agent")));
 //        log.info(JSON.toJSONString(zuulRequestHeaders));
-        return null;
+    }
+
+    /**
+     * 异常处理
+     * @param currentContext
+     * @param httpError
+     */
+    private void returnFalse(RequestContext currentContext, HttpError httpError){
+        currentContext.setResponseStatusCode(httpError.getHttpStatus().value());
+        Result result = new Result();
+        result.setHttpError(httpError);
+        currentContext.setResponseBody(JSON.toJSONString(result));
+        currentContext.setSendZuulResponse(false);
     }
 }

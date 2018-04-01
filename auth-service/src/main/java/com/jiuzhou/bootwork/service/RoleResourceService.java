@@ -56,4 +56,16 @@ public interface RoleResourceService {
      */
     boolean updateById(RoleResourceDto roleResourceDto) throws ServiceException;
 
+    /**
+     * 加载权限
+     * @throws ServiceException
+     */
+    void loadPermission();
+
+    /**
+     * 获取有效的角色资源
+     * @return
+     */
+    List<RoleResourceDto> selectAvailable();
+
 }
