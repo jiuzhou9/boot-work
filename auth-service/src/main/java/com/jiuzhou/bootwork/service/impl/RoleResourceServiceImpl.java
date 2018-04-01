@@ -144,22 +144,23 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     }
 
     @Override
-    public List<RoleDto> selectRolesByResourceId(Long resourceId) throws ServiceException {
-        List<RoleResourceDto> roleResourceDtos = selectRoleResourceByResourceId(resourceId);
+    public List<RoleDto> selectAvailableRolesByResourceId(Long resourceId) throws ServiceException {
+        List<RoleResourceDto> roleResourceDtos = selectAvailableRoleResourceByResourceId(resourceId);
 
         List<Long> roleIds = new ArrayList<>();
         roleResourceDtos.forEach( roleResourceDto -> {
             roleIds.add(roleResourceDto.getId());
         });
 
-        List<RoleDto> roleDtos = roleService.selectByIds(roleIds);
+        List<RoleDto> roleDtos = roleService.selectAvailableByIds(roleIds);
         return roleDtos;
     }
 
-    private List<RoleResourceDto> selectRoleResourceByResourceId(Long resourceId){
+    private List<RoleResourceDto> selectAvailableRoleResourceByResourceId(Long resourceId){
         RoleResourceExample roleResourceExample = new RoleResourceExample();
         RoleResourceExample.Criteria criteria = roleResourceExample.createCriteria();
         criteria.andResourceIdEqualTo(resourceId);
+        criteria.andAvailableEqualTo(true);
         List<RoleResource> roleResources = roleResourceMapper.selectByExample(roleResourceExample);
         List<RoleResourceDto> roleResourceDtos = new ArrayList<>();
         roleResources.forEach( roleResource -> {
@@ -174,14 +175,14 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     public List<RoleDto> selectRolesByResourceName(String resourceName) throws ServiceException {
         ResourceDto resourceDto = resourceService.selectOneByName(resourceName);
         Long resourceId = resourceDto.getId();
-        return selectRolesByResourceId(resourceId);
+        return selectAvailableRolesByResourceId(resourceId);
     }
 
     @Override
     public List<RoleDto> selectRolesByResourceUrl(String url) throws ServiceException {
         ResourceDto resourceDto = resourceService.selectOneByUrl(url);
         Long resourceId = resourceDto.getId();
-        List<RoleDto> roleDtos = selectRolesByResourceId(resourceId);
+        List<RoleDto> roleDtos = selectAvailableRolesByResourceId(resourceId);
         return roleDtos;
     }
 
@@ -445,5 +446,15 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         }
         //TODO 此处将来可以根据需求改进，如果数据库里没有资源角色映射的话，那么就抛异常不进行放行,现在是数据库中没有资源角色映射那么说明这个资源是不需要权限控制的
         return null;
+    }
+
+    @Override
+    public boolean decide(String username, String resourcePath, String method) {
+        return false;
+    }
+
+    @Override
+    public boolean decide(String userName, String resourcePath, String appName, String method) {
+        return false;
     }
 }

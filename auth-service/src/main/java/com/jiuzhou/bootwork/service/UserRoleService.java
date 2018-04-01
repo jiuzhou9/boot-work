@@ -20,7 +20,7 @@ public interface UserRoleService {
 
     List<RoleDto> selectOneByMobile(String mobile) throws ServiceException;
 
-    List<RoleDto> selectByUserId(Long userId) throws ServiceException;
+    List<RoleDto> selectAvailableByUserId(Long userId) throws ServiceException;
 
     UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws ServiceException;
 

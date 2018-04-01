@@ -7,7 +7,9 @@ import com.jiuzhou.bootwork.dao.model.UserExample;
 import com.jiuzhou.bootwork.dao.model.UserKey;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
+import com.jiuzhou.bootwork.service.UserRoleService;
 import com.jiuzhou.bootwork.service.UserService;
+import com.jiuzhou.bootwork.service.dto.RoleDto;
 import com.jiuzhou.bootwork.service.dto.UserDto;
 import com.jiuzhou.bootwork.service.dto.UserTokenDto;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     protected Long insert(UserDto userDto) throws ServiceException {
@@ -232,4 +238,22 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    @Override
+    public UserDto selectOneAvailableWithRolesByUsername(String username) throws ServiceException {
+        UserDto userDto = selectOneByUsername(username);
+        if (userDto == null){
+            return null;
+        }else if (!userDto.getAvailable()){
+            throw new ServiceException(HttpErrorEnum.USER_IS_NOT_AVAILABLE);
+        }
+        Long userId = userDto.getId();
+        List<RoleDto> roleDtos = userRoleService.selectAvailableByUserId(userId);
+        List<String> roleNames = new ArrayList<>();
+        roleDtos.forEach( roleDto -> {
+            String name = roleDto.getName();
+            roleNames.add(name);
+        });
+        userDto.setRoleNames(roleNames);
+        return userDto;
+    }
 }

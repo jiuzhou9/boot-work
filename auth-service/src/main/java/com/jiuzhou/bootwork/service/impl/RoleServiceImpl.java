@@ -1,12 +1,15 @@
 package com.jiuzhou.bootwork.service.impl;
 
 import com.jiuzhou.bootwork.dao.mapper.RoleMapper;
+import com.jiuzhou.bootwork.dao.mapper.UserRoleMapper;
 import com.jiuzhou.bootwork.dao.model.Role;
 import com.jiuzhou.bootwork.dao.model.RoleExample;
 import com.jiuzhou.bootwork.dao.model.RoleKey;
+import com.jiuzhou.bootwork.dao.model.UserRoleExample;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.RoleService;
+import com.jiuzhou.bootwork.service.UserRoleService;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -140,13 +143,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RoleDto> selectByIds(List<Long> ids) throws ServiceException {
+    public List<RoleDto> selectAvailableByIds(List<Long> ids) throws ServiceException {
         if (CollectionUtils.isEmpty(ids)){
             throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
         }
         RoleExample roleExample = new RoleExample();
         RoleExample.Criteria criteria = roleExample.createCriteria();
         criteria.andIdIn(ids);
+        criteria.andAvailableEqualTo(true);
         List<Role> roles = roleMapper.selectByExample(roleExample);
         List<RoleDto> roleDtos = new ArrayList<>();
         roles.forEach( role -> {
@@ -174,4 +178,5 @@ public class RoleServiceImpl implements RoleService {
         });
         return roleDtos;
     }
+
 }

@@ -35,7 +35,7 @@ public interface RoleResourceService {
      * @param resourceId
      * @return
      */
-    List<RoleDto> selectRolesByResourceId(Long resourceId) throws ServiceException;
+    List<RoleDto> selectAvailableRolesByResourceId(Long resourceId) throws ServiceException;
 
     /**
      * 绝对查询
@@ -76,5 +76,26 @@ public interface RoleResourceService {
      * @return
      */
     Collection<String> getAttributes(String serverResource, String method);
+
+    /**
+     * 投票判决，一个第三方是否可以访问一个资源
+     *
+     * @param username     第三方
+     * @param resourcePath 他想访问的资源
+     *
+     * @return
+     */
+    boolean decide(String username, String resourcePath, String method);
+
+    /**
+     * 判断某用户的App是否有权限访问资源
+     *
+     * @param userName
+     * @param resourcePath
+     * @param appName
+     *
+     * @return
+     */
+    boolean decide(String userName, String resourcePath, String appName, String method);
 
 }

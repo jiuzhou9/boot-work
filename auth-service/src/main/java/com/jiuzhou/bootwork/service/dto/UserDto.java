@@ -3,6 +3,7 @@ package com.jiuzhou.bootwork.service.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UserDto {
@@ -25,6 +26,8 @@ public class UserDto {
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    private List<String> roleNames;
 
     private static final long serialVersionUID = 1L;
 

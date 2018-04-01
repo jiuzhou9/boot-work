@@ -15,4 +15,5 @@ public class AppTokenVo {
     private String userName;
     private String appName;
     private String serverResource;
+    private String method;
 }
