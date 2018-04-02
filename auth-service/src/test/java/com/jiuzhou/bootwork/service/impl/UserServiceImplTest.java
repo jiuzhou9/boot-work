@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.AuthServiceApp;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.UserDto;
 import com.jiuzhou.bootwork.service.dto.UserTokenDto;
@@ -37,5 +38,16 @@ public class UserServiceImplTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void selectOneAvailableWithRolesByUsername() {
+        UserDto userDto = null;
+        try {
+            userDto = userService.selectOneAvailableWithRolesByUsername("123");
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        log.info(JSON.toJSONString(userDto));
     }
 }
