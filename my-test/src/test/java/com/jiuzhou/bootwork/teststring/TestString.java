@@ -14,19 +14,31 @@ public class TestString extends TestCase{
 
     public void test_split(){
         String url = "/eureka-api/api/v1/hello";
-        String[] split1 = url.split("/");
-        System.out.println(split1[1]);
+        int count = 4;
+//        String[] split1 = url.split("/");
+//        System.out.println(split1.length);
+//        System.out.println(split1[1]);
+//        String s = "";
 
-        String resource;
-        for (int i = 2; i < split1.length; i++){
-            resource = "/" + split1[i];
+        String[] split = url.split("/");
+        url = "";
+        for (int i = 0; i < split.length - count; i++) {
+            if (i != 0){
+                url = url + "/" + split[i];
+            }
         }
+        System.out.println(url);
 
-        String s = "srn:unicorn:::api";
-        String[] split = s.split(":");
-        System.out.println(split.length);
-
-        int i = StringUtils.countOccurrencesOf(s, ":");
-        System.out.println(i);
+//        String resource;
+//        for (int i = 2; i < split1.length; i++){
+//            resource = "/" + split1[i];
+//        }
+//
+//        String s = "srn:unicorn:::api";
+//        String[] split = s.split(":");
+//        System.out.println(split.length);
+//
+//        int i = StringUtils.countOccurrencesOf(s, ":");
+//        System.out.println(i);
     }
 }
