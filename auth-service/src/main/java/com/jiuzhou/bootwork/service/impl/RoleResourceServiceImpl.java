@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -432,21 +434,69 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     @Override
     public Collection<String> getAttributes(String serverResource, String method) {
+        Collection<String> attributesCompletelyEquals = new ArrayList<>();
+        String[] split = serverResource.split("/");
+        for (int count = 0; count < split.length - 1; count++){
+            attributesCompletelyEquals = getAttributesCompletelyEquals(serverResource, method, count);
+            if (!CollectionUtils.isEmpty(attributesCompletelyEquals)){
+                return attributesCompletelyEquals;
+            }
+        }
+        return attributesCompletelyEquals;
+    }
+
+
+
+    /**
+     * 完全匹配
+     * @param serverResource
+     * @param method
+     * @return
+     */
+    private Collection<String> getAttributesCompletelyEquals(String serverResource, String method, int count){
+        //去掉参数的请求URL
+        String[] split = serverResource.split("/");
+        serverResource = "";
+        for (int i = 0; i < split.length - count; i++) {
+            if (i != 0){
+                serverResource = serverResource + "/" + split[i];
+            }
+        }
+
+
+        //加载权限列表
         String serverResourceMethod = serverResource + "," + method;
         if (map == null || map.size() == 0) {
             loadPermission();
         }
 
         String resUrl;
+        String resUrlOrigin;
         for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
             resUrl = iter.next();
+            resUrlOrigin = resUrl;
+            if (count > 0){
+                //因为请求URL进行了去参数，那么数据库中的资源也进行去参数
+                String[] resourceArray = resUrl.split(",");
+                String resource = resourceArray[0];
+                String[] resUrlSplit = resource.split("/");
+                resource = "";
+                for (int i = 0; i < resUrlSplit.length - count; i++) {
+                    if (i != 0){
+                        resource = resource + "/" + resUrlSplit[i];
+                    }
+                }
+                resUrl = resource + "," + resourceArray[1];
+            }
             if (resUrl.equals(serverResourceMethod)) {
-                return map.get(resUrl);
+                return map.get(resUrlOrigin);
             }
         }
         //TODO 此处将来可以根据需求改进，如果数据库里没有资源角色映射的话，那么就抛异常不进行放行,现在是数据库中没有资源角色映射那么说明这个资源是不需要权限控制的
         return null;
     }
+
+
 
     @Override
     public boolean decide(String username, String resourcePath, String method) {

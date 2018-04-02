@@ -32,7 +32,8 @@ public class RoleResourceServiceImplTest {
 
     @Test
     public void getAttributes() {
-        Collection<String> get = roleResourceService.getAttributes("/eureka-api/api/v1/hello", "GET");
+        Collection<String> get = roleResourceService.getAttributes("/eureka-api/api/v1/hello/123/name", "GET");
         log.info(JSON.toJSONString(get));
     }
+
 }

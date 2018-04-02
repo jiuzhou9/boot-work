@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.EAN;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,13 +22,13 @@ import java.util.List;
 @Api(value = "test")
 public class TestController {
 
-    @GetMapping(value = "/test")
+    @GetMapping(value = "/test/resources")
     @ApiOperation(value = "test")
-    public Result test(){
+    public Result test(@RequestParam String name){
         return null;
     }
 
-    @GetMapping(value = "/test1/{id}")
+    @GetMapping(value = "/test/resources/{id}")
     @ApiOperation(value = "test1")
     public Result test1(@PathVariable String id){
         return Result.buildSuccess(id);
