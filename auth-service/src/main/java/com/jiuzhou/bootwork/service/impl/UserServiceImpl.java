@@ -248,6 +248,9 @@ public class UserServiceImpl implements UserService {
         }
         Long userId = userDto.getId();
         List<RoleDto> roleDtos = userRoleService.selectAvailableByUserId(userId);
+        if (CollectionUtils.isEmpty(roleDtos)){
+            return userDto;
+        }
         List<String> roleNames = new ArrayList<>();
         roleDtos.forEach( roleDto -> {
             String name = roleDto.getName();
