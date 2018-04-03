@@ -46,6 +46,7 @@ public class AccessFilter extends ZuulFilter{
         RequestContext currentContext = RequestContext.getCurrentContext();
         HttpServletRequest request = currentContext.getRequest();
         String servletPath = request.getServletPath();
+        String method = request.getMethod();
         String appToken = request.getHeader("x-access-token");
         String code = request.getHeader("code");
 
@@ -56,7 +57,7 @@ public class AccessFilter extends ZuulFilter{
         }else {
             boolean b;
             try {
-                b = authService.checkAuthAndPermission(appToken, code);
+                b = authService.checkAuthAndPermission(appToken, code, servletPath, method);
                 if (b){
                     return null;
                 }else {
