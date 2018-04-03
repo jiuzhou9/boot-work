@@ -86,7 +86,7 @@ public interface RoleResourceService {
      *
      * @return
      */
-    boolean decide(String username, String resourcePath, String method);
+    boolean decide(String username, String resourcePath, String method) throws ServiceException;
 
     /**
      * 判断某用户的App是否有权限访问资源
@@ -97,6 +97,6 @@ public interface RoleResourceService {
      *
      * @return
      */
-    boolean decide(String userName, String resourcePath, String appName, String method);
+    boolean decide(String userName, String resourcePath, String appName, String method) throws ServiceException;
 
 }

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,8 +86,25 @@ public class AppRoleServiceImpl implements AppRoleService {
     }
 
     @Override
-    public List<AppRoleDto> selectByAppId(Long appId) throws ServiceException {
-        return null;
+    public List<AppRoleDto> selectAvailableByAppId(Long appId) throws ServiceException {
+        if (appId == null || appId.equals(0L)){
+            return null;
+        }
+        AppRoleExample appRoleExample = new AppRoleExample();
+        AppRoleExample.Criteria criteria = appRoleExample.createCriteria();
+        criteria.andAppIdEqualTo(appId);
+        criteria.andAvailableEqualTo(true);
+        List<AppRole> appRoles = appRoleMapper.selectByExample(appRoleExample);
+        if (CollectionUtils.isEmpty(appRoles)){
+            return null;
+        }
+        List<AppRoleDto> appRoleDtos = new ArrayList<>();
+        appRoles.forEach( appRole -> {
+            AppRoleDto dto = new AppRoleDto();
+            BeanUtils.copyProperties(appRole, dto);
+            appRoleDtos.add(dto);
+        });
+        return appRoleDtos;
     }
 
     @Override

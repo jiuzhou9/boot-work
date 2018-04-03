@@ -41,4 +41,10 @@ public class TestString extends TestCase{
 //        int i = StringUtils.countOccurrencesOf(s, ":");
 //        System.out.println(i);
     }
+
+    public void test_trim(){
+        String s = " abc";
+        String trim = s.trim();
+        System.out.println(trim);
+    }
 }

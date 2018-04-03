@@ -3,6 +3,7 @@ package com.jiuzhou.bootwork.service.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class AppDto {
@@ -21,4 +22,6 @@ public class AppDto {
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    private List<String> roleNames;
 }

@@ -9,10 +9,15 @@ import com.jiuzhou.bootwork.dao.model.AppExample;
 import com.jiuzhou.bootwork.dao.model.AppKey;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
+import com.jiuzhou.bootwork.service.AppRoleService;
 import com.jiuzhou.bootwork.service.AppService;
+import com.jiuzhou.bootwork.service.RoleResourceService;
+import com.jiuzhou.bootwork.service.RoleService;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.AppDto;
+import com.jiuzhou.bootwork.service.dto.AppRoleDto;
 import com.jiuzhou.bootwork.service.dto.AppTokenDto;
+import com.jiuzhou.bootwork.service.dto.RoleDto;
 import com.jiuzhou.bootwork.service.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -24,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +46,15 @@ public class AppServiceImpl implements AppService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleResourceService roleResourceService;
+
+    @Autowired
+    private AppRoleService appRoleService;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 返回APP code
@@ -91,15 +104,15 @@ public class AppServiceImpl implements AppService {
             throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
 
-        AppDto appDtoResult = selectOneByNameUserId(name, userId);
+        AppDto appDtoResult = selectOneAvailableByNameUserId(name, userId);
         if (appDtoResult != null){
             throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
         }
 
     }
 
-    private AppDto selectOneByNameUserId(String name, Long userId) throws ServiceException {
-        if (StringUtils.isEmpty(name)){
+    private AppDto selectOneAvailableByNameUserId(String appName, Long userId) throws ServiceException {
+        if (StringUtils.isEmpty(appName)){
             throw new ServiceException(HttpErrorEnum.APP_NAME_IS_EMPTY);
         }
         if (userId == null || userId.equals(0L)){
@@ -113,8 +126,9 @@ public class AppServiceImpl implements AppService {
 
         AppExample appExample = new AppExample();
         AppExample.Criteria criteria = appExample.createCriteria();
-        criteria.andNameEqualTo(name);
+        criteria.andNameEqualTo(appName);
         criteria.andUserIdEqualTo(userId);
+        criteria.andAvailableEqualTo(true);
         List<App> apps = appMapper.selectByExample(appExample);
         if (CollectionUtils.isEmpty(apps)){
             return null;
@@ -160,19 +174,19 @@ public class AppServiceImpl implements AppService {
             throw new ServiceException(HttpErrorEnum.APP_ID_IS_NOT_EXIST);
         }
         if (!StringUtils.isEmpty(name) && userId == null){
-            AppDto dto = selectOneByNameUserId(name, appDtoResult.getUserId());
+            AppDto dto = selectOneAvailableByNameUserId(name, appDtoResult.getUserId());
             if (dto != null){
                 throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
             }
         }
         if (StringUtils.isEmpty(name) && userId != null){
-            AppDto dto = selectOneByNameUserId(appDtoResult.getName(), userId);
+            AppDto dto = selectOneAvailableByNameUserId(appDtoResult.getName(), userId);
             if (dto != null){
                 throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
             }
         }
         if (!StringUtils.isEmpty(name) && userId != null){
-            AppDto dto = selectOneByNameUserId(name, userId);
+            AppDto dto = selectOneAvailableByNameUserId(name, userId);
             if (dto != null){
                 throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
             }
@@ -226,7 +240,7 @@ public class AppServiceImpl implements AppService {
     public AppTokenDto getAppToken(String userToken, String appName) throws ServiceException {
         UserDto userDto = userService.checkUserToken(userToken);
         Long userId = userDto.getId();
-        AppDto appDto = selectOneByNameUserId(appName, userId);
+        AppDto appDto = selectOneAvailableByNameUserId(appName, userId);
         if (appDto == null){
             throw new ServiceException(HttpErrorEnum.APP_NAME_IS_NOT_EXIST);
         }
@@ -291,10 +305,50 @@ public class AppServiceImpl implements AppService {
         }
     }
 
-    @Override
-    public boolean decide(AppTokenDto appTokenDto) throws ServiceException {
-        String serverResource = appTokenDto.getServerResource();
+//    @Override
+//    public boolean decide(AppTokenDto appTokenDto) throws ServiceException {
+//        validateDecide(appTokenDto);
+//        String userName = appTokenDto.getUserName();
+//        String appName = appTokenDto.getAppName();
+//        String serverResource = appTokenDto.getServerResource();
+//        String methodType = appTokenDto.getMethodType();
+//        boolean decide = roleResourceService.decide(userName, serverResource, methodType);
+//
+//        return false;
+//    }
 
-        return false;
+    @Override
+    public AppDto getAvailableByAppNameUserName(String appName, String userName) throws ServiceException {
+        UserDto userDto = userService.selectOneAvailableWithRolesByUsername(userName);
+        if (userDto == null){
+            return null;
+        }
+
+        Long userId = userDto.getId();
+        AppDto appDto = selectOneAvailableByNameUserId(appName, userId);
+        if (appDto == null){
+            return null;
+        }
+
+        Long id = appDto.getId();
+        List<AppRoleDto> appRoleDtos = appRoleService.selectAvailableByAppId(id);
+        if (CollectionUtils.isEmpty(appRoleDtos)){
+            return appDto;
+        }
+
+        List<Long> roleIds = new ArrayList<>();
+        appRoleDtos.forEach( appRoleDto -> {
+            roleIds.add(appRoleDto.getRoleId());
+        });
+
+        List<RoleDto> roleDtos =  roleService.selectAvailableByIds(roleIds);
+        List<String> roleNames = new ArrayList<>();
+        roleDtos.forEach( roleDto -> {
+            roleNames.add(roleDto.getName());
+        });
+
+        appDto.setRoleNames(roleNames);
+
+        return appDto;
     }
 }
