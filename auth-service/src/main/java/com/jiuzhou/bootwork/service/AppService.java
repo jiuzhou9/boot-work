@@ -46,5 +46,12 @@ public interface AppService {
 
     AppDto selectById(Long id) throws ServiceException;
 
-    boolean decide(AppTokenDto appTokenDto) throws ServiceException;
+
+    /**
+     * 根据APP name user name 查询APP信息包含角色
+     * @param appName
+     * @param userName
+     * @return
+     */
+    AppDto getAvailableByAppNameUserName(String appName, String userName) throws ServiceException;
 }

@@ -6,15 +6,19 @@ import com.jiuzhou.bootwork.dao.model.RoleResourceExample;
 import com.jiuzhou.bootwork.dao.model.RoleResourceKey;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
+import com.jiuzhou.bootwork.service.AppService;
 import com.jiuzhou.bootwork.service.ResourceService;
 import com.jiuzhou.bootwork.service.RoleResourceService;
 import com.jiuzhou.bootwork.service.RoleService;
 import com.jiuzhou.bootwork.service.ServerService;
+import com.jiuzhou.bootwork.service.UserService;
+import com.jiuzhou.bootwork.service.dto.AppDto;
 import com.jiuzhou.bootwork.service.dto.PermissionDto;
 import com.jiuzhou.bootwork.service.dto.ResourceDto;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 import com.jiuzhou.bootwork.service.dto.RoleResourceDto;
 import com.jiuzhou.bootwork.service.dto.ServerDto;
+import com.jiuzhou.bootwork.service.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +60,12 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     @Autowired
     private RoleResourceService roleResourceService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AppService appService;
 
     private HashMap<String, Collection<String>> map = null;
 
@@ -499,12 +509,71 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
 
     @Override
-    public boolean decide(String username, String resourcePath, String method) {
+    public boolean decide(String username, String resourcePath, String method) throws ServiceException{
+        UserDto userDto = userService.selectOneAvailableWithRolesByUsername(username);
+        List<String> roleNames = userDto.getRoleNames();
+
+        if (!CollectionUtils.isEmpty(roleNames) && checkPermission(resourcePath, method, roleNames)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 检测角色集合对一个资源是否有效
+     * @param resourcePath
+     * @param method
+     * @param roleNames
+     * @return
+     */
+    private boolean checkPermission(String resourcePath, String method, List<String> roleNames) {
+        Collection<String> attributes = getAttributes(resourcePath, method);
+        if (CollectionUtils.isEmpty(attributes) || CollectionUtils.isEmpty(roleNames)){
+            return false;
+        }
+
+        String needRole;
+        for (Iterator<String> iter = attributes.iterator(); iter.hasNext(); ) {
+            needRole = iter.next();
+            for (String role : roleNames) {
+                if (needRole.trim().equals(role)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     @Override
-    public boolean decide(String userName, String resourcePath, String appName, String method) {
+    public boolean decide(String userName, String resourcePath, String appName, String method) throws ServiceException {
+        validateDecideAppRequest(userName, resourcePath, appName, method);
+        boolean decide = decide(userName, resourcePath, method);
+        if (decide){
+            AppDto appDto = appService.getAvailableByAppNameUserName(appName, userName);
+            if (appDto == null){
+                throw new ServiceException(HttpErrorEnum.APP_NAME_IS_NOT_EXIST);
+            }
+            List<String> roleNames = appDto.getRoleNames();
+
+            boolean b = checkPermission(resourcePath, method, roleNames);
+            if (b){
+                return true;
+            }
+
+        }
         return false;
+    }
+
+    private void validateDecideAppRequest(String userName, String resourcePath, String appName, String method)
+                    throws ServiceException {
+        if (StringUtils.isEmpty(userName)){
+            throw new ServiceException(HttpErrorEnum.USERNAME_PARAMETER_IS_EMPTY);
+        }else if (StringUtils.isEmpty(resourcePath)){
+            throw new ServiceException(HttpErrorEnum.RESOURCE_URL_PARAMETER_IS_EMPTY);
+        }else if (StringUtils.isEmpty(appName)){
+            throw new ServiceException(HttpErrorEnum.APP_NAME_IS_EMPTY);
+        }else if (StringUtils.isEmpty(method)){
+            throw new ServiceException(HttpErrorEnum.METHOD_TYPE_IS_EMPTY);
+        }
     }
 }

@@ -8,6 +8,10 @@ import junit.framework.TestCase;
  */
 public class TestSwitch extends TestCase {
 
+    public static final int ALL1 = 1;
+    private static final int ALL2 = 2;
+    private static final int ALL3 = 3;
+
     public void test(){
         String s = switchMethod(1);
         System.out.println(s == "");
@@ -15,8 +19,8 @@ public class TestSwitch extends TestCase {
 
     public String switchMethod(Integer s){
         String str = "";
-        switch (s){
-            case 1:
+        switch (s.intValue()){
+            case ALL1: str = "a";
             break;
 
             case 2: str = "b";

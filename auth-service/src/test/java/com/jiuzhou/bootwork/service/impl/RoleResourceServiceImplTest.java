@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.AuthServiceApp;
+import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.RoleResourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -36,4 +37,13 @@ public class RoleResourceServiceImplTest {
         log.info(JSON.toJSONString(get));
     }
 
+    @Test
+    public void decide() {
+        try {
+            boolean decide = roleResourceService.decide("123", "/eureka-api/api/v1/hello/12/name", "测试APP", "POST");
+            log.info(JSON.toJSONString(decide));
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+    }
 }

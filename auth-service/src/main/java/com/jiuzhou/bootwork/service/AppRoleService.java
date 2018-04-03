@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.service;
 
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.AppRoleDto;
+import com.jiuzhou.bootwork.service.dto.RoleDto;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface AppRoleService {
 
     boolean updateById(AppRoleDto appRoleDto) throws ServiceException;
 
-    List<AppRoleDto> selectByAppId(Long appId) throws ServiceException;
+    List<AppRoleDto> selectAvailableByAppId(Long appId) throws ServiceException;
 
     AppRoleDto selectById(Long id) throws ServiceException;
 
