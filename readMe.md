@@ -98,12 +98,46 @@ spring-boot-maven-plugin资源依赖，但是发现还是解决不了，总而�
 项目整体install，然后即可操作任何一个项目package操作，因为各个项目有依赖common项目，所以先install。
 
 
-  服务           | 端口     | 服务描述  
-  ------------- | -------------  
-  auth-server   | 15050   |认证服务  
-  feign-consumer| 15033   |消费者服务
-  eureka-server | 15011   |注册中心
-  eureka-api    | 15021   |api 服务
-  api-gateway   | 15040   |网关
-  permission-server| 15060  |鉴权服务
+  <table>
+      <tr>
+          <th>服务</th>
+          <th>端口</th>
+          <th>服务描述</th>
+      </tr>
+      <tr>
+          <th>auth-server</th>
+          <th>15050</th>
+          <th>认证服务</th>
+      </tr>
+      <tr>
+          <th>feign-consumer</th>
+          <th>15033</th>
+          <th>消费者服务</th>
+      </tr>
+      <tr>
+          <th>eureka-server</th>
+          <th>15011</th>
+          <th>注册中心</th>
+      </tr>
+      <tr>
+          <th>eureka-server</th>
+          <th>15011</th>
+          <th>注册中心</th>
+      </tr>
+      <tr>
+          <th>eureka-api</th>
+          <th>15021</th>
+          <th>api 服务</th>
+      </tr>
+      <tr>
+          <th>api-gateway</th>
+          <th>15040</th>
+          <th>网关</th>
+        </tr>
+      <tr>
+          <th>permission-server</th>
+          <th>15060</th>
+          <th>鉴权服务</th>
+      </tr>
+  </table>
   
