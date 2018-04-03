@@ -12,7 +12,9 @@ public interface AuthService {
      * 校验身份正确性，权限
      * @param appToken
      * @param code
+     * @param serverResource
+     * @param method
      * @return
      */
-    boolean checkAuthAndPermission(String appToken, String code) throws ServiceException;
+    boolean checkAuthAndPermission(String appToken, String code, String serverResource, String method) throws ServiceException;
 }

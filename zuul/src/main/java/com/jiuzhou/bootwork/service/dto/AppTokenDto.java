@@ -14,4 +14,7 @@ public class AppTokenDto {
     private String userToken;
     private String userName;
     private String appName;
+
+    private String serverResource;
+    private String method;
 }

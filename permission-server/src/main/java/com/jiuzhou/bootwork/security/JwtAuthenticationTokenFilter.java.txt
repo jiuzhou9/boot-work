@@ -1,0 +1,98 @@
+package ai.shanshu.auth.security;
+
+import ai.shanshu.auth.dao.entity.UserApp;
+import ai.shanshu.auth.domain.UserDTO;
+import ai.shanshu.auth.service.UserAppService;
+import ai.shanshu.auth.service.UserService;
+import ai.shanshu.auth.utils.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * @author wangjiuzhou
+ */
+//@SuppressWarnings("SpringJavaAutowiringInspection")
+@Component
+@Deprecated
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserAppService userAppService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Value("${jwt.header}")
+    private String tokenHeader;
+
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+
+    @Value("${jwt.appIdHeader}")
+    private String appIdHeader;
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+                    throws ServletException, IOException {
+
+        String authHeader = request.getHeader(this.tokenHeader);
+        String appIdHeader = request.getHeader(this.appIdHeader);
+
+        if (authHeader != null && authHeader.startsWith(tokenHead)) {
+            // The part after "Basic "
+            final String authToken = authHeader.substring(tokenHead.length());
+
+            //TODO根据APPID查secret 解决
+            UserApp userApp = userAppService.selectByPrimaryKey(Integer.parseInt(appIdHeader), true);
+            String appSecret = userApp.getSecret();
+
+            String username = jwtTokenUtil.getUsernameFromToken(authToken, appSecret);
+
+            logger.info("checking authentication " + username);
+
+            if (username != null) {
+                //从令牌中查询用户信息
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+                //从app角度出发查询用户信息
+                Result<UserDTO> userDtoResult = userService.selectByPrimaryKey(userApp.getUserId(), true);
+
+                //校验令牌和数据库中的用户名是否一致
+                Result result = jwtTokenUtil.validate(authToken, userDtoResult.getData(), userApp);
+                String code = result.getCode();
+
+                if (Result.SUCCESS_CODE.equals(code)) {
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                                    userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    logger.info("authenticated user " + username + ", setting security context");
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
+        }
+
+        chain.doFilter(request, response);
+    }
+}

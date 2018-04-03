@@ -74,6 +74,7 @@ public enum HttpErrorEnum implements HttpError {
     APP_CODE_IS_NOT_EXIT(HttpStatus.BAD_REQUEST, "10010065", "APPcode不存在"),
     USER_IS_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "10010066", "用户为无效用户"),
     METHOD_TYPE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010067", "请求方式(RequestMethod:GET/POST/PUT等)为空"),
+    HAS_NO_AUTHORITY(HttpStatus.BAD_REQUEST, "10010068", "无权限"),
     ;
 
     private HttpStatus httpStatus;

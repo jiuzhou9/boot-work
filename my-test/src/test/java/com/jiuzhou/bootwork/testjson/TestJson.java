@@ -12,6 +12,11 @@ import junit.framework.TestCase;
 public class TestJson extends TestCase {
 
     public void test(){
+        String s = JSON.toJSONString(true);
+        System.out.println(s);
+    }
+
+    public void test_json_parse(){
         Person person = new Person();
         person.setAge(12);
         person.setName("ertyui");
