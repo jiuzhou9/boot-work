@@ -24,13 +24,9 @@ public class HelloEurekaApi {
 
     private final Logger logger = Logger.getLogger(HelloEurekaApi.class.getName());
 
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
     @GetMapping(value = "")
     @ApiOperation(value = "hello 方法")
     public String hello(){
-        String description = discoveryClient.description();
-        return description;
+        return "eureka-api hello方法";
     }
 }

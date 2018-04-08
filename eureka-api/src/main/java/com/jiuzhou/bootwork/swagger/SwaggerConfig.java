@@ -27,6 +27,21 @@ import java.util.List;
 public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
+        Docket docket = getWithHeader();
+        return docket;
+
+//                        .paths(Predicates.not(PathSelectors.regex("/error"))).build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder().title("eureka-api").description("eureka-api API文档").version("1.0").build();
+    }
+
+    /**
+     * 获取携带header
+     * @return
+     */
+    private Docket getWithHeader(){
         ParameterBuilder tokenPar = new ParameterBuilder();
         ParameterBuilder code = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
@@ -36,22 +51,9 @@ public class SwaggerConfig {
         code.name("code").description("code").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(code.build());
 
-        return new Docket(DocumentationType.SWAGGER_2)
-                        .apiInfo(apiInfo())
-                        .select()
-                        .paths(
-                                        Predicates.or(
-                                        //这里添加你需要展示的接口
-                                        PathSelectors.ant("/api/**")
-                               )
-                        ).build()
-                        .globalOperationParameters(pars)
-                        .apiInfo(apiInfo());
-
-//                        .paths(Predicates.not(PathSelectors.regex("/error"))).build();
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("auth-server").description("auth-server API文档").version("1.0").build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().paths(Predicates.or(
+                        //这里添加你需要展示的接口
+                        PathSelectors.ant("/api/**"))).build().globalOperationParameters(pars).apiInfo(apiInfo());
+        return docket;
     }
 }

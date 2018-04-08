@@ -120,11 +120,6 @@ spring-boot-maven-plugin资源依赖，但是发现还是解决不了，总而�
           <th>注册中心</th>
       </tr>
       <tr>
-          <th>eureka-server</th>
-          <th>15011</th>
-          <th>注册中心</th>
-      </tr>
-      <tr>
           <th>eureka-api</th>
           <th>15021</th>
           <th>api 服务</th>

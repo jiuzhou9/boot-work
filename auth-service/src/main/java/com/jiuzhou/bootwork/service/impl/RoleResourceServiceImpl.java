@@ -558,10 +558,13 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             boolean b = checkPermission(resourcePath, method, roleNames);
             if (b){
                 return true;
+            }else {
+                throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
             }
 
+        }else {
+            throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
         }
-        return false;
     }
 
     private void validateDecideAppRequest(String userName, String resourcePath, String appName, String method)

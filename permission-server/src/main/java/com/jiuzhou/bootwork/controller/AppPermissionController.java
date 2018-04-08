@@ -39,7 +39,7 @@ public class AppPermissionController {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (ServiceException e) {
             e.printStackTrace();
-            result.setHttpError(HttpErrorEnum.HAS_NO_AUTHORITY);
+            result.setHttpError(e.getHttpError());
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
     }

@@ -13,7 +13,9 @@ public class PasswordTest extends TestCase {
      * spring security 包中的加密
      */
     public void test() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
+
         String encode = bCryptPasswordEncoder.encode("string");
         System.out.println(encode);
         System.out.println(encode.length());
