@@ -27,6 +27,7 @@ import java.util.List;
 public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
+        //Header
         ParameterBuilder tokenPar = new ParameterBuilder();
         ParameterBuilder code = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
