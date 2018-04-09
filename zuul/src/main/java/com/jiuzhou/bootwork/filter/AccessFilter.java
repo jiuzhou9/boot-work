@@ -85,7 +85,7 @@ public class AccessFilter extends ZuulFilter{
         currentContext.setResponseBody(JSON.toJSONString(result));
         currentContext.setSendZuulResponse(false);
         //设置路由编码
-//        currentContext.getResponse().setContentType("text/html;charset=UTF-8");
+        /*currentContext.getResponse().setContentType("text/html;charset=UTF-8");*/
         currentContext.getResponse().setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
     }
 
