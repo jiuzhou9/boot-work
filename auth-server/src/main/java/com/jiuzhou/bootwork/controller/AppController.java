@@ -86,8 +86,10 @@ public class AppController {
             }else if (StringUtils.isEmpty(code)){
                 throw new ServiceException(HttpErrorEnum.APP_CODE_IS_EMPTY);
             }
-            
+
             AppTokenDto appTokenDto = appService.checkAppToken(appToken, code);
+            log.info("APP 令牌校验" + JSON.toJSONString(appTokenDto));
+
             BeanUtils.copyProperties(appTokenDto, appTokenVo);
             result = Result.buildSuccess(appTokenVo);
             return new ResponseEntity<>(result, HttpStatus.OK);
