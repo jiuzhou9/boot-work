@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.rmi.ServerException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -280,10 +281,17 @@ public class AppServiceImpl implements AppService {
         }
         Long userId = byCode.getUserId();
         UserDto userDto = userService.selectById(userId);
-        AppTokenDto appTokenDto = new AppTokenDto();
-        appTokenDto.setAppName(appName);
-        appTokenDto.setUserName(userDto.getUsername());
-        return appTokenDto;
+        if (userDto != null && userDto.getAvailable()){
+            AppTokenDto appTokenDto = new AppTokenDto();
+            appTokenDto.setAppName(appName);
+            appTokenDto.setUserName(userDto.getUsername());
+            return appTokenDto;
+        }else if (userDto == null){
+            throw new ServiceException(HttpErrorEnum.USER_ID_IS_NOT_EXIST);
+        }else {
+            throw new ServiceException(HttpErrorEnum.USER_IS_NOT_AVAILABLE);
+        }
+
     }
 
     private AppDto getByCode(String code) throws ServiceException {

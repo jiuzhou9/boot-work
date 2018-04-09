@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
  * @date 2018/03/28
  */
 public enum HttpErrorEnum implements HttpError {
+
     USERNAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010001", "用户名已经存在"),
     MOBILE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010002", "手机号码已经存在"),
     USER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010003", "用户参数为空"),
@@ -17,6 +18,7 @@ public enum HttpErrorEnum implements HttpError {
     MOBILE_PARAMETER_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010008", "手机号参数查询到多条数据结果"),
     USER_ROLE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010009", "用户-角色ID参数为空或者为0"),
     USER_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010010", "用户ID不存在"),
+
     USER_ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010011", "用户角色信息为空"),
     USER_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010012", "该用户角色映射已经存在"),
     SERVER_NAME_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010013", "服务名参数查询到多条数据结果"),
@@ -27,6 +29,7 @@ public enum HttpErrorEnum implements HttpError {
     SERVER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010018", "服务信息为空"),
     SERVER_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010019", "服务名为空"),
     SERVER_DESCRIPTION_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010020", "服务描述空"),
+
     SERVER_NAME_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010021", "服务名已经存在"),
     ROLE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010022", "角色ID不存在"),
     RESOURCE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010023", "资源ID不存在"),
@@ -37,6 +40,7 @@ public enum HttpErrorEnum implements HttpError {
     RESOURCE_NAME_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010028", "资源名称参数为空"),
     RESOURCE_URL_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010029", "资源url参数为空"),
     RESOURCE_TYPE_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010030", "资源请求方式参数为空"),
+
     RESOURCE_TYPE_PARAMETER_IS_ERROR(HttpStatus.BAD_REQUEST, "10010031", "资源请求方式参数类型错误"),
     SERVER_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010032", "服务ID不存在"),
     SERVER_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST, "10010033", "该服务已经存在"),
@@ -46,6 +50,7 @@ public enum HttpErrorEnum implements HttpError {
     ROLE_RESOURCE_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010037", "角色资源参数为空"),
     ROLE_RESOURCE_ID_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010038", "角色资源id参数为空"),
     ROLE_RESOURCE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010039", "角色资源ID不存在"),
+
     ROLE_ID_RESOURCE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010040", "角色ID、资源ID参数查询到多条数据结果"),
     USER_ROLE_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010041", "用户角色ID不存在"),
     USER_ID_ROLE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010042", "用户ID、角色ID参数查询到多条数据结果"),
@@ -56,6 +61,7 @@ public enum HttpErrorEnum implements HttpError {
     APP_ID_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010047", "APP id参数为空"),
     APP_ID_IS_NOT_EXIST(HttpStatus.BAD_REQUEST, "10010048", "APP id参数不存在"),
     APP_ID_ROLE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST,"10010049", "APP ID、角色ID参数查询到多条数据结果"),
+
     APP_ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010050", "app角色参数为空"),
     APP_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010051", "该APP角色已经存在，请重新定义"),
     PASSWORD_IS_NOT_RIGHT(HttpStatus.BAD_REQUEST,"10010052", "密码错误，请重新登录认证"),
@@ -66,6 +72,7 @@ public enum HttpErrorEnum implements HttpError {
     APP_UPDATE_FAILED(HttpStatus.BAD_REQUEST, "10010057", "APP更新失败"),
     USER_TOKEN_IS_EMPTY(HttpStatus.BAD_REQUEST,"10010058", "用户令牌不能为空"),
     APP_TOKEN_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010059", "APP令牌参数为空"),
+
     APP_CODE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010060", "APPcode参数为空"),
     APP_CODE_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST, "10010061", "APPcode参数参数查询到多条数据"),
     APP_TOKEN_IS_NOT_RIGHT(HttpStatus.BAD_REQUEST,"10010062", "app令牌不正确"),
@@ -104,10 +111,9 @@ public enum HttpErrorEnum implements HttpError {
     }
 
 
-    @Deprecated
-    public static HttpError getError(String msg){
+    public static HttpError getError(String code){
         for (HttpErrorEnum httpErrorEnum:HttpErrorEnum.values()){
-            if (httpErrorEnum.getMessage().equals(msg)){
+            if (httpErrorEnum.getCode().equals(code)){
                 return httpErrorEnum;
             }
         }
