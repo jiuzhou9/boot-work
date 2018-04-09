@@ -118,14 +118,8 @@ public class AuthServiceImpl implements AuthService {
         ResponseEntity<Result<Boolean>> resultResponseEntity = permissionServerClient
                         .checkAppToken(appTokenDto);
         Result<Boolean> body = resultResponseEntity.getBody();
-        if (body != null && Result.SUCCESS_CODE.equals(body.getCode())){
-            return true;
-        }else {
-            log.error("权限校验结果:"+JSON.toJSONString(body));
-            log.error("权限参数："+JSON.toJSONString(appTokenDto));
-            throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
-        }
-
+        dealResult(body, HttpErrorEnum.APP_PERMISSION_CHECK_FAILED);
+        return true;
     }
 
     /**
@@ -141,17 +135,29 @@ public class AuthServiceImpl implements AuthService {
         appTokenDto.setCode(code);
         ResponseEntity<Result<AppTokenDto>> resultResponseEntity = authServerClient.checkAppToken(appTokenDto);
         Result<AppTokenDto> body = resultResponseEntity.getBody();
-        if (body != null && Result.SUCCESS_CODE.equals(body.getCode())){
-            appTokenDto = body.getData();
-            log.info("APP token 校验结果：" + JSON.toJSONString(appTokenDto));
-            return appTokenDto;
-        }else if (!Result.SUCCESS_CODE.equals(body.getCode())) {
-            HttpError error = HttpErrorEnum.getError(body.getCode());
-            throw new ServiceException(error);
+        dealResult(body, HttpErrorEnum.APP_TOKEN_CHECK_FAILED);
+        appTokenDto = body.getData();
+        return appTokenDto;
+    }
+
+    /**
+     * 处理zuul与认证、鉴权服务之间的异常情况
+     * @param result
+     * @param httpError
+     * @throws ServiceException
+     */
+    private void dealResult(Result result, HttpError httpError) throws ServiceException {
+        if (result != null && Result.SUCCESS_CODE.equals(result.getCode())){
+            return;
+        }else if (!Result.SUCCESS_CODE.equals(result.getCode())) {
+            HttpError error = HttpErrorEnum.getError(result.getCode());
+            if (error != null){
+                throw new ServiceException(error);
+            }else {
+                throw new ServiceException(httpError);
+            }
         }else {
-            log.error("app 令牌身份认证失败："+JSON.toJSONString(body));
-            log.error("app 令牌身份认证失败参数appToken："+appToken + " code参数：" + code);
-            throw new ServiceException(HttpErrorEnum.APP_TOKEN_CHECK_FAILED);
+            throw new ServiceException(httpError);
         }
     }
 
