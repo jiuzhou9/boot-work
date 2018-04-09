@@ -482,6 +482,9 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
         String resUrl;
         String resUrlOrigin;
+        if (CollectionUtils.isEmpty(map)){
+            return null;
+        }
         for (Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
             resUrl = iter.next();
             resUrlOrigin = resUrl;
