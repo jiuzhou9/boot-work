@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.constants.TimeStampConstants;
+import com.jiuzhou.bootwork.excep.HttpError;
 import com.jiuzhou.bootwork.excep.HttpErrorEnum;
 import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.result.Result;
@@ -142,7 +143,11 @@ public class AuthServiceImpl implements AuthService {
         Result<AppTokenDto> body = resultResponseEntity.getBody();
         if (body != null && Result.SUCCESS_CODE.equals(body.getCode())){
             appTokenDto = body.getData();
+            log.info("APP token 校验结果：" + JSON.toJSONString(appTokenDto));
             return appTokenDto;
+        }else if (!Result.SUCCESS_CODE.equals(body.getCode())) {
+            HttpError error = HttpErrorEnum.getError(body.getCode());
+            throw new ServiceException(error);
         }else {
             log.error("app 令牌身份认证失败："+JSON.toJSONString(body));
             log.error("app 令牌身份认证失败参数appToken："+appToken + " code参数：" + code);
