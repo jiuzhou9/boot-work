@@ -297,6 +297,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     @Override
     public void loadPermission(){
+        map = new HashMap<>();
         //查询server列表（true）
         List<ServerDto> serverDtos = serverService.selectAvailable();
         if (CollectionUtils.isEmpty(serverDtos)){

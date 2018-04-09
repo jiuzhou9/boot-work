@@ -269,10 +269,11 @@ public class AppServiceImpl implements AppService {
         AppDto byCode = getByCode(code);
         if(byCode == null){
             throw new ServiceException(HttpErrorEnum.APP_CODE_IS_NOT_EXIT);
+        }else if (!byCode.getAvailable()){
+            throw new ServiceException(HttpErrorEnum.APP_IS_NOT_AVAILABLE);
         }
-        //todo 空指针校验
         String appName = JwtTokenUtil.getAppName(appToken, byCode.getSecret());
-        if (!appName.equals(byCode.getName())){
+        if (StringUtils.isEmpty(appName) || !appName.equals(byCode.getName())){
             throw new ServiceException(HttpErrorEnum.APP_TOKEN_IS_NOT_RIGHT);
         }
         Boolean aBoolean = JwtTokenUtil.checkAppTokenExpired(appToken, byCode.getSecret());
