@@ -490,7 +490,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             resUrl = iter.next();
             resUrlOrigin = resUrl;
             if (count > 0){
-                //因为请求URL进行了去参数，那么数据库中的资源也进行去参数
+                //因为请求URL进行了去参数，那么数据库中的资源也进行去参数操作
                 String[] resourceArray = resUrl.split(",");
                 String resource = resourceArray[0];
                 String[] resUrlSplit = resource.split("/");
@@ -532,6 +532,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      */
     private boolean checkPermission(String resourcePath, String method, List<String> roleNames) {
         Collection<String> attributes = getAttributes(resourcePath, method);
+        //如果资源所需要的角色列表为空，那么该资源不进行放行
         if (CollectionUtils.isEmpty(attributes) || CollectionUtils.isEmpty(roleNames)){
             return false;
         }
