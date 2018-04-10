@@ -107,10 +107,6 @@ public class AppRoleServiceImpl implements AppRoleService {
         return appRoleDtos;
     }
 
-    @Override
-    public AppRoleDto selectById(Long id) throws ServiceException {
-        return null;
-    }
 
     @Override
     public AppRoleDto selectOneByAppIdRoleId(Long appId, Long roleId) throws ServiceException {

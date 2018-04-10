@@ -4,14 +4,15 @@ package com.jiuzhou.bootwork.constants;
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
  * @date 2018/03/28
  */
+@Deprecated
 public class JwtConstants {
 //    header: Authorization   # 头
 //    userTokenHeader: UserAuthorization   # 头
 //    appTokenHeader: AppAuthorization   # 头
 //    appIdHeader: appId  #appid头
 //    secret: 70463a4b66f635a06b3a350f2b62e11f
-//    appExpiration: 86400  # TODO 项目上线 考虑调配参数 App有效时间24小时 此参数单位秒
-//    userExpiration: 300 #TODO 项目上线 考虑调配参数 用户令牌有效时间5分钟
+//    appExpiration: 86400  # 项目上线 考虑调配参数 App有效时间24小时 此参数单位秒
+//    userExpiration: 300 #项目上线 考虑调配参数 用户令牌有效时间5分钟
 //    tokenHead: "Basic "
 
     public static final String TOKEN_HEADER = "Authorization";

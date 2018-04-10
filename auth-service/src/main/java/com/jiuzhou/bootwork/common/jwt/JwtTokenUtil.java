@@ -34,7 +34,6 @@ public class JwtTokenUtil {
     private static final String CLAIM_APP_NAME = "appname";
 
     /**
-     * todo
      * 后面需要迁移到配置文件
      */
     private static String userSecret = "67cd9e77-b62a-40ab-b67a-8d416cec5f25";
