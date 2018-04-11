@@ -24,6 +24,7 @@ public interface UserService {
     /**
      * 校验userToken是否是可用的，如果token正确，但是过期，那么用户重新刷新；
      * 如果token不正确那么抛异常；
+     * 如果用户失效，那么抛异常，提示用户已经失效
      * @return
      * @throws ServiceException
      * @param userToken
