@@ -64,7 +64,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<RoleDto> selectByName(String name) throws ServiceException {
+    public List<RoleDto> selectLikeName(String name) throws ServiceException {
         if (StringUtils.isEmpty(name)){
             throw new ServiceException(HttpErrorEnum.ROLE_NAME_IS_EMPTY);
         }
