@@ -105,15 +105,14 @@ public class AppServiceImpl implements AppService {
             throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
 
-        //TODO 此处应该是校验是否存在，而不是校验是否存在"有效的"
-        AppDto appDtoResult = selectOneAvailableByNameUserId(name, userId);
+        AppDto appDtoResult = selectOneByNameUserId(name, userId);
         if (appDtoResult != null){
             throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
         }
 
     }
 
-    private AppDto selectOneAvailableByNameUserId(String appName, Long userId) throws ServiceException {
+    private AppDto selectOneByNameUserId(String appName, Long userId) throws ServiceException {
         if (StringUtils.isEmpty(appName)){
             throw new ServiceException(HttpErrorEnum.APP_NAME_IS_EMPTY);
         }
@@ -130,7 +129,6 @@ public class AppServiceImpl implements AppService {
         AppExample.Criteria criteria = appExample.createCriteria();
         criteria.andNameEqualTo(appName);
         criteria.andUserIdEqualTo(userId);
-        criteria.andAvailableEqualTo(true);
         List<App> apps = appMapper.selectByExample(appExample);
         if (CollectionUtils.isEmpty(apps)){
             return null;
@@ -140,6 +138,15 @@ public class AppServiceImpl implements AppService {
             return appDto;
         }else {
             throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_QUERY_MANY_RESULTS);
+        }
+    }
+
+    private AppDto selectOneAvailableByNameUserId(String appName, Long userId) throws ServiceException {
+        AppDto appDto = selectOneByNameUserId(appName, userId);
+        if (appDto.getAvailable()){
+            return appDto;
+        }else {
+            return null;
         }
     }
 
