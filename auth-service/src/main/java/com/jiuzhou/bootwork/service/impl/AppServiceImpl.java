@@ -249,9 +249,11 @@ public class AppServiceImpl implements AppService {
     public AppTokenDto getAppToken(String userToken, String appName) throws ServiceException {
         UserDto userDto = userService.checkUserToken(userToken);
         Long userId = userDto.getId();
-        AppDto appDto = selectOneAvailableByNameUserId(appName, userId);
+        AppDto appDto = selectOneByNameUserId(appName, userId);
         if (appDto == null){
             throw new ServiceException(HttpErrorEnum.APP_NAME_IS_NOT_EXIST);
+        }else if (!appDto.getAvailable()){
+            throw new ServiceException(HttpErrorEnum.APP_IS_NOT_AVAILABLE);
         }
         AppDto dto = new AppDto();
         dto.setId(appDto.getId());
