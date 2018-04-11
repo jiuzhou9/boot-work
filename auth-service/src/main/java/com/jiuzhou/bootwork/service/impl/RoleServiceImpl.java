@@ -54,11 +54,8 @@ public class RoleServiceImpl implements RoleService {
             throw new ServiceException(HttpErrorEnum.ROLE_NAME_IS_EMPTY);
         }
 
-        RoleExample roleExample = new RoleExample();
-        RoleExample.Criteria criteria = roleExample.createCriteria();
-        criteria.andNameEqualTo(name);
-        List<Role> roles = roleMapper.selectByExample(roleExample);
-        if (!CollectionUtils.isEmpty(roles)){
+        RoleDto roleDtoTemp = selectOneByName(name);
+        if (roleDtoTemp != null){
             throw new ServiceException(HttpErrorEnum.ROLE_NAME_HAS_ALREADY_EXISTED);
         }
     }
