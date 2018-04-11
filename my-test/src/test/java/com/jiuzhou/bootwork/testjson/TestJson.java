@@ -3,7 +3,11 @@ package com.jiuzhou.bootwork.testjson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jiuzhou.bootwork.beans.Person;
+import com.jiuzhou.bootwork.result.Result;
 import junit.framework.TestCase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -23,5 +27,16 @@ public class TestJson extends TestCase {
         String s = JSON.toJSONString(person);
         JSONObject personJsonObject = JSONObject.parseObject(s);
         System.out.println(personJsonObject);
+    }
+
+    public void test_1(){
+        Person person = new Person();
+        person.setAge(12);
+        person.setName("ertyui");
+        Map<String, Person> map = new HashMap<>();
+        map.put("a", person);
+//        Result<String> result = new Result<>();
+//        result.setData(JSON.toJSONString(person));
+        System.out.println(JSON.toJSONString(person));
     }
 }

@@ -229,6 +229,8 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = selectOneByUsername(userName);
         if (userDto == null){
             throw new ServiceException(HttpErrorEnum.USERNAME_NOT_EXITED);
+        }else if (!userDto.getAvailable()){
+            throw new ServiceException(HttpErrorEnum.USER_IS_NOT_AVAILABLE);
         }
 
         Boolean flag = JwtTokenUtil.checkUserTokenExpired(userToken);

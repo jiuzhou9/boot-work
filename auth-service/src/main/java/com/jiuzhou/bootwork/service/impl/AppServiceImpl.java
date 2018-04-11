@@ -105,6 +105,7 @@ public class AppServiceImpl implements AppService {
             throw new ServiceException(HttpErrorEnum.USER_ID_IS_EMPTY);
         }
 
+        //TODO 此处应该是校验是否存在，而不是校验是否存在"有效的"
         AppDto appDtoResult = selectOneAvailableByNameUserId(name, userId);
         if (appDtoResult != null){
             throw new ServiceException(HttpErrorEnum.USER_ID_APP_NAME_HAS_ALREADY_EXISTED);
