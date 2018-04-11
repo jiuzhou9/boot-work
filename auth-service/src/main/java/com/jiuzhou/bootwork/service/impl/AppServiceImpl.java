@@ -112,6 +112,13 @@ public class AppServiceImpl implements AppService {
 
     }
 
+    /**
+     * 根据appName userId查询这个用户是否存在；查询这个用户下面是否已经含有这个app,如果有那么返回这个对象
+     * @param appName
+     * @param userId
+     * @return
+     * @throws ServiceException
+     */
     private AppDto selectOneByNameUserId(String appName, Long userId) throws ServiceException {
         if (StringUtils.isEmpty(appName)){
             throw new ServiceException(HttpErrorEnum.APP_NAME_IS_EMPTY);
@@ -141,12 +148,21 @@ public class AppServiceImpl implements AppService {
         }
     }
 
+    /**
+     * 根据appName userId查询这个用户是否存在；查询这个用户下面是否已经含有这个app,如果有那么返回这个对象
+     * @param appName
+     * @param userId
+     * @return
+     * @throws ServiceException 如果这个对象是无效的，那么抛异常
+     */
     private AppDto selectOneAvailableByNameUserId(String appName, Long userId) throws ServiceException {
         AppDto appDto = selectOneByNameUserId(appName, userId);
-        if (appDto.getAvailable()){
-            return appDto;
-        }else {
+        if (appDto == null){
             return null;
+        }else if (!appDto.getAvailable()){
+            throw new ServiceException(HttpErrorEnum.APP_IS_NOT_AVAILABLE);
+        }else {
+            return appDto;
         }
     }
 

@@ -18,7 +18,7 @@ public interface RoleService {
      * @param name
      * @return
      */
-    List<RoleDto> selectByName(String name) throws ServiceException;
+    List<RoleDto> selectLikeName(String name) throws ServiceException;
 
     /**
      * name的绝对查询，如果查询到多条将抛异常
