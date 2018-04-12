@@ -42,14 +42,14 @@ public class ServerServiceImplTest {
 
     @Test
     public void selectByName() {
-        List<ServerDto> serverDtos = serverService.selectByName("eureka-api");
+        List<ServerDto> serverDtos = serverService.selectLikeName("eureka-api");
         log.info(JSON.toJSONString(serverDtos));
     }
 
     @Test
     public void selectOne() {
         try {
-            ServerDto serverDto = serverService.selectOne("eureka-api");
+            ServerDto serverDto = serverService.selectOneByName("eureka-api");
             log.info(JSON.toJSONString(serverDto));
         } catch (Exception e) {
             e.printStackTrace();

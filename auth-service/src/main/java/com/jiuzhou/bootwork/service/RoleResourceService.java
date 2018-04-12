@@ -4,8 +4,6 @@ import com.jiuzhou.bootwork.excep.ServiceException;
 import com.jiuzhou.bootwork.service.dto.ResourceDto;
 import com.jiuzhou.bootwork.service.dto.RoleDto;
 import com.jiuzhou.bootwork.service.dto.RoleResourceDto;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -44,12 +42,6 @@ public interface RoleResourceService {
      */
     List<RoleDto> selectRolesByResourceName(String resourceName) throws ServiceException;
 
-    /**
-     * 绝对查询
-     * @param url
-     * @return
-     */
-    List<RoleDto> selectRolesByResourceUrl(String url) throws ServiceException;
 
     /**
      * ID更新

@@ -18,14 +18,14 @@ public interface ServerService {
      * @param name
      * @return
      */
-    List<ServerDto> selectByName(String name);
+    List<ServerDto> selectLikeName(String name);
 
     /**
      * name的绝对查询，如果查询到多条将抛异常
      * @param name
      * @return
      */
-    ServerDto selectOne(String name) throws ServiceException;
+    ServerDto selectOneByName(String name) throws ServiceException;
 
     /**
      * 主键查询

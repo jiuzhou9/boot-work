@@ -58,17 +58,14 @@ public class ServerServiceImpl implements ServerService {
             throw new ServiceException(HttpErrorEnum.SERVER_DESCRIPTION_IS_EMPTY);
         }
 
-        ServerExample serverExample = new ServerExample();
-        ServerExample.Criteria criteria = serverExample.createCriteria();
-        criteria.andNameEqualTo(name);
-        List<Server> servers = serverMapper.selectByExample(serverExample);
-        if (!CollectionUtils.isEmpty(servers)){
+        ServerDto serverDto1 = selectOneByName(name);
+        if (serverDto1 != null){
             throw new ServiceException(HttpErrorEnum.SERVER_NAME_HAS_ALREADY_EXISTED);
         }
     }
 
     @Override
-    public List<ServerDto> selectByName(String name) {
+    public List<ServerDto> selectLikeName(String name) {
         ServerExample serverExample = new ServerExample();
         ServerExample.Criteria criteria = serverExample.createCriteria();
         criteria.andNameLike(name);
@@ -83,7 +80,7 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public ServerDto selectOne(String name) throws ServiceException {
+    public ServerDto selectOneByName(String name) throws ServiceException {
         ServerExample serverExample = new ServerExample();
         ServerExample.Criteria criteria = serverExample.createCriteria();
         criteria.andNameEqualTo(name);
