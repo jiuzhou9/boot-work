@@ -31,6 +31,7 @@ public class WhiteList {
                                     "/auth-server/swagger-ui.html/swagger-resources",
                                     "/auth-server/v2/api-docs",
                                     "/eureka-api/v2/api-docs",
+                                    "/eureka-api/api/v1/hello/page",
                     };
 
     public static boolean contain(String resourcePath){

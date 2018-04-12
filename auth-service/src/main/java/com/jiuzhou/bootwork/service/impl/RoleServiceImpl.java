@@ -120,7 +120,7 @@ public class RoleServiceImpl implements RoleService {
         validateUpdate(roleDto);
         Role role = new Role();
         BeanUtils.copyProperties(roleDto, role);
-        int i = roleMapper.updateByPrimaryKey(role);
+        int i = roleMapper.updateByPrimaryKeySelective(role);
         if (i == 1){
             return true;
         }else {
@@ -136,6 +136,11 @@ public class RoleServiceImpl implements RoleService {
         RoleDto dto = selectById(id);
         if (dto == null){
             throw new ServiceException(HttpErrorEnum.ROLE_ID_IS_NOT_EXIST);
+        }else if (!dto.getName().equals(roleDto.getName())){
+            RoleDto roleDtoTemp = selectOneByName(roleDto.getName());
+            if (roleDtoTemp != null){
+                throw new ServiceException(HttpErrorEnum.ROLE_NAME_HAS_ALREADY_EXISTED);
+            }
         }
     }
 
