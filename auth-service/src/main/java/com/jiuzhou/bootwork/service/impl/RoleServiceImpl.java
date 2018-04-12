@@ -120,7 +120,7 @@ public class RoleServiceImpl implements RoleService {
         validateUpdate(roleDto);
         Role role = new Role();
         BeanUtils.copyProperties(roleDto, role);
-        int i = roleMapper.updateByExampleSelective(role);
+        int i = roleMapper.updateByPrimaryKeySelective(role);
         if (i == 1){
             return true;
         }else {
