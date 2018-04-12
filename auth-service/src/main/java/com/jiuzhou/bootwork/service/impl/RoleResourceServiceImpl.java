@@ -58,8 +58,6 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     @Autowired
     private ServerService serverService;
 
-    @Autowired
-    private RoleResourceService roleResourceService;
 
     @Autowired
     private UserService userService;
@@ -308,7 +306,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             return;
         }
 
-        List<RoleResourceDto> roleResourceDtos = roleResourceService.selectAvailable();
+        List<RoleResourceDto> roleResourceDtos = selectAvailable();
         if (CollectionUtils.isEmpty(roleResourceDtos)){
             return;
         }
@@ -440,10 +438,14 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     public Collection<String> getAttributes(String serverResource, String method) {
         Collection<String> attributesCompletelyEquals = new ArrayList<>();
         String[] split = serverResource.split("/");
-        for (int count = 0; count < split.length - 1; count++){
-            attributesCompletelyEquals = getAttributesCompletelyEquals(serverResource, method, count);
-            if (!CollectionUtils.isEmpty(attributesCompletelyEquals)){
-                return attributesCompletelyEquals;
+        if (!method.equals(RequestMethod.DELETE.name()) && !method.equals(RequestMethod.GET.name()) && !method.equals(RequestMethod.PUT.name())){
+            attributesCompletelyEquals = getAttributesCompletelyEquals(serverResource, method, 0);
+        }else {
+            for (int count = 0; count < split.length - 1; count++){
+                attributesCompletelyEquals = getAttributesCompletelyEquals(serverResource, method, count);
+                if (!CollectionUtils.isEmpty(attributesCompletelyEquals)){
+                    return attributesCompletelyEquals;
+                }
             }
         }
         return attributesCompletelyEquals;
