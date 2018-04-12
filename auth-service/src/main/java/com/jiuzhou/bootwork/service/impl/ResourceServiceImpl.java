@@ -63,6 +63,7 @@ public class ResourceServiceImpl implements ResourceService {
         String url = resourceDto.getUrl();
         String type = resourceDto.getType();
         Long serverId = resourceDto.getServerId();
+        String description = resourceDto.getDescription();
 
         if (StringUtils.isEmpty(name)){
             throw new ServiceException(HttpErrorEnum.RESOURCE_NAME_IS_EMPTY);
@@ -72,6 +73,9 @@ public class ResourceServiceImpl implements ResourceService {
         }
         if (serverId == null || serverId.equals(0L)){
             throw new ServiceException(HttpErrorEnum.SERVER_ID_PARAMETER_IS_EMPTY);
+        }
+        if (StringUtils.isEmpty(description)){
+            throw new ServiceException(HttpErrorEnum.RESOURCE_DESCRIPTION_PARAMETER_IS_EMPTY);
         }
         if (StringUtils.isEmpty(type)){
             throw new ServiceException(HttpErrorEnum.RESOURCE_TYPE_PARAMETER_IS_EMPTY);
@@ -128,11 +132,8 @@ public class ResourceServiceImpl implements ResourceService {
      * 校验资源名字是否已经存在
      */
     private void validateName(String name) throws ServiceException {
-        ResourceExample resourceExample = new ResourceExample();
-        ResourceExample.Criteria criteria = resourceExample.createCriteria();
-        criteria.andNameEqualTo(name);
-        List<Resource> resources = resourceMapper.selectByExample(resourceExample);
-        if (!CollectionUtils.isEmpty(resources)){
+        ResourceDto resourceDto = selectOneByName(name);
+        if (resourceDto != null){
             throw new ServiceException(HttpErrorEnum.SERVER_NAME_HAS_ALREADY_EXISTED);
         }
     }
@@ -146,10 +147,10 @@ public class ResourceServiceImpl implements ResourceService {
         ResourceExample.Criteria criteria = resourceExample.createCriteria();
         criteria.andNameEqualTo(name);
         List<Resource> resources = resourceMapper.selectByExample(resourceExample);
-        return dealList(resources);
+        return dealListToOne(resources);
     }
 
-    private ResourceDto dealList(List resources) throws ServiceException {
+    private ResourceDto dealListToOne(List resources) throws ServiceException {
         if (CollectionUtils.isEmpty(resources)){
             return null;
         }else if (resources.size() == 1){
@@ -161,17 +162,6 @@ public class ResourceServiceImpl implements ResourceService {
         }
     }
 
-    @Override
-    public ResourceDto selectOneByUrl(String url) throws ServiceException {
-        if (StringUtils.isEmpty(url)){
-            return null;
-        }
-        ResourceExample resourceExample = new ResourceExample();
-        ResourceExample.Criteria criteria = resourceExample.createCriteria();
-        criteria.andUrlEqualTo(url);
-        List<Resource> resources = resourceMapper.selectByExample(resourceExample);
-        return dealList(resources);
-    }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override

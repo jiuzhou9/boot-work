@@ -190,13 +190,6 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         return selectAvailableRolesByResourceId(resourceId);
     }
 
-    @Override
-    public List<RoleDto> selectRolesByResourceUrl(String url) throws ServiceException {
-        ResourceDto resourceDto = resourceService.selectOneByUrl(url);
-        Long resourceId = resourceDto.getId();
-        List<RoleDto> roleDtos = selectAvailableRolesByResourceId(resourceId);
-        return roleDtos;
-    }
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
     @Override

@@ -26,13 +26,6 @@ public interface ResourceService {
     ResourceDto selectOneByName(String name) throws ServiceException;
 
     /**
-     * 根据URL插叙（绝对查询）
-     * @param url
-     * @return
-     */
-    ResourceDto selectOneByUrl(String url) throws ServiceException;
-
-    /**
      * 根据id更新
      * @param resourceDto
      * @param id

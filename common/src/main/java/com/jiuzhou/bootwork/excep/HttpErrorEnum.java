@@ -86,6 +86,7 @@ public enum HttpErrorEnum implements HttpError {
 
     APP_IS_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "10010070", "app失效"),
     APP_PERMISSION_CHECK_FAILED(HttpStatus.BAD_REQUEST,"10010071", "app权限校验失败"),
+    RESOURCE_DESCRIPTION_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010072", "资源描述参数为空"),
     ;
 
     private HttpStatus httpStatus;
