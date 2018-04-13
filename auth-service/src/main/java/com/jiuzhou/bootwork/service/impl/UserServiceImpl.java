@@ -210,6 +210,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserTokenDto login(String username, String password) throws ServiceException {
         UserDto userDto = selectOneByUsername(username);
+        if (userDto == null){
+            throw new ServiceException(HttpErrorEnum.USERNAME_NOT_EXITED);
+        }
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         boolean matches = bCryptPasswordEncoder.matches(password, userDto.getPassword());
         if (matches){
