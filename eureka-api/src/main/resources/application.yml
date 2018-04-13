@@ -6,7 +6,8 @@ eureka:
 #    register-with-eureka: false
 #    fetch-registry: false
     service-url:
-      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
+      defaultZone: http://127.0.0.1:15100/eureka/
+#      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
 spring:
   application:
     name: eureka-api

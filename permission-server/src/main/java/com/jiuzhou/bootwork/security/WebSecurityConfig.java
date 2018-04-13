@@ -77,12 +77,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * api 白名单
      */
     private static final String[] AUTH_WHITELIST_API = {
-                    "/api/v1/user/register",
-                    "/api/v1/user/create-user-token",
-                    "/api/v1/user/check-user-token",
-                    "/api/v1/app/create",
-                    "/api/v1/app/refresh",
-                    "/api/v1/app/check",
                     "/api/v1/app-permission/decide"
     };
 
@@ -98,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/configuration/security",
                     "/swagger-ui.html",
                     "/webjars/**",
-                    "/auth-server/swagger-ui.html"
+                    "/permission-server/swagger-ui.html"
                     // other public endpoints of your API may be appended to this array
     };
 }
