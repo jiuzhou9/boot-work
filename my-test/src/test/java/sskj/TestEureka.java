@@ -25,10 +25,10 @@ public class TestEureka {
     @Test
     //    @Ignore
     public void test_eureka_api(){
-        String urlStr = "http://localhost:15102/eureka-api/api/v1/example/get";
+        String urlStr = "http://localhost:15102/eureka-api/api/v1/example/get?id=12";
 
-        Map<String, String> headers = RequestTool.buildHeaders("BZNTKomAhZwY3EU9iD",
-                                                               "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi5rWL6K-VQVBQIiwiZXhwIjoxNTI1MTAzOTI4fQ.eTDzilG7N1b_vN4F7zrWneppRuxTDCoPWwv_vlYjshb3iaRDeZ2f4h0XVFyejEdPa_UkT1rXPWwO_OuQcZSGWg", null);
+        Map<String, String> headers = RequestTool.buildHeaders("T4NPJ7UxsIjzszyS0g",
+                                                               "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoiYWJj55qEQVBQIiwiZXhwIjoxNTI2MTkwODg3LCJ1c2VybmFtZSI6ImFiYyJ9.UjRIkMEVzh2jwhnXJlpfCL9fHmgw4Tuu8NhVTVvVokML7dI7O5XGJqiFY8_zC4q37HHZNNxw0u7kJEwF5EFaPg", null);
 
         String responseEntity = RequestTool.getRequest(headers, urlStr, HttpMethod.GET);
 
