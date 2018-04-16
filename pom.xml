@@ -57,6 +57,7 @@
         <!--<spring-cloud-starter-netflix-zuul.version>1.4.3.RELEASE</spring-cloud-starter-netflix-zuul.version>-->
         <!--<spring-cloud-starter-netflix-ribbon.version>1.4.3.RELEASE</spring-cloud-starter-netflix-ribbon.version>-->
         <common.version>1.0-SNAPSHOT</common.version>
+        <spring-cloud-zuul-ratelimit.version>1.5.0.RELEASE</spring-cloud-zuul-ratelimit.version>
     </properties>
 
     <dependencies>

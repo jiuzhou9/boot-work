@@ -13,3 +13,16 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:15011/eureka
+#网关限流
+zuul:
+  ratelimit:
+    enabled: true
+    behind-proxy: true
+    policy-list:
+      user-service:
+          limit: 10
+          refresh-interval: 60
+          type: user
+#            - user
+#            - origin
+#            - ur

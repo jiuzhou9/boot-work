@@ -139,3 +139,4 @@ spring-boot-maven-plugin资源依赖，但是发现还是解决不了，总而�
       </tr>
   </table>
   
+  mvn clean package -Dmaven.test.skip=true
