@@ -89,7 +89,7 @@
                 <configuration>
                     <excludes>
                         <exclude>application*.yml</exclude>
-                        <exclude>logback.xml</exclude>
+                        <exclude>logback-spring.xml</exclude>
                     </excludes>
                 </configuration>
             </plugin>

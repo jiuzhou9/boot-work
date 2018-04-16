@@ -87,9 +87,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
+                    <!--配置文件，打包的时候不包含-->
                     <excludes>
                         <exclude>application*.yml</exclude>
-                        <exclude>logback.xml</exclude>
+                        <exclude>logback-spring.xml</exclude>
                     </excludes>
                 </configuration>
             </plugin>

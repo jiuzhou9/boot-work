@@ -52,17 +52,6 @@ public class ResourceServiceImplTest {
     }
 
     @Test
-    public void selectOneByUrl() {
-        ResourceDto resourceDto = null;
-        try {
-            resourceDto = resourceService.selectOneByUrl("/api/v1/hello");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        log.info(JSON.toJSONString(resourceDto));
-    }
-
-    @Test
     public void updateById() {
         ResourceDto resourceDto = new ResourceDto();
         resourceDto.setDescription("测试更新");

@@ -1,20 +1,3 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/20180301?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: 12345
-  application:
-    name: auth-server
-server:
-  port: 15050
-
-# mybatis配置
-mybatis:
-#  type-aliases-package: com.jiuzhou.bootwork.dao.model
-  mapper-locations: classpath:com/jiuzhou/bootwork/dao/mapper/*.xml
-eureka:
-  client:
-    service-url:
-      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
-#      defaultZone: http://172.16.1.7:8889/
+  profiles:
+    active: dev

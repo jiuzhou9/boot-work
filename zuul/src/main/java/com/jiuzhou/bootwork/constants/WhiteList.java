@@ -9,14 +9,14 @@ import java.util.List;
  */
 public class WhiteList {
 
-//    private static final String AUTH_SERVER = "/auth-server";
+    private static final String AUTH_SERVER = "/auth-server";
     private static final String[] RESOURCE_PATH =
                     {
                                     //此处可以指定白名单路径
-//                                    AUTH_SERVER+"/api/v1/user/register",
-//                                    AUTH_SERVER+"/api/v1/user/create-user-token",
-//                                    AUTH_SERVER+"/api/v1/app/create",
-//                                    AUTH_SERVER+"/api/v1/app/refresh",
+                                    AUTH_SERVER+"/api/v1/user/register",
+                                    AUTH_SERVER+"/api/v1/user/create-user-token",
+                                    AUTH_SERVER+"/api/v1/app/create",
+                                    AUTH_SERVER+"/api/v1/app/refresh",
 //                                    //临时添加 todo 后面会删除
 //                                    AUTH_SERVER+"/swagger-ui.html",
 //                                    AUTH_SERVER+"/webjars/springfox-swagger-ui/springfox.css",
