@@ -235,6 +235,186 @@ public class RoleExample {
             return (Criteria) this;
         }
 
+        public Criteria andTimesIsNull() {
+            addCriterion("times is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesIsNotNull() {
+            addCriterion("times is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesEqualTo(Long value) {
+            addCriterion("times =", value, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesNotEqualTo(Long value) {
+            addCriterion("times <>", value, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesGreaterThan(Long value) {
+            addCriterion("times >", value, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesGreaterThanOrEqualTo(Long value) {
+            addCriterion("times >=", value, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesLessThan(Long value) {
+            addCriterion("times <", value, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesLessThanOrEqualTo(Long value) {
+            addCriterion("times <=", value, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesIn(List<Long> values) {
+            addCriterion("times in", values, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesNotIn(List<Long> values) {
+            addCriterion("times not in", values, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesBetween(Long value1, Long value2) {
+            addCriterion("times between", value1, value2, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimesNotBetween(Long value1, Long value2) {
+            addCriterion("times not between", value1, value2, "times");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotIsNull() {
+            addCriterion("time_slot is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotIsNotNull() {
+            addCriterion("time_slot is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotEqualTo(Integer value) {
+            addCriterion("time_slot =", value, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotNotEqualTo(Integer value) {
+            addCriterion("time_slot <>", value, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotGreaterThan(Integer value) {
+            addCriterion("time_slot >", value, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotGreaterThanOrEqualTo(Integer value) {
+            addCriterion("time_slot >=", value, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotLessThan(Integer value) {
+            addCriterion("time_slot <", value, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotLessThanOrEqualTo(Integer value) {
+            addCriterion("time_slot <=", value, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotIn(List<Integer> values) {
+            addCriterion("time_slot in", values, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotNotIn(List<Integer> values) {
+            addCriterion("time_slot not in", values, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotBetween(Integer value1, Integer value2) {
+            addCriterion("time_slot between", value1, value2, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeSlotNotBetween(Integer value1, Integer value2) {
+            addCriterion("time_slot not between", value1, value2, "timeSlot");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

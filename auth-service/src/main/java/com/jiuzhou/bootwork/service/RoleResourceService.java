@@ -78,7 +78,18 @@ public interface RoleResourceService {
      *
      * @return
      */
+    @Deprecated
     boolean decide(String username, String resourcePath, String method) throws ServiceException;
+
+    /**
+     * 投票判决，一个第三方是否可以访问一个资源，如果有权限访问那么返回相应的角色信息
+     *
+     * @param username     第三方
+     * @param resourcePath 他想访问的资源
+     *
+     * @return
+     */
+    String decideUser(String username, String resourcePath, String method) throws ServiceException;
 
     /**
      * 判断某用户的App是否有权限访问资源

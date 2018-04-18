@@ -23,7 +23,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -183,12 +185,21 @@ public class UserRoleServiceImpl implements UserRoleService {
         }
 
         List<Long> roleIds = new ArrayList<>();
+        Map<Long, UserRole> userRoleMap = new HashMap<>();
         userRoles.forEach( userRole -> {
             Long roleId = userRole.getRoleId();
             roleIds.add(roleId);
+            userRoleMap.put(roleId, userRole);
         });
 
         List<RoleDto> roleDtos = roleService.selectAvailableByIds(roleIds);
+
+        //拼接用户角色的付费信息
+        roleDtos.forEach( roleDto -> {
+            UserRole userRole = userRoleMap.get(roleDto.getId());
+            roleDto.setRemainder(userRole.getRemainder());
+            roleDto.setEndTime(userRole.getEndTime());
+        });
         return roleDtos;
     }
 

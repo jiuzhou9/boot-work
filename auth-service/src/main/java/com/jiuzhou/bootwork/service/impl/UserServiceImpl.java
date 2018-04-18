@@ -24,7 +24,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -256,12 +258,20 @@ public class UserServiceImpl implements UserService {
         if (CollectionUtils.isEmpty(roleDtos)){
             return userDto;
         }
+
+        /*非付费机制使用的角色集合*/
         List<String> roleNames = new ArrayList<>();
+
+        /*付费机制使用的集合*/
+        Map<String, RoleDto> roleDtoMap = new HashMap<>();
         roleDtos.forEach( roleDto -> {
             String name = roleDto.getName();
             roleNames.add(name);
+            roleDtoMap.put(name, roleDto);
         });
         userDto.setRoleNames(roleNames);
+        userDto.setRoleDtoMap(roleDtoMap);
+
         return userDto;
     }
 }
