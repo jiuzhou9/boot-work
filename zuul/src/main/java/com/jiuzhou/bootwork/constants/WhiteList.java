@@ -17,22 +17,6 @@ public class WhiteList {
                                     AUTH_SERVER+"/api/v1/user/create-user-token",
                                     AUTH_SERVER+"/api/v1/app/create",
                                     AUTH_SERVER+"/api/v1/app/refresh",
-//                                    //临时添加 todo 后面会删除
-//                                    AUTH_SERVER+"/swagger-ui.html",
-//                                    AUTH_SERVER+"/webjars/springfox-swagger-ui/springfox.css",
-//                                    AUTH_SERVER+"/webjars/springfox-swagger-ui/springfox.js",
-//                                    AUTH_SERVER+"/webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js",
-//                                    "/auth-server/webjars/springfox-swagger-ui/favicon-32x32.png",
-//                                    "/auth-server/webjars/springfox-swagger-ui/favicon-16x16.png",
-//                                    "/auth-server/swagger-resources/configuration/ui",
-//                                    "/auth-server/swagger-resources/configuration/security",
-//                                    "/auth-server/swagger-resources",
-//                                    "/auth-server/swagger-ui.html/swagger-resources/configuration/ui",
-//                                    "/auth-server/swagger-ui.html/swagger-resources/configuration/security",
-//                                    "/auth-server/swagger-ui.html/swagger-resources",
-//                                    "/auth-server/v2/api-docs",
-//                                    "/eureka-api/v2/api-docs",
-//                                    "/eureka-api/api/v1/hello/page",
                     };
 
     /**
