@@ -20,6 +20,12 @@ public interface UserRoleService {
 
     List<RoleDto> selectOneByMobile(String mobile) throws ServiceException;
 
+    /**
+     * 查询一个用户的角色信息集合，集合中元素对象包含着角色的剩余次数、截止时间
+     * @param userId
+     * @return
+     * @throws ServiceException
+     */
     List<RoleDto> selectAvailableByUserId(Long userId) throws ServiceException;
 
     UserRoleDto selectByUserIdRoleId(Long userId, Long roleId) throws ServiceException;

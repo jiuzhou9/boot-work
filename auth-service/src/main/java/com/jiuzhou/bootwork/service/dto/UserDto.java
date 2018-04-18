@@ -1,9 +1,11 @@
 package com.jiuzhou.bootwork.service.dto;
 
+import com.jiuzhou.bootwork.dao.model.Role;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class UserDto {
@@ -27,7 +29,10 @@ public class UserDto {
 
     private LocalDateTime updateTime;
 
+    @Deprecated
     private List<String> roleNames;
+
+    private Map<String, RoleDto> roleDtoMap;
 
     private static final long serialVersionUID = 1L;
 

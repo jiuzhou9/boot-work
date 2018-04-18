@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class UserVo {
-    private Long id;
 
     private String username;
 
@@ -20,15 +19,5 @@ public class UserVo {
     private String address;
 
     private String mobile;
-
-    private Boolean available;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateTime;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
-
-    private static final long serialVersionUID = 1L;
 
 }

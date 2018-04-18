@@ -285,6 +285,186 @@ public class UserRoleExample {
             return (Criteria) this;
         }
 
+        public Criteria andRemainderIsNull() {
+            addCriterion("remainder is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderIsNotNull() {
+            addCriterion("remainder is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderEqualTo(Long value) {
+            addCriterion("remainder =", value, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderNotEqualTo(Long value) {
+            addCriterion("remainder <>", value, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderGreaterThan(Long value) {
+            addCriterion("remainder >", value, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderGreaterThanOrEqualTo(Long value) {
+            addCriterion("remainder >=", value, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderLessThan(Long value) {
+            addCriterion("remainder <", value, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderLessThanOrEqualTo(Long value) {
+            addCriterion("remainder <=", value, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderIn(List<Long> values) {
+            addCriterion("remainder in", values, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderNotIn(List<Long> values) {
+            addCriterion("remainder not in", values, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderBetween(Long value1, Long value2) {
+            addCriterion("remainder between", value1, value2, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemainderNotBetween(Long value1, Long value2) {
+            addCriterion("remainder not between", value1, value2, "remainder");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeIsNull() {
+            addCriterion("start_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeIsNotNull() {
+            addCriterion("start_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeEqualTo(LocalDateTime value) {
+            addCriterion("start_time =", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeNotEqualTo(LocalDateTime value) {
+            addCriterion("start_time <>", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeGreaterThan(LocalDateTime value) {
+            addCriterion("start_time >", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("start_time >=", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeLessThan(LocalDateTime value) {
+            addCriterion("start_time <", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("start_time <=", value, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeIn(List<LocalDateTime> values) {
+            addCriterion("start_time in", values, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeNotIn(List<LocalDateTime> values) {
+            addCriterion("start_time not in", values, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("start_time between", value1, value2, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("start_time not between", value1, value2, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeIsNull() {
+            addCriterion("end_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeIsNotNull() {
+            addCriterion("end_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeEqualTo(LocalDateTime value) {
+            addCriterion("end_time =", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeNotEqualTo(LocalDateTime value) {
+            addCriterion("end_time <>", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeGreaterThan(LocalDateTime value) {
+            addCriterion("end_time >", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("end_time >=", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeLessThan(LocalDateTime value) {
+            addCriterion("end_time <", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("end_time <=", value, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeIn(List<LocalDateTime> values) {
+            addCriterion("end_time in", values, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeNotIn(List<LocalDateTime> values) {
+            addCriterion("end_time not in", values, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("end_time between", value1, value2, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("end_time not between", value1, value2, "endTime");
+            return (Criteria) this;
+        }
+
         public Criteria andAvailableIsNull() {
             addCriterion("available is null");
             return (Criteria) this;

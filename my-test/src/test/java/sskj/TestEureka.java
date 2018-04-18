@@ -55,9 +55,9 @@ public class TestEureka {
     @Test
     public void test_sskj_eureka_api(){
 
-        String url = "http://47.94.134.37:15102/eureka-api/api/v1/example/get?id=12";
-        String appCode = "6ZoNpHiRa3zaZyR3VS";
-        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mb5Lmz5LiaQVBQIiwiZXhwIjoxNTI2NTM2OTMzLCJ1c2VybmFtZSI6IuiSmeeJm-S5s-S4miJ9.88TiGlvA_eoVemhB6u9-R4tJui4_yWuQKjH_9NLEkqU_Fkaa7_CSoUOtlrnwtE9GOftMXJGFaknD3SuIjZYVRg";
+        String url = "http://127.0.0.1:15040/eureka-api/api/v1/example/get?id=12";
+        String appCode = "0s7mkuNq4byMD2Ms6M";
+        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mbQVBQIiwiZXhwIjoxNTI2NjI4MTYwLCJ1c2VybmFtZSI6IuiSmeeJm-S5s-S4miJ9.fp8sLhZBMcMW2XvF-DLvzJNDARRndBtrtJd2nDavqCEgAi3G1bOqlq83JnQL6mig12wgUepblE8WxnhUPs7SiA";
 
         Map<String, String> headers = new HashMap<>();
         //时间戳

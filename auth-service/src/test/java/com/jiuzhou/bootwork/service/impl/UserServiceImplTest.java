@@ -44,7 +44,7 @@ public class UserServiceImplTest {
     public void selectOneAvailableWithRolesByUsername() {
         UserDto userDto = null;
         try {
-            userDto = userService.selectOneAvailableWithRolesByUsername("123");
+            userDto = userService.selectOneAvailableWithRolesByUsername("蒙牛乳业");
         } catch (ServiceException e) {
             e.printStackTrace();
         }

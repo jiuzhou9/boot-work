@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.service.impl;
 
+import com.jiuzhou.bootwork.common.role.RoleConstants;
 import com.jiuzhou.bootwork.dao.mapper.RoleResourceMapper;
 import com.jiuzhou.bootwork.dao.model.RoleResource;
 import com.jiuzhou.bootwork.dao.model.RoleResourceExample;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -453,7 +455,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
 
     /**
-     * 完全匹配
+     * 完全匹配 根据请求资源获取相应的角色列表
      * @param serverResource
      * @param method
      * @return
@@ -500,17 +502,25 @@ public class RoleResourceServiceImpl implements RoleResourceService {
                 return map.get(resUrlOrigin);
             }
         }
-        //TODO 此处将来可以根据需求改进，如果数据库里没有资源角色映射的话，那么就抛异常不进行放行,现在是数据库中没有资源角色映射那么说明这个资源是不需要权限控制的
         return null;
     }
 
-
-
+    /**
+     * 校验用户请求资源是否有权限
+     * @param username     第三方
+     * @param resourcePath 他想访问的资源
+     *
+     * @param method
+     * @return
+     * @throws ServiceException
+     */
     @Override
+    @Deprecated
     public boolean decide(String username, String resourcePath, String method) throws ServiceException{
         UserDto userDto = userService.selectOneAvailableWithRolesByUsername(username);
         List<String> roleNames = userDto.getRoleNames();
 
+        //如果用户没有任何角色那么，用户不能访问任何资源，所以返回false
         if (!CollectionUtils.isEmpty(roleNames) && checkPermission(resourcePath, method, roleNames)) {
             return true;
         }
@@ -518,12 +528,36 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     }
 
     /**
-     * 检测角色集合对一个资源是否有效
+     * 校验用户请求资源是否有权限
+     * @param username     第三方
+     * @param resourcePath 他想访问的资源
+     *
+     * @param method
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public String decideUser(String username, String resourcePath, String method) throws ServiceException{
+        UserDto userDto = userService.selectOneAvailableWithRolesByUsername(username);
+        Map<String, RoleDto> roleDtoMap = userDto.getRoleDtoMap();
+        List<String> roleNames = userDto.getRoleNames();
+
+        //如果用户没有任何角色那么，用户不能访问任何资源，所以返回false
+        String role = getPermission(resourcePath, method, roleDtoMap);
+        if (!CollectionUtils.isEmpty(roleNames) && !StringUtils.isEmpty(role)) {
+            return role;
+        }
+        return "";
+    }
+
+    /**
+     * 检测角色集合对一个资源是否有效 如果有效那么返回true
      * @param resourcePath
      * @param method
      * @param roleNames
      * @return
      */
+    @Deprecated
     private boolean checkPermission(String resourcePath, String method, List<String> roleNames) {
         Collection<String> attributes = getAttributes(resourcePath, method);
         //如果资源所需要的角色列表为空，那么该资源不进行放行
@@ -541,6 +575,43 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             }
         }
         return false;
+    }
+
+    /**
+     * 检测角色集合对一个资源是否有效 如果有效那么返回该角色名称
+     * @param resourcePath
+     * @param method
+     * @param roleDtoMap
+     * @return
+     */
+    private String getPermission(String resourcePath, String method, Map<String, RoleDto> roleDtoMap) {
+        Collection<String> attributes = getAttributes(resourcePath, method);
+        //如果资源所需要的角色列表为空，那么该资源不进行放行
+        if (CollectionUtils.isEmpty(attributes) || CollectionUtils.isEmpty(roleDtoMap)){
+            return "";
+        }
+
+        Set<String> roleNameSet = roleDtoMap.keySet();
+
+        String needRole;
+        for (Iterator<String> iter = attributes.iterator(); iter.hasNext(); ) {
+            needRole = iter.next();
+            for (String role : roleNameSet) {
+                if (needRole.trim().equals(role)) {
+                    //如果角色名匹配，那么校验付费标准校验
+                    RoleDto roleDto = roleDtoMap.get(role);
+                    Integer type = roleDto.getType();
+                    if (RoleConstants.PAY_TYPE_TIMES == type.intValue()){
+
+                    }else if (RoleConstants.PAY_TYPE_TIME_SLOT == type.intValue()){
+
+                    }else {
+                        //nothing
+                    }
+                }
+            }
+        }
+        return "";
     }
 
     @Override
@@ -566,6 +637,14 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         }
     }
 
+    /**
+     * 校验用户请求资源是否有权限访问
+     * @param userName
+     * @param resourcePath
+     * @param appName
+     * @param method
+     * @throws ServiceException
+     */
     private void validateDecideAppRequest(String userName, String resourcePath, String appName, String method)
                     throws ServiceException {
         if (StringUtils.isEmpty(userName)){
