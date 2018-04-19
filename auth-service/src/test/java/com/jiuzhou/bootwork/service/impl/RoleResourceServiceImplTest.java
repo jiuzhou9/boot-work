@@ -46,4 +46,14 @@ public class RoleResourceServiceImplTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void decideWithPay() {
+        try {
+            boolean decide = roleResourceService.decideWithPay("蒙牛乳业", "/eureka-api/api/v1/example/get?id=12", "蒙牛APP", "GET");
+            log.info(JSON.toJSONString(decide));
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+    }
 }

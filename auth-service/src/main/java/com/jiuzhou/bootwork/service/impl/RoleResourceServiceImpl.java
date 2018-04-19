@@ -12,6 +12,7 @@ import com.jiuzhou.bootwork.service.ResourceService;
 import com.jiuzhou.bootwork.service.RoleResourceService;
 import com.jiuzhou.bootwork.service.RoleService;
 import com.jiuzhou.bootwork.service.ServerService;
+import com.jiuzhou.bootwork.service.UserRoleService;
 import com.jiuzhou.bootwork.service.UserService;
 import com.jiuzhou.bootwork.service.dto.AppDto;
 import com.jiuzhou.bootwork.service.dto.PermissionDto;
@@ -31,13 +32,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -65,6 +61,9 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     @Autowired
     private AppService appService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     private HashMap<String, Collection<String>> map = null;
 
@@ -537,25 +536,34 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      * @throws ServiceException
      */
     @Override
-    public String decideUser(String username, String resourcePath, String method) throws ServiceException{
+    public RoleDto decideUser(String username, String resourcePath, String method) throws ServiceException{
         UserDto userDto = userService.selectOneAvailableWithRolesByUsername(username);
         Map<String, RoleDto> roleDtoMap = userDto.getRoleDtoMap();
-        List<String> roleNames = userDto.getRoleNames();
+
+        //如果用户没有任何角色，那么不放行
+        if (CollectionUtils.isEmpty(roleDtoMap)){
+            return null;
+        }
 
         //如果用户没有任何角色那么，用户不能访问任何资源，所以返回false
-        String role = getPermission(resourcePath, method, roleDtoMap);
-        if (!CollectionUtils.isEmpty(roleNames) && !StringUtils.isEmpty(role)) {
-            return role;
+        String roleName = getUserPermission(resourcePath, method, roleDtoMap);
+        if (!CollectionUtils.isEmpty(roleDtoMap) && !StringUtils.isEmpty(roleName)) {
+            return roleDtoMap.get(roleName);
         }
-        return "";
+        return null;
     }
 
     /**
-     * 检测角色集合对一个资源是否有效 如果有效那么返回true
+     * 检测角色集合对一个资源是否有效
+     * 如果有效那么返回true
+     * 本方法没有付费机制，所以只提供给APP投票使用
+     *
      * @param resourcePath
      * @param method
      * @param roleNames
      * @return
+     *
+     * @see RoleResourceServiceImpl#getUserPermission(java.lang.String, java.lang.String, java.util.Map)
      */
     @Deprecated
     private boolean checkPermission(String resourcePath, String method, List<String> roleNames) {
@@ -578,13 +586,16 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     }
 
     /**
-     * 检测角色集合对一个资源是否有效 如果有效那么返回该角色名称
+     * 检测角色集合对一个资源是否有效
+     * 如果有效那么返回该角色名称
+     * 本方法有付费机制所以需要提供给用户角色投票使用
+     *
      * @param resourcePath
      * @param method
      * @param roleDtoMap
      * @return
      */
-    private String getPermission(String resourcePath, String method, Map<String, RoleDto> roleDtoMap) {
+    private String getUserPermission(String resourcePath, String method, Map<String, RoleDto> roleDtoMap) {
         Collection<String> attributes = getAttributes(resourcePath, method);
         //如果资源所需要的角色列表为空，那么该资源不进行放行
         if (CollectionUtils.isEmpty(attributes) || CollectionUtils.isEmpty(roleDtoMap)){
@@ -593,18 +604,29 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
         Set<String> roleNameSet = roleDtoMap.keySet();
 
-        String needRole;
+        String needRoleName;
         for (Iterator<String> iter = attributes.iterator(); iter.hasNext(); ) {
-            needRole = iter.next();
-            for (String role : roleNameSet) {
-                if (needRole.trim().equals(role)) {
-                    //如果角色名匹配，那么校验付费标准校验
-                    RoleDto roleDto = roleDtoMap.get(role);
+            needRoleName = iter.next();
+            for (String roleName : roleNameSet) {
+                if (needRoleName.trim().equals(roleName)) {
+                    //如果角色名匹配，那么校验付费标准校验,获取用户角色集合中匹配成功的角色对象
+                    RoleDto roleDto = roleDtoMap.get(roleName);
                     Integer type = roleDto.getType();
                     if (RoleConstants.PAY_TYPE_TIMES == type.intValue()){
+                        Long remainder = roleDto.getRemainder();
+                        long l = remainder.longValue();
+                        if (l > 0){
+                            return roleName;
+                        }
+                        //否则视为用户的当前角色需要续费
 
                     }else if (RoleConstants.PAY_TYPE_TIME_SLOT == type.intValue()){
-
+                        //如果这个角色是按照时间段进行收费的类型，那么判断该用户的角色截止时间是什么时候，是否在当前时间以后
+                        LocalDateTime endTime = roleDto.getEndTime();
+                        boolean after = endTime.isAfter(LocalDateTime.now());
+                        if (after){
+                            return roleName;
+                        }
                     }else {
                         //nothing
                     }
@@ -615,27 +637,58 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     }
 
     @Override
+    @Deprecated
     public boolean decide(String userName, String resourcePath, String appName, String method) throws ServiceException {
         validateDecideAppRequest(userName, resourcePath, appName, method);
         boolean decide = decide(userName, resourcePath, method);
         if (decide){
-            AppDto appDto = appService.getAvailableByAppNameUserName(appName, userName);
-            if (appDto == null){
-                throw new ServiceException(HttpErrorEnum.APP_NAME_IS_NOT_EXIST);
-            }
-            List<String> roleNames = appDto.getRoleNames();
-
-            boolean b = checkPermission(resourcePath, method, roleNames);
-            if (b){
-                return true;
-            }else {
-                throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
-            }
-
+            return dealAppPermission(userName, resourcePath, appName, method);
         }else {
             throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
         }
     }
+
+    /**
+     * 处理APP 的权限
+     * @param userName
+     * @param resourcePath
+     * @param appName
+     * @param method
+     * @return
+     * @throws ServiceException
+     */
+    private boolean dealAppPermission(String userName, String resourcePath, String appName, String method)
+                    throws ServiceException {
+        AppDto appDto = appService.getAvailableByAppNameUserName(appName, userName);
+        if (appDto == null){
+            throw new ServiceException(HttpErrorEnum.APP_NAME_IS_NOT_EXIST);
+        }
+        List<String> roleNames = appDto.getRoleNames();
+
+        boolean b = checkPermission(resourcePath, method, roleNames);
+        if (b){
+            return true;
+        }else {
+            throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
+        }
+    }
+
+
+    @Override
+    public boolean decideWithPay(String userName, String resourcePath, String appName, String method) throws ServiceException {
+        validateDecideAppRequest(userName, resourcePath, appName, method);
+        RoleDto roleDto = decideUser(userName, resourcePath, method);
+        if (roleDto != null){
+            boolean flag;
+            flag = dealAppPermission(userName, resourcePath, appName, method);
+            //重置用户角色付费信息
+            flag = userRoleService.updateRemainderByUserNameAndRoleId(userName, roleDto.getId());
+            return flag;
+        }else {
+            throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
+        }
+    }
+
 
     /**
      * 校验用户请求资源是否有权限访问
