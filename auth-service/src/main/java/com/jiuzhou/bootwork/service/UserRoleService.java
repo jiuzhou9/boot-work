@@ -32,4 +32,12 @@ public interface UserRoleService {
 
     UserRoleDto selectById(Long id) throws ServiceException;
 
+    /**
+     * 根据用户名和角色ID更新
+     * @param username
+     * @param roleId
+     * @return
+     */
+    boolean updateRemainderByUserNameAndRoleId(String username, Long roleId) throws ServiceException;
+
 }

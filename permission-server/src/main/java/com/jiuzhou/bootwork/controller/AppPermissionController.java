@@ -37,7 +37,7 @@ public class AppPermissionController {
         String method = appTokenVo.getMethod();
         String serverResource = appTokenVo.getServerResource();
         try {
-            boolean decide = roleResourceService.decide(userName, serverResource, appName, method);
+            boolean decide = roleResourceService.decideWithPay(userName, serverResource, appName, method);
             result = Result.buildSuccess(decide);
             log.info("权限校验：" + JSON.toJSONString(result));
             return new ResponseEntity<>(result, HttpStatus.OK);

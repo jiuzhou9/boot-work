@@ -15,4 +15,5 @@ public class RoleConstants {
      * 付费类型：时间段
      */
     public static final int PAY_TYPE_TIME_SLOT = 2;
+
 }

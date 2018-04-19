@@ -14,6 +14,8 @@ public class TestCompare extends TestCase {
      */
     public void test(){
         Integer a = 0;
-        System.out.println(a.compareTo(0));
+        Long b = 1L;
+        System.out.println(b > 0L);
     }
+
 }

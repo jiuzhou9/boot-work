@@ -77,6 +77,8 @@ public interface RoleResourceService {
      * @param resourcePath 他想访问的资源
      *
      * @return
+     *
+     * @see RoleResourceService#decideUser(java.lang.String, java.lang.String, java.lang.String)
      */
     @Deprecated
     boolean decide(String username, String resourcePath, String method) throws ServiceException;
@@ -89,7 +91,7 @@ public interface RoleResourceService {
      *
      * @return
      */
-    String decideUser(String username, String resourcePath, String method) throws ServiceException;
+    RoleDto decideUser(String username, String resourcePath, String method) throws ServiceException;
 
     /**
      * 判断某用户的App是否有权限访问资源
@@ -99,7 +101,22 @@ public interface RoleResourceService {
      * @param appName
      *
      * @return
+     *
+     * @see RoleResourceService#decideWithPay(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
+    @Deprecated
     boolean decide(String userName, String resourcePath, String appName, String method) throws ServiceException;
 
+
+    /**
+     * 判断某用户的App是否有权限访问资源
+     * 含有付费机制
+     *
+     * @param userName
+     * @param resourcePath
+     * @param appName
+     *
+     * @return
+     */
+    boolean decideWithPay(String userName, String resourcePath, String appName, String method) throws ServiceException;
 }

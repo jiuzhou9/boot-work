@@ -37,4 +37,15 @@ public class UserRoleServiceImplTest {
         }
         log.info(JSON.toJSONString(roleDtos));
     }
+
+    @Test
+    public void updateRemainderByUserNameAndRoleId() {
+        boolean flag = false;
+        try {
+            flag = userRoleService.updateRemainderByUserNameAndRoleId("蒙牛乳业", 1L);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        System.out.println(flag);
+    }
 }

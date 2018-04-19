@@ -242,4 +242,35 @@ public class UserRoleServiceImpl implements UserRoleService {
         BeanUtils.copyProperties(userRole, userRoleDto);
         return userRoleDto;
     }
+
+    @Override
+    public boolean updateRemainderByUserNameAndRoleId(String username, Long roleId) throws ServiceException {
+        UserDto userDto = userService.selectOneByUsername(username);
+        if (userDto == null){
+            throw new ServiceException(HttpErrorEnum.USERNAME_NOT_EXITED);
+        }
+        UserRoleExample userRoleExample = new UserRoleExample();
+        UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
+        criteria.andUserIdEqualTo(userDto.getId());
+        criteria.andRoleIdEqualTo(roleId);
+        List<UserRole> userRoles = userRoleMapper.selectByExample(userRoleExample);
+        if (CollectionUtils.isEmpty(userRoles)){
+            throw new ServiceException(HttpErrorEnum.USER_ROLE_IS_EMPTY);
+        }else if (userRoles.size() != 1){
+            throw new ServiceException(HttpErrorEnum.USER_ID_ROLE_ID_QUERY_MANY_RESULTS);
+        }else {
+            UserRole userRole = userRoles.get(0);
+            Long remainder = userRole.getRemainder();
+            Long id = userRole.getId();
+            UserRole userRoleTemp = new UserRole();
+            userRoleTemp.setRemainder(remainder - 1L);
+            userRoleTemp.setId(id);
+            int i = userRoleMapper.updateByPrimaryKeySelective(userRoleTemp);
+            if (i == 1){
+                return true;
+            }else {
+                return false;
+            }
+        }
+    }
 }
