@@ -36,10 +36,10 @@ public class TestNull extends TestCase {
         Person person2 = new Person();
         person2.setAge(22);
 
-        Person person3 = new Person();
-        BeanUtils.copyProperties(person1, person3);
-        BeanUtils.copyProperties(person2, person3);
+//        Person person3 = new Person();
+//        BeanUtils.copyProperties(person1, person3);
+        BeanUtils.copyProperties(person1, person2);
 
-        System.out.println(JSON.toJSONString(person3));
+        System.out.println(JSON.toJSONString(person2));
     }
 }
