@@ -68,7 +68,7 @@ create table role
 (
    id                   bigint(11) not null auto_increment,
    name                 varchar(20) not null comment '角色名',
-   times                bigint(10) comment '计费方式总次数',
+   cents_one_time       bigint(10) comment '每次花费多少分钱',
    time_slot            int(2) comment '时间段类型:1:24h;2:7 * 24h;3:30 * 24h;4:365 * 24h',
    type                 int(1) not null comment '计费类型:1:次数计费;2:时间计费',
    create_time          timestamp not null default CURRENT_TIMESTAMP,

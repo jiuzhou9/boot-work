@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class Role extends RoleKey implements Serializable {
     private String name;
 
-    private Long times;
+    private Long centsOneTime;
 
     private Integer timeSlot;
 
@@ -29,11 +29,11 @@ public class Role extends RoleKey implements Serializable {
     }
 
     public Long getTimes() {
-        return times;
+        return centsOneTime;
     }
 
     public void setTimes(Long times) {
-        this.times = times;
+        this.centsOneTime = times;
     }
 
     public Integer getTimeSlot() {
@@ -120,7 +120,7 @@ public class Role extends RoleKey implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", name=").append(name);
-        sb.append(", times=").append(times);
+        sb.append(", times=").append(centsOneTime);
         sb.append(", timeSlot=").append(timeSlot);
         sb.append(", type=").append(type);
         sb.append(", createTime=").append(createTime);
