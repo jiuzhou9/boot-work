@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.jiuzhou.bootwork.dao.model.Role">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="times" jdbcType="BIGINT" property="times" />
+    <result column="cents_one_time" jdbcType="BIGINT" property="centsOneTime" />
     <result column="time_slot" jdbcType="INTEGER" property="timeSlot" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />

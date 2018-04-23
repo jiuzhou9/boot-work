@@ -11,7 +11,7 @@ public class RoleDto {
     private String name;
 
     @Deprecated
-    private Long times;
+//    private Long times;
 
     /**
      * 时间段

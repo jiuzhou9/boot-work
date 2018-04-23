@@ -236,62 +236,62 @@ public class RoleExample {
         }
 
         public Criteria andTimesIsNull() {
-            addCriterion("times is null");
+            addCriterion("cents_one_time is null");
             return (Criteria) this;
         }
 
         public Criteria andTimesIsNotNull() {
-            addCriterion("times is not null");
+            addCriterion("cents_one_time is not null");
             return (Criteria) this;
         }
 
         public Criteria andTimesEqualTo(Long value) {
-            addCriterion("times =", value, "times");
+            addCriterion("cents_one_time =", value, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesNotEqualTo(Long value) {
-            addCriterion("times <>", value, "times");
+            addCriterion("cents_one_time <>", value, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesGreaterThan(Long value) {
-            addCriterion("times >", value, "times");
+            addCriterion("cents_one_time >", value, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesGreaterThanOrEqualTo(Long value) {
-            addCriterion("times >=", value, "times");
+            addCriterion("cents_one_time >=", value, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesLessThan(Long value) {
-            addCriterion("times <", value, "times");
+            addCriterion("cents_one_time <", value, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesLessThanOrEqualTo(Long value) {
-            addCriterion("times <=", value, "times");
+            addCriterion("cents_one_time <=", value, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesIn(List<Long> values) {
-            addCriterion("times in", values, "times");
+            addCriterion("cents_one_time in", values, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesNotIn(List<Long> values) {
-            addCriterion("times not in", values, "times");
+            addCriterion("cents_one_time not in", values, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesBetween(Long value1, Long value2) {
-            addCriterion("times between", value1, value2, "times");
+            addCriterion("cents_one_time between", value1, value2, "centsOneTime");
             return (Criteria) this;
         }
 
         public Criteria andTimesNotBetween(Long value1, Long value2) {
-            addCriterion("times not between", value1, value2, "times");
+            addCriterion("cents_one_time not between", value1, value2, "centsOneTime");
             return (Criteria) this;
         }
 
