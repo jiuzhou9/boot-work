@@ -565,7 +565,6 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      *
      * @see RoleResourceServiceImpl#getUserPermission(java.lang.String, java.lang.String, java.util.Map)
      */
-    @Deprecated
     private boolean checkPermission(String resourcePath, String method, List<String> roleNames) {
         Collection<String> attributes = getAttributes(resourcePath, method);
         //如果资源所需要的角色列表为空，那么该资源不进行放行
@@ -681,7 +680,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         if (roleDto != null){
             boolean flag;
             flag = dealAppPermission(userName, resourcePath, appName, method);
-            //重置用户角色付费信息
+            //按次数计费的角色需要重置用户角色付费信息
             flag = userRoleService.updateRemainderByUserNameAndRoleId(userName, roleDto.getId());
             return flag;
         }else {
