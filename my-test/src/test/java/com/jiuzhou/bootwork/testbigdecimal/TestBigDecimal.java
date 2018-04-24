@@ -25,6 +25,18 @@ public class TestBigDecimal extends TestCase {
 
     }
 
+    public void test(){
+        Long l1 = 5L;
+        Long l2 = 2L;
+        System.out.println(l1 / l2);
+        System.out.println(l1 % l2 == 0);
+
+        BigDecimal b1 = new BigDecimal(5);
+        BigDecimal b2 = new BigDecimal(2);
+        System.out.println(b1.divide(b2));
+        System.out.println(b1.divideToIntegralValue(b2));
+    }
+
     /**
      * 测试四舍五入
      */

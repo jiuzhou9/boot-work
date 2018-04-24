@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, times, time_slot, type, create_time, update_time, available
+    id, name, cents_one_time, time_slot, type, create_time, update_time, available
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.RoleExample" resultMap="BaseResultMap">
     select
@@ -103,10 +103,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.Role">
-    insert into role (id, name, times, 
+    insert into role (id, name, cents_one_time,
       time_slot, type, create_time, 
       update_time, available)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{times,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{centsOneTime,jdbcType=BIGINT},
       #{timeSlot,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{available,jdbcType=BIT})
   </insert>
@@ -119,8 +119,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="times != null">
-        times,
+      <if test="centsOneTime != null">
+        cents_one_time,
       </if>
       <if test="timeSlot != null">
         time_slot,
@@ -145,8 +145,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="times != null">
-        #{times,jdbcType=BIGINT},
+      <if test="centsOneTime != null">
+        #{centsOneTime,jdbcType=BIGINT},
       </if>
       <if test="timeSlot != null">
         #{timeSlot,jdbcType=INTEGER},
@@ -180,8 +180,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.times != null">
-        times = #{record.times,jdbcType=BIGINT},
+      <if test="record.centsOneTime != null">
+        cents_one_time = #{record.centsOneTime,jdbcType=BIGINT},
       </if>
       <if test="record.timeSlot != null">
         time_slot = #{record.timeSlot,jdbcType=INTEGER},
@@ -207,7 +207,7 @@
     update role
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
-      times = #{record.times,jdbcType=BIGINT},
+      cents_one_time = #{record.centsOneTime,jdbcType=BIGINT},
       time_slot = #{record.timeSlot,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -223,8 +223,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="times != null">
-        times = #{times,jdbcType=BIGINT},
+      <if test="centsOneTime != null">
+        cents_one_time = #{centsOneTime,jdbcType=BIGINT},
       </if>
       <if test="timeSlot != null">
         time_slot = #{timeSlot,jdbcType=INTEGER},
@@ -247,7 +247,7 @@
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Role">
     update role
     set name = #{name,jdbcType=VARCHAR},
-      times = #{times,jdbcType=BIGINT},
+      cents_one_time = #{centsOneTime,jdbcType=BIGINT},
       time_slot = #{timeSlot,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

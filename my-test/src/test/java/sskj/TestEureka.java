@@ -40,6 +40,7 @@ import java.util.Map;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestEureka {
 
+
     /**
      本地环境
      String url = "http://127.0.0.1:15102/eureka-api/api/v1/example/get?id=12";
@@ -54,11 +55,15 @@ public class TestEureka {
      */
     @Test
     public void test_sskj_eureka_api(){
+//        String url = "http://127.0.0.1:15102/eureka-api/api/v1/example/get?id=12";
+//        String appCode = "6xgMGQadx8cWPqZGdA";
+//        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi5rW36aOe5LidQVBQIiwiZXhwIjoxNTI3MDg4MTI2LCJ1c2VybmFtZSI6Iua1t-mjnuS4nSJ9.BYmMSotZd1AJgBfKFFYXMh2-cXhRInTVVcIlpYUvSjXk5nxf5k3WtsOPxJ2JsuPX8nJU4eyTnaUOEwRjpKGyxw";
 
-        String url = "http://127.0.0.1:15040/eureka-api/api/v1/example/get?id=12";
-        String appCode = "0s7mkuNq4byMD2Ms6M";
-        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mbQVBQIiwiZXhwIjoxNTI2NjI4MTYwLCJ1c2VybmFtZSI6IuiSmeeJm-S5s-S4miJ9.fp8sLhZBMcMW2XvF-DLvzJNDARRndBtrtJd2nDavqCEgAi3G1bOqlq83JnQL6mig12wgUepblE8WxnhUPs7SiA";
 
+        String url = "http://47.94.134.37:15102/eureka-api/api/v1/example/get?id=1";
+        String appCode = "6ZoNpHiRa3zaZyR3VS";
+        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mb5Lmz5LiaQVBQIiwiZXhwIjoxNTI3MDcyODgyLCJ1c2VybmFtZSI6IuiSmeeJm-S5s-S4miJ9.jRMgwl3PYpuXPbftGm7dgjPgGIVdfQUVon53fMp1Hutl2IbsyZNSpExwOdChrfWfnneEcTIaNjmqcgyHPv93jQ";
+//
         Map<String, String> headers = new HashMap<>();
         //时间戳
         long timestamp = System.currentTimeMillis();
