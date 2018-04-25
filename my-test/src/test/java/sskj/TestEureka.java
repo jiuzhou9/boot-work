@@ -20,10 +20,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -53,8 +56,8 @@ public class TestEureka {
      String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mb5Lmz5LiaQVBQIiwiZXhwIjoxNTI2NTM2OTMzLCJ1c2VybmFtZSI6IuiSmeeJm-S5s-S4miJ9.88TiGlvA_eoVemhB6u9-R4tJui4_yWuQKjH_9NLEkqU_Fkaa7_CSoUOtlrnwtE9GOftMXJGFaknD3SuIjZYVRg";
 
      */
-    @Test
-    public void test_sskj_eureka_api(){
+//    @Test
+    public String test_sskj_eureka_api(){
 //        String url = "http://127.0.0.1:15102/eureka-api/api/v1/example/get?id=12";
 //        String appCode = "6xgMGQadx8cWPqZGdA";
 //        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi5rW36aOe5LidQVBQIiwiZXhwIjoxNTI3MDg4MTI2LCJ1c2VybmFtZSI6Iua1t-mjnuS4nSJ9.BYmMSotZd1AJgBfKFFYXMh2-cXhRInTVVcIlpYUvSjXk5nxf5k3WtsOPxJ2JsuPX8nJU4eyTnaUOEwRjpKGyxw";
@@ -108,12 +111,13 @@ public class TestEureka {
         System.out.println(statusCode);
         String body = responseEntity.getBody();
         System.out.println(body);
+        return body;
     }
 
     /**
      * http 请求rest api 接口 此test 值能测试api 不能测试zuul
      */
-    @Test
+//    @Test
     //    @Ignore
     public void test_eureka_api_tool(){
         String urlStr = "http://localhost:15102/eureka-api/api/v1/example/get?id=12";
@@ -124,5 +128,32 @@ public class TestEureka {
         String responseEntity = RequestTool.getRequest(headers, urlStr, HttpMethod.GET);
 
         System.out.println(responseEntity);
+    }
+
+    @Test
+    public void test_thread() {
+
+        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+        for (int i = 0; i < 100; i++) {
+            final int index = i;
+//            try {
+//                Thread.sleep(index * 1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            cachedThreadPool.execute(new Runnable() {
+                public void run() {
+//                    System.out.println(index);
+                    String s = test_sskj_eureka_api();
+                    System.out.println(s);
+                }
+            });
+        }
+
+        try {
+            Thread.sleep(1000 * 60);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
