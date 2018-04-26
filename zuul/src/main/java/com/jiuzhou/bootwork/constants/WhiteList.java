@@ -20,7 +20,7 @@ public class WhiteList {
                     };
 
     /**
-     * 所有swagger文档请求全部放行
+     * 1.所有swagger文档请求全部放行
      * @param resourcePath
      * @return
      */
@@ -29,7 +29,9 @@ public class WhiteList {
         boolean contains = list.contains(resourcePath);
         if (resourcePath.contains("swagger") || resourcePath.contains("api-docs")){
             contains = true;
-        }
+        }/*else if (resourcePath.contains("eureka-api")){
+            contains = true;
+        }*/
         return contains;
     };
 }

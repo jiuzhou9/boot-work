@@ -28,4 +28,11 @@ public interface UserRoleMapper {
     int updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
+
+    /**
+     * 用户角色剩余次数更新（递减）
+     * @param id
+     * @return
+     */
+    int updateRemainderById(Long id);
 }

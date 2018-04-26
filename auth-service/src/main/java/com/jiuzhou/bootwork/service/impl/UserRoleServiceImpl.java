@@ -260,6 +260,15 @@ public class UserRoleServiceImpl implements UserRoleService {
             throw new ServiceException(HttpErrorEnum.USER_ID_ROLE_ID_QUERY_MANY_RESULTS);
         }else {
             UserRole userRole = userRoles.get(0);
+            Long id = userRole.getId();
+            int i = userRoleMapper.updateRemainderById(id);
+            if (i == 1){
+                return true;
+            }else {
+                return false;
+            }
+
+            /*UserRole userRole = userRoles.get(0);
             Long remainder = userRole.getRemainder();
             Long id = userRole.getId();
             UserRole userRoleTemp = new UserRole();
@@ -270,7 +279,7 @@ public class UserRoleServiceImpl implements UserRoleService {
                 return true;
             }else {
                 return false;
-            }
+            }*/
         }
     }
 }

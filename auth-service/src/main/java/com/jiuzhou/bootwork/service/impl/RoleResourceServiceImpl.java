@@ -537,6 +537,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      */
     @Override
     public RoleDto decideUser(String username, String resourcePath, String method) throws ServiceException{
+        //查询用户信息，得到有效的用户，并携带她的角色集合信息
         UserDto userDto = userService.selectOneAvailableWithRolesByUsername(username);
         Map<String, RoleDto> roleDtoMap = userDto.getRoleDtoMap();
 
@@ -587,7 +588,8 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     /**
      * 检测角色集合对一个资源是否有效
      * 如果有效那么返回该角色名称
-     * 本方法有付费机制所以需要提供给用户角色投票使用
+     *
+     * 判断一个角色有效的条件是，针对这个资源（resourcePath）：1.这个角色有权限 2.这个角色还有剩余的调用次数
      *
      * @param resourcePath
      * @param method
