@@ -135,7 +135,7 @@ public class TestEureka {
     @Test
     public void test_thread() {
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 30; i++) {
             final int index = i;
 //            try {
 //                Thread.sleep(index * 1000);

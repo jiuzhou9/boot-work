@@ -455,6 +455,8 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     /**
      * 完全匹配 根据请求资源获取相应的角色列表
+     *
+     * 映射器
      * @param serverResource
      * @param method
      * @return
@@ -547,7 +549,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         }
 
         //如果用户没有任何角色那么，用户不能访问任何资源，所以返回false
-        String roleName = getUserPermission(resourcePath, method, roleDtoMap);
+        String roleName = getPermissionWithPay(resourcePath, method, roleDtoMap);
         if (!CollectionUtils.isEmpty(roleDtoMap) && !StringUtils.isEmpty(roleName)) {
             return roleDtoMap.get(roleName);
         }
@@ -557,14 +559,15 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     /**
      * 检测角色集合对一个资源是否有效
      * 如果有效那么返回true
-     * 本方法没有付费机制，所以只提供给APP投票使用
+     * 本方法没有付费机制
+     * 所以只提供给APP投票使用
      *
      * @param resourcePath
      * @param method
      * @param roleNames
      * @return
      *
-     * @see RoleResourceServiceImpl#getUserPermission(java.lang.String, java.lang.String, java.util.Map)
+     * @see RoleResourceServiceImpl#getPermissionWithPay(java.lang.String, java.lang.String, java.util.Map)
      */
     private boolean checkPermission(String resourcePath, String method, List<String> roleNames) {
         Collection<String> attributes = getAttributes(resourcePath, method);
@@ -591,12 +594,14 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      *
      * 判断一个角色有效的条件是，针对这个资源（resourcePath）：1.这个角色有权限 2.这个角色还有剩余的调用次数
      *
+     * 有付费概念
+     *
      * @param resourcePath
      * @param method
      * @param roleDtoMap
      * @return
      */
-    private String getUserPermission(String resourcePath, String method, Map<String, RoleDto> roleDtoMap) {
+    private String getPermissionWithPay(String resourcePath, String method, Map<String, RoleDto> roleDtoMap) {
         Collection<String> attributes = getAttributes(resourcePath, method);
         //如果资源所需要的角色列表为空，那么该资源不进行放行
         if (CollectionUtils.isEmpty(attributes) || CollectionUtils.isEmpty(roleDtoMap)){
@@ -619,10 +624,10 @@ public class RoleResourceServiceImpl implements RoleResourceService {
                         if (l > 0){
                             return roleName;
                         }
-                        //否则视为用户的当前角色需要续费
+                        //否则视为用户的当前角色为无效的，所以需要继续遍历
 
                     }else if (RoleConstants.PAY_TYPE_TIME_SLOT == type.intValue()){
-                        //如果这个角色是按照时间段进行收费的类型，那么判断该用户的角色截止时间是什么时候，是否在当前时间以后
+                        //如果这个角色是按照时间段进行收费的类型，那么判断该用户的角色截止时间是什么时候，是否在当前时间以后，如果是，那么认为这个角色为有效
                         LocalDateTime endTime = roleDto.getEndTime();
                         boolean after = endTime.isAfter(LocalDateTime.now());
                         if (after){
@@ -637,6 +642,16 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         return "";
     }
 
+    /**
+     * 这种方式没有付费机制，废弃
+     * @param userName
+     * @param resourcePath
+     * @param appName
+     *
+     * @param method
+     * @return
+     * @throws ServiceException
+     */
     @Override
     @Deprecated
     public boolean decide(String userName, String resourcePath, String appName, String method) throws ServiceException {
