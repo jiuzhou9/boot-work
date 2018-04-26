@@ -272,4 +272,10 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="updateRemainderById" parameterType="java.lang.Long">
+    UPDATE user_role ur
+    SET ur.remainder = ur.remainder - 1
+    WHERE ur.id = #{id,jdbcType=BIGINT} AND ur.remainder &gt; 0;
+  </update>
 </mapper>

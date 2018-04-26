@@ -7,7 +7,7 @@ spring:
   application:
     name: permission-server
 server:
-  port: 15060
+  port: 15103
 
 # mybatis配置
 mybatis:
@@ -16,7 +16,7 @@ mybatis:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
+      defaultZone: http://127.0.0.1:15100/eureka/,http://127.0.0.1:15012/eureka/
 logging:
   config: classpath:logback-spring.xml
   path: logs/

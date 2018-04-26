@@ -42,7 +42,7 @@ public class UserRoleServiceImplTest {
     public void updateRemainderByUserNameAndRoleId() {
         boolean flag = false;
         try {
-            flag = userRoleService.updateRemainderByUserNameAndRoleId("蒙牛乳业", 1L);
+            flag = userRoleService.updateRemainderByUserNameAndRoleId("海飞丝", 1L);
         } catch (ServiceException e) {
             e.printStackTrace();
         }

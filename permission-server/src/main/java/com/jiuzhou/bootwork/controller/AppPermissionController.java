@@ -29,6 +29,11 @@ public class AppPermissionController {
     @Autowired
     private RoleResourceService roleResourceService;
 
+    /**
+     * 付费
+     * @param appTokenVo
+     * @return
+     */
     @RequestMapping(value = "/decide", method = RequestMethod.POST)
     public ResponseEntity<Result<Boolean>> checkPermission(@RequestBody AppTokenVo appTokenVo){
         Result<Boolean> result = new Result<>();
@@ -38,6 +43,30 @@ public class AppPermissionController {
         String serverResource = appTokenVo.getServerResource();
         try {
             boolean decide = roleResourceService.decideWithPay(userName, serverResource, appName, method);
+            result = Result.buildSuccess(decide);
+            log.info("权限校验：" + JSON.toJSONString(result));
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            result.setHttpError(e.getHttpError());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+    }
+
+    /**
+     * 非付费
+     * @param appTokenVo
+     * @return
+     */
+    @RequestMapping(value = "/decide-no-pay", method = RequestMethod.POST)
+    public ResponseEntity<Result<Boolean>> checkPermissionNoPay(@RequestBody AppTokenVo appTokenVo){
+        Result<Boolean> result = new Result<>();
+        String userName = appTokenVo.getUserName();
+        String appName = appTokenVo.getAppName();
+        String method = appTokenVo.getMethod();
+        String serverResource = appTokenVo.getServerResource();
+        try {
+            boolean decide = roleResourceService.decide(userName, serverResource, appName, method);
             result = Result.buildSuccess(decide);
             log.info("权限校验：" + JSON.toJSONString(result));
             return new ResponseEntity<>(result, HttpStatus.OK);

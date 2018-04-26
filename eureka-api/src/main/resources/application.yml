@@ -1,5 +1,5 @@
 server:
-  port: 15021
+  port: 15022
 eureka:
   client:
 #  不进行注册的意思

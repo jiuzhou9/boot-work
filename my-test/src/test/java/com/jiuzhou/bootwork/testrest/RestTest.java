@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -31,20 +33,36 @@ public class RestTest {
      * 返回值类型是json类型
      * @Ignore 打包自动跳过Test
      */
-    @Ignore
+//    @Ignore
     @Test
     public void test_json(){
 
-        HttpHeaders headers = new HttpHeaders();
+        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+        for (int i = 0; i < 300; i++) {
+            cachedThreadPool.execute(new Runnable() {
+                public void run() {
 
-        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
-        headers.setContentType(type);
-        headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-        HttpEntity<String> formEntity = new HttpEntity<>(headers);
+                    HttpHeaders headers = new HttpHeaders();
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> forEntity = restTemplate.exchange("http://localhost:15021/api/v1/product/info?id=1", HttpMethod.GET.GET, formEntity, String.class);
-        log.info(JSON.toJSONString(forEntity));
+                    MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+                    headers.setContentType(type);
+                    headers.add("Accept", MediaType.APPLICATION_JSON.toString());
+                    HttpEntity<String> formEntity = new HttpEntity<>(headers);
+
+                    RestTemplate restTemplate = new RestTemplate();
+                    ResponseEntity<String> forEntity = restTemplate.exchange("http://localhost:15102/eureka-api/api/v1/example/get?id=1", HttpMethod.GET, formEntity, String.class);
+                    System.out.println(forEntity.getBody());
+                }
+            });
+        }
+
+        try {
+            Thread.sleep(1000 * 10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**

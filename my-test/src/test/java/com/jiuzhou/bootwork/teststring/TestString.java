@@ -1,10 +1,6 @@
 package com.jiuzhou.bootwork.teststring;
 
-import com.sun.xml.internal.fastinfoset.stax.factory.StAXOutputFactory;
 import junit.framework.TestCase;
-import org.springframework.util.StringUtils;
-
-import javax.xml.bind.SchemaOutputResolver;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)

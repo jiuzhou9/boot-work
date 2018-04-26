@@ -95,6 +95,7 @@ public interface RoleResourceService {
 
     /**
      * 判断某用户的App是否有权限访问资源
+     * 不含有付费机制
      *
      * @param userName
      * @param resourcePath
@@ -109,8 +110,9 @@ public interface RoleResourceService {
 
 
     /**
+     *
      * 判断某用户的App是否有权限访问资源
-     * 含有付费机制：此方法目前只支持'分/次'付费机制
+     * 含有付费机制：此方法目前只支持'分/次'付费机制/时间计费
      *
      * @param userName
      * @param resourcePath
