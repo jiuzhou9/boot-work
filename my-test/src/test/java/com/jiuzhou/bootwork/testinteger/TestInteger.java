@@ -36,4 +36,12 @@ public class TestInteger extends TestCase {
         }
     }
 
+
+    public void test4(){
+        Integer i = 12100;
+        Double d = 12.1d * 1000;
+
+        System.out.println(i.intValue() == d.intValue());
+    }
+
 }
