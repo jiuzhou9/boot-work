@@ -29,5 +29,10 @@ public class TestLocalDate extends TestCase{
         String s = LocalDate.now().toString();
         String replace = s.replace("-", "");
         System.out.println(replace);
+
+        //比较时间
+        LocalDate of1 = LocalDate.of(2018, 12, 12);
+        LocalDate of2 = LocalDate.of(2018, 12, 12);
+        System.out.println(of1.equals(of2));
     }
 }
