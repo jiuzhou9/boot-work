@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -34,5 +35,11 @@ public class TestLocalDate extends TestCase{
         LocalDate of1 = LocalDate.of(2018, 12, 12);
         LocalDate of2 = LocalDate.of(2018, 12, 12);
         System.out.println(of1.equals(of2));
+
+        System.out.println(localDateTime);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        String format = localDateTime.format(df);
+        System.out.println(format);
+
     }
 }
