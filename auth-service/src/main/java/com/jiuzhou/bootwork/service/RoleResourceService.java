@@ -64,8 +64,8 @@ public interface RoleResourceService {
 
     /**
      * 查询资源所需要的角色
-     * @param serverResource
-     * @param method
+     * @param serverResource 资源路径
+     * @param method 资源type
      * @return
      */
     Collection<String> getAttributes(String serverResource, String method);

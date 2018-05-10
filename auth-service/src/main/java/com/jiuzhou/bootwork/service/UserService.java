@@ -43,9 +43,9 @@ public interface UserService {
     UserDto selectOneByMobile(String mobile) throws ServiceException;
 
     /**
-     * 查询有效的用户，并且有该用户的角色信息
-     * @param username
-     * @return
+     * 查询用户信息
+     * @param username 用户名
+     * @return 有效的用户，并且有该用户的角色信息
      * @throws ServiceException
      */
     UserDto selectOneAvailableWithRolesByUsername(String username) throws ServiceException;

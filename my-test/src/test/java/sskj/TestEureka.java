@@ -56,7 +56,7 @@ public class TestEureka {
      String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mb5Lmz5LiaQVBQIiwiZXhwIjoxNTI2NTM2OTMzLCJ1c2VybmFtZSI6IuiSmeeJm-S5s-S4miJ9.88TiGlvA_eoVemhB6u9-R4tJui4_yWuQKjH_9NLEkqU_Fkaa7_CSoUOtlrnwtE9GOftMXJGFaknD3SuIjZYVRg";
 
      */
-    @Ignore
+//    @Ignore
     @Test
     public void test_sskj_eureka_api(){
 //        String url = "http://127.0.0.1:15102/eureka-api/api/v1/example/get?id=12";
@@ -66,7 +66,7 @@ public class TestEureka {
 
         String url = "http://47.94.134.37:15102/eureka-api/api/v1/example/get?id=1";
         String appCode = "6ZoNpHiRa3zaZyR3VS";
-        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mb5Lmz5LiaQVBQIiwiZXhwIjoxNTI3MDcyODgyLCJ1c2VybmFtZSI6IuiSmeeJm-S5s-S4miJ9.jRMgwl3PYpuXPbftGm7dgjPgGIVdfQUVon53fMp1Hutl2IbsyZNSpExwOdChrfWfnneEcTIaNjmqcgyHPv93jQ";
+        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mb5Lmz5LiaQVBQIiwiZXhwIjoxNTI4NTMxODY5fQ.XOasiq1yWwVUrptaxl8ZBO7WrZtQkbjZLD3xjSVX-Gcs9scWd39Aq6MjkvJVr_wkBySuvDN5hwnJ7aD07-SU4Q";
 
         Map<String, String> headers = new HashMap<>();
         //时间戳
