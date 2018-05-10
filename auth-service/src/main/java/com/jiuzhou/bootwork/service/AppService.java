@@ -49,9 +49,9 @@ public interface AppService {
 
     /**
      * 根据APP name user name 查询APP信息包含角色
-     * @param appName
-     * @param userName
-     * @return
+     * @param appName APP名字
+     * @param userName 用户名字
+     * @return APP信息
      */
     AppDto getAvailableByAppNameUserName(String appName, String userName) throws ServiceException;
 }

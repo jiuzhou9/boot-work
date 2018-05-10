@@ -478,6 +478,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
             loadPermission();
         }
 
+        //资源路径
         String resUrl;
         String resUrlOrigin;
         if (CollectionUtils.isEmpty(map)){
@@ -497,6 +498,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
                         resource = resource + "/" + resUrlSplit[i];
                     }
                 }
+                //切割后将 type 方式连接上
                 resUrl = resource + "," + resourceArray[1];
             }
             if (resUrl.equals(serverResourceMethod)) {
@@ -529,12 +531,12 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     }
 
     /**
-     * 校验用户请求资源是否有权限
-     * @param username     第三方
+     * 校验用户请求资源是否有权限，这个方法中有付费机制，并且付费机制是划分到用户层次的
+     * @param username     用户名
      * @param resourcePath 他想访问的资源
      *
-     * @param method
-     * @return
+     * @param method 资源的请求方式
+     * @return 有效的角色，这个角色是可以对资源进行访问的
      * @throws ServiceException
      */
     @Override
@@ -560,12 +562,12 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      * 检测角色集合对一个资源是否有效
      * 如果有效那么返回true
      * 本方法没有付费机制
-     * 所以只提供给APP投票使用
+     * 所以只提供给不参与付费的，比如：如果平台付费机制划分到user层次的时候，那么可能APP角色的筛选可能就需要调用此方法
      *
-     * @param resourcePath
-     * @param method
-     * @param roleNames
-     * @return
+     * @param resourcePath 请求的资源
+     * @param method 资源的请求方式
+     * @param roleNames 角色集合
+     * @return true or false,true代表这个角色集合针对这个资源是有效的
      *
      * @see RoleResourceServiceImpl#getPermissionWithPay(java.lang.String, java.lang.String, java.util.Map)
      */
@@ -596,13 +598,14 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      *
      * 有付费概念
      *
-     * @param resourcePath
-     * @param method
-     * @param roleDtoMap
-     * @return
+     * @param resourcePath 访问的资源
+     * @param method 资源的请求方式
+     * @param roleDtoMap 角色集合，可以是用户的角色集合，也可以是APP的角色集合
+     * @return 有效的角色，可以进行访问资源的有效角色
      */
     private String getPermissionWithPay(String resourcePath, String method, Map<String, RoleDto> roleDtoMap) {
         Collection<String> attributes = getAttributes(resourcePath, method);
+
         //如果资源所需要的角色列表为空，那么该资源不进行放行
         if (CollectionUtils.isEmpty(attributes) || CollectionUtils.isEmpty(roleDtoMap)){
             return "";
@@ -610,13 +613,15 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
         Set<String> roleNameSet = roleDtoMap.keySet();
 
+        //合适的角色名字，有效的角色名称
         String needRoleName;
         for (Iterator<String> iter = attributes.iterator(); iter.hasNext(); ) {
             needRoleName = iter.next();
             for (String roleName : roleNameSet) {
                 if (needRoleName.trim().equals(roleName)) {
-                    //如果角色名匹配，那么校验付费标准校验,获取用户角色集合中匹配成功的角色对象
+                    //如果角色名匹配，那么校验付费标准校验,获取 用户/APP 角色集合中匹配成功的角色对象
                     RoleDto roleDto = roleDtoMap.get(roleName);
+                    //获取角色的付费方式
                     Integer type = roleDto.getType();
                     if (RoleConstants.PAY_TYPE_TIMES == type.intValue()){
                         Long remainder = roleDto.getRemainder();
@@ -627,7 +632,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
                         //否则视为用户的当前角色为无效的，所以需要继续遍历
 
                     }else if (RoleConstants.PAY_TYPE_TIME_SLOT == type.intValue()){
-                        //如果这个角色是按照时间段进行收费的类型，那么判断该用户的角色截止时间是什么时候，是否在当前时间以后，如果是，那么认为这个角色为有效
+                        //如果这个角色是按照时间段进行收费的类型，那么判断该 用户/APP 的角色截止时间是什么时候，是否在当前时间以后，如果是，那么认为这个角色为有效
                         LocalDateTime endTime = roleDto.getEndTime();
                         boolean after = endTime.isAfter(LocalDateTime.now());
                         if (after){
@@ -666,15 +671,16 @@ public class RoleResourceServiceImpl implements RoleResourceService {
 
     /**
      * 处理APP 的权限
-     * @param userName
-     * @param resourcePath
-     * @param appName
-     * @param method
-     * @return
+     * @param userName 用户名
+     * @param resourcePath 请求的资源
+     * @param appName 用户使用的APP
+     * @param method 资源的请求路径
+     * @return 是否可以访问，true可以访问，false不可以访问
      * @throws ServiceException
      */
     private boolean dealAppPermission(String userName, String resourcePath, String appName, String method)
                     throws ServiceException {
+
         AppDto appDto = appService.getAvailableByAppNameUserName(appName, userName);
         if (appDto == null){
             throw new ServiceException(HttpErrorEnum.APP_NAME_IS_NOT_EXIST);
@@ -685,6 +691,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
         if (b){
             return true;
         }else {
+            log.info("APP " + appName + "经过校验没有访问资源" + resourcePath + "的权限");
             throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
         }
     }
@@ -693,12 +700,16 @@ public class RoleResourceServiceImpl implements RoleResourceService {
     @Override
     public boolean decideWithPay(String userName, String resourcePath, String appName, String method) throws ServiceException {
         validateDecideAppRequest(userName, resourcePath, appName, method);
+
         RoleDto roleDto = decideUser(userName, resourcePath, method);
+
         if (roleDto != null){
             boolean flag;
             flag = dealAppPermission(userName, resourcePath, appName, method);
-            //按次数计费的角色需要重置用户角色付费信息
-            flag = userRoleService.updateRemainderByUserNameAndRoleId(userName, roleDto.getId());
+            if (roleDto.getType().equals(RoleConstants.PAY_TYPE_TIMES)){
+                //按次数计费的角色需要重置用户角色付费信息
+                flag = userRoleService.updateRemainderByUserNameAndRoleId(userName, roleDto.getId());
+            }
             return flag;
         }else {
             throw new ServiceException(HttpErrorEnum.HAS_NO_AUTHORITY);
