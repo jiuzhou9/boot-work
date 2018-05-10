@@ -27,7 +27,7 @@ public class ConsumerServiceImpl implements ConsumerService {
 //        RestTemplate restTemplate = new RestTemplate();
 //        String body = restTemplate.getForEntity("http://EUREKA-API/api/v1/product/info", String.class).getBody();
         ResponseEntity<Result> responseEntity = restTemplate
-                        .getForEntity("http://EUREKA-API/api/v1/product/info?id="+productId, Result.class);
+                        .getForEntity("http://EUREKA-API/api/v1/product/info/"+productId, Result.class);
         Result<ProductDTO> result = responseEntity.getBody();
         return result;
     }

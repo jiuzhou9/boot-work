@@ -27,7 +27,7 @@ public class ConsumerController {
     @Autowired
     private ConsumerService consumerService;
 
-    @GetMapping(value = "product-info")
+    @GetMapping(value = "/product-info")
     @ApiOperation(value = "获取商品信息")
     public Result<ProductVO> getProductInfo(@RequestParam Long productId){
         Result<ProductDTO> productDTOResult = consumerService.getProductInfo(productId);
