@@ -1,3 +1,6 @@
+/*
+这个数据库版本设计是有付费机制的，并且将付费机制划分到了用户层次面
+*/
 drop table if exists app;
 
 drop table if exists app_role;

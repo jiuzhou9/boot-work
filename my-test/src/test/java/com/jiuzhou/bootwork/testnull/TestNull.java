@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 import org.springframework.beans.BeanUtils;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/01/08
  */
 public class TestNull extends TestCase {

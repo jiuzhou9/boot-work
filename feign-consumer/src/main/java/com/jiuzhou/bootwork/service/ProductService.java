@@ -5,7 +5,7 @@ import com.jiuzhou.bootwork.service.dto.ProductDTO;
 import com.jiuzhou.bootwork.vo.ProductVO;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/20
  */
 public interface ProductService {

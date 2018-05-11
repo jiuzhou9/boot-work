@@ -5,7 +5,7 @@ import com.jiuzhou.bootwork.excep.HttpError;
 import java.io.Serializable;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/02/22
  */
 public class Result<T> implements Serializable {
@@ -13,8 +13,9 @@ public class Result<T> implements Serializable {
 
     public static final String SUCCESS_CODE = "0";
 
-    private String code;
-    private String message;
+    protected String code;
+    protected String message;
+
     private T data;
 
     public T getData() {

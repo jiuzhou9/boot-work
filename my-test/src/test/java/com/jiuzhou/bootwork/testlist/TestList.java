@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/02/02
  */
 public class TestList extends TestCase{

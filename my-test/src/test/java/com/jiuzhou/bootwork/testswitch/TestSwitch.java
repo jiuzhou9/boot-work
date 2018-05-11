@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.testswitch;
 import junit.framework.TestCase;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2017/12/28
  */
 public class TestSwitch extends TestCase {

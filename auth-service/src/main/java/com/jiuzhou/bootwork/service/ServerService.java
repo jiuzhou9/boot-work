@@ -6,7 +6,7 @@ import com.jiuzhou.bootwork.service.dto.ServerDto;
 import java.util.List;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/25
  */
 public interface ServerService {

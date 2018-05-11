@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
 import java.nio.charset.Charset;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/04/01
  */
 @Service

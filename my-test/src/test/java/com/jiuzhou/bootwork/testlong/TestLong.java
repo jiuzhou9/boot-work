@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.testlong;
 import junit.framework.TestCase;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/01/10
  */
 public class TestLong extends TestCase{

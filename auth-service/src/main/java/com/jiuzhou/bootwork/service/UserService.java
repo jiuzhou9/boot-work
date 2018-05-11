@@ -5,7 +5,7 @@ import com.jiuzhou.bootwork.service.dto.UserDto;
 import com.jiuzhou.bootwork.service.dto.UserTokenDto;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/27
  */
 public interface UserService {

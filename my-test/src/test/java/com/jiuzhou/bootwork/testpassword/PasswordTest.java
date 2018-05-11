@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/05
  */
 public class PasswordTest extends TestCase {
