@@ -4,7 +4,7 @@ import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/01/09
  */
 public class TestReturn extends TestCase {

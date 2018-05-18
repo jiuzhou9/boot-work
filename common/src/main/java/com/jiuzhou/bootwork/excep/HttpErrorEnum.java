@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.excep;
 import org.springframework.http.HttpStatus;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/28
  */
 public enum HttpErrorEnum implements HttpError {
@@ -87,6 +87,7 @@ public enum HttpErrorEnum implements HttpError {
     APP_IS_NOT_AVAILABLE(HttpStatus.BAD_REQUEST, "10010070", "app失效"),
     APP_PERMISSION_CHECK_FAILED(HttpStatus.BAD_REQUEST,"10010071", "app权限校验失败"),
     RESOURCE_DESCRIPTION_PARAMETER_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010072", "资源描述参数为空"),
+    SYS_ERROR(HttpStatus.BAD_REQUEST, "10010073", "系统错误"),
     ;
 
     private HttpStatus httpStatus;

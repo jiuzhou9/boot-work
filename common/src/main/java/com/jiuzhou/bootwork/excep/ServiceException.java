@@ -1,8 +1,9 @@
 package com.jiuzhou.bootwork.excep;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/28
+ * 这是一个应用在Service层的异常类，Service层抛异常的时候需要使用
  */
 public class ServiceException extends Exception {
 
@@ -17,7 +18,4 @@ public class ServiceException extends Exception {
         return httpError;
     }
 
-    public void setHttpError(HttpError httpError) {
-        this.httpError = httpError;
-    }
 }

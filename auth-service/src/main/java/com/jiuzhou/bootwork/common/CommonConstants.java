@@ -1,7 +1,7 @@
 package com.jiuzhou.bootwork.common;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/23
  */
 public class CommonConstants {

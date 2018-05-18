@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.controller.vo;
 import lombok.Data;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/30
  */
 @Data

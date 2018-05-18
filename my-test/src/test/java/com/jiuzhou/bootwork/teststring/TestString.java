@@ -1,9 +1,10 @@
 package com.jiuzhou.bootwork.teststring;
 
 import junit.framework.TestCase;
+import org.springframework.util.StringUtils;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/07
  */
 public class TestString extends TestCase{
@@ -39,8 +40,11 @@ public class TestString extends TestCase{
     }
 
     public void test_trim(){
-        String s = " abc";
+        String s = " a bc";
         String trim = s.trim();
         System.out.println(trim);
+
+        String a = " ";
+        System.out.println(StringUtils.isEmpty(a));
     }
 }

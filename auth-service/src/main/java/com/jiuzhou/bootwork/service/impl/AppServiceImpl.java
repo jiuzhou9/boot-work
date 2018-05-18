@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/27
  */
 @Service

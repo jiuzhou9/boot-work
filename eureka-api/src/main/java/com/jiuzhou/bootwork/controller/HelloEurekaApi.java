@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.logging.Logger;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/02/16
  */
 @RestController

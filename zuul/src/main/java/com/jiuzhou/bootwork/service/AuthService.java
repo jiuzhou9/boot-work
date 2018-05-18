@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.service;
 import com.jiuzhou.bootwork.excep.ServiceException;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/04/01
  */
 public interface AuthService {

@@ -4,11 +4,12 @@ import com.alibaba.fastjson.JSON;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/02/02
  */
 public class TestList extends TestCase{
@@ -42,4 +43,18 @@ public class TestList extends TestCase{
         }
         System.out.println(JSON.toJSONString(list));
     }
+
+    public void test_sort(){
+        List<String> keys = new ArrayList<>();
+        keys.add("sdfg");
+        keys.add("dg");
+        keys.add("wef");
+        keys.add("we");
+        keys.add("weF");
+        keys.add("weA");
+        keys.add("hf");
+        Collections.sort(keys);
+        System.out.println(keys);
+    }
+
 }

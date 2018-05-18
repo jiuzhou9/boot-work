@@ -10,7 +10,7 @@ import org.junit.Test;
 import javax.xml.ws.Service;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/04/09
  */
 public class TestResult {
