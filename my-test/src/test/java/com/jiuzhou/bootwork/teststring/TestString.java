@@ -1,6 +1,7 @@
 package com.jiuzhou.bootwork.teststring;
 
 import junit.framework.TestCase;
+import org.springframework.util.StringUtils;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
@@ -39,8 +40,11 @@ public class TestString extends TestCase{
     }
 
     public void test_trim(){
-        String s = " abc";
+        String s = " a bc";
         String trim = s.trim();
         System.out.println(trim);
+
+        String a = " ";
+        System.out.println(StringUtils.isEmpty(a));
     }
 }

@@ -5,7 +5,9 @@ import junit.framework.TestCase;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
@@ -41,5 +43,8 @@ public class TestLocalDate extends TestCase{
         String format = localDateTime.format(df);
         System.out.println(format);
 
+        ZoneId zoneId = ZoneId.systemDefault();
+        Date from = Date.from(localDateTime.atZone(zoneId).toInstant());
+        System.out.println(new Date());
     }
 }
