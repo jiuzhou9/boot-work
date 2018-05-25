@@ -459,7 +459,7 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      * 映射器
      * @param serverResource
      * @param method
-     * @return
+     * @return 角色集合
      */
     private Collection<String> getAttributesCompletelyEquals(String serverResource, String method, int count){
         //去掉参数的请求URL
