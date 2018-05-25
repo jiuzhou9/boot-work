@@ -44,4 +44,10 @@ public class TestInteger extends TestCase {
         System.out.println(i.intValue() == d.intValue());
     }
 
+    public void test5(){
+        Integer i = 1;
+        Integer i1 = -1;
+        System.out.println( i + i1);
+    }
+
 }

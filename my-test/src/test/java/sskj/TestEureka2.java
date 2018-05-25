@@ -1,11 +1,11 @@
 package sskj;
 
 import com.jiuzhou.bootwork.App;
+import com.jiuzhou.bootwork.testpassword.MD5Util;
 import com.jiuzhou.bootwork.testrest.CustomErrorHandler;
 import com.jiuzhou.bootwork.testrest.RequestTool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,7 +42,7 @@ import java.util.concurrent.Executors;
 @Slf4j
 @SpringBootTest(classes = App.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestEureka {
+public class TestEureka2 {
 
 
     /**
@@ -59,32 +60,51 @@ public class TestEureka {
 //    @Ignore
     @Test
     public void test_sskj_eureka_api(){
-//        String url = "http://127.0.0.1:15102/eureka-api/api/v1/example/get?id=12";
-//        String appCode = "6xgMGQadx8cWPqZGdA";
-//        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi5rW36aOe5LidQVBQIiwiZXhwIjoxNTI3MDg4MTI2LCJ1c2VybmFtZSI6Iua1t-mjnuS4nSJ9.BYmMSotZd1AJgBfKFFYXMh2-cXhRInTVVcIlpYUvSjXk5nxf5k3WtsOPxJ2JsuPX8nJU4eyTnaUOEwRjpKGyxw";
 
-
-        String url = "http://47.94.134.37:15102/eureka-api/api/v1/example/get?id=1";
-        String appCode = "6ZoNpHiRa3zaZyR3VS";
-        String appToken = "eyJhbGciOiJIUzUxMiJ9.eyJhcHBuYW1lIjoi6JKZ54mb5Lmz5LiaQVBQIiwiZXhwIjoxNTI4NTMxODY5fQ.XOasiq1yWwVUrptaxl8ZBO7WrZtQkbjZLD3xjSVX-Gcs9scWd39Aq6MjkvJVr_wkBySuvDN5hwnJ7aD07-SU4Q";
+        String key = "690da61e018a42e6a3e3b55bed84d4c8";
+        String secret = "3176fde1c63c4a38b85cb4a9da439a8f";
+        String keyToken = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjIxNDU4ODgwMDAsImtleSI6IjY5MGRhNjFlMDE4YTQyZTZhM2UzYjU1YmVkODRkNGM4In0.H4Oz7-ucgbVZePSwb-ErOCtHwsC3zQEDllQbSMEi8TdIMZzcG9BWtT7tpUJ7MEChZAFkZAlXaUyV_IxHbyQGKw";
+        String url = "http://47.94.134.37:15102/eureka-api/api/v1/example/get?id=12";
 
         Map<String, String> headers = new HashMap<>();
         //时间戳
-        long timestamp = System.currentTimeMillis();
-        headers.put("timestamp", Long.toString(timestamp));
-        String clientValue = appCode + appToken + timestamp;
-        //签名
-        String clientAutograph = DigestUtils.sha1Hex(clientValue.getBytes(Charset.forName("UTF-8")));
-        headers.put("autograph", clientAutograph);
-        //APP 令牌
-        headers.put("x-access-token", appToken);
-        //APP code
-        headers.put("code", appCode);
+        Long timestamp = System.currentTimeMillis();
+        headers.put("reqTimestamp", Long.toString(timestamp));
+        //签名：签名内容规则~   start
+        // 1.URL中的参数按照键排序，然后&连接
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", 12);
 
-        //创建rest 模板
+        List<String> keys = new ArrayList<>();
+        params.forEach( (name, value) -> {
+            keys.add(name);
+        });
+
+        Collections.sort(keys);
+
+        StringBuffer sb = new StringBuffer();
+        for (String name : keys) {
+            sb.append(name + "=" + params.get(name) + "&");
+        }
+        // 2.结尾拼接时间戳
+        sb.append(timestamp.toString());
+
+        // 3.转成大写，MD5加盐式加密
+        String sign = MD5Util.MD5(sb.toString().toUpperCase() + secret);
+        //签名结束
+
+        //添加签名信息
+        headers.put("sign", sign);
+        //添加key 令牌信息
+        headers.put("x-access-token", keyToken);
+        //添加key信息
+        headers.put("key", key);
+
+        //创建rest 模板 发送请求
         RestTemplate restTemplate = new RestTemplate();
         CustomErrorHandler customErrorHandler = new CustomErrorHandler();
         restTemplate.setErrorHandler(customErrorHandler);
+
         //创建HTTP header
         HttpHeaders httpHeaders = new HttpHeaders();
         //定义内容类型
@@ -99,9 +119,7 @@ public class TestEureka {
             Iterator<Map.Entry<String, String>> iterator = headers.entrySet().iterator();
             while (iterator.hasNext()){
                 Map.Entry<String, String> next = iterator.next();
-                String key = next.getKey();
-                String value = next.getValue();
-                httpHeaders.add(key, value);
+                httpHeaders.add(next.getKey(), next.getValue());
             }
         }
 
@@ -112,7 +130,6 @@ public class TestEureka {
         System.out.println(statusCode);
         String body = responseEntity.getBody();
         System.out.println(body);
-//        return body;
     }
 
     /**
