@@ -8,7 +8,13 @@ import junit.framework.TestCase;
  */
 public class TestLong extends TestCase{
 
-    public void test(){
+    public void test_compare(){
+        Long l = 1l;
+        System.out.println(l.compareTo(0L) == 1);
+    }
+
+
+    public void test_equals(){
         Long l = 0L;
         Long L = 0L;
         System.out.println(l.equals(L));
@@ -18,5 +24,11 @@ public class TestLong extends TestCase{
         long l = 100;
         long l1 = 2000;
         System.out.println(Long.toString(l1 - l));
+    }
+
+    public void test1(){
+        Long l = 1L;
+        Long l1 = -10L;
+        System.out.println(l+l1);
     }
 }
