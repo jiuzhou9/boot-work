@@ -63,7 +63,7 @@ public enum HttpErrorEnum implements HttpError {
     APP_ID_ROLE_ID_QUERY_MANY_RESULTS(HttpStatus.BAD_REQUEST,"10010049", "APP ID、角色ID参数查询到多条数据结果"),
 
     APP_ROLE_IS_EMPTY(HttpStatus.BAD_REQUEST, "10010050", "app角色参数为空"),
-    APP_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010051", "该APP角色已经存在，请重新定义"),
+    APP_ROLE_HAS_ALREADY_EXISTED(HttpStatus.BAD_REQUEST,"10010051", "SSSSSSS该APP角色已经存在，请重新定义"),
     PASSWORD_IS_NOT_RIGHT(HttpStatus.BAD_REQUEST,"10010052", "密码错误，请重新登录认证"),
     USERNAME_NOT_EXITED(HttpStatus.BAD_REQUEST,"10010053", "用户名不存在"),
     USER_TOKEN_IS_EXPIRED(HttpStatus.BAD_REQUEST,"10010054", "用户令牌过期，请重新获取"),
