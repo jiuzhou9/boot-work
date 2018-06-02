@@ -25,6 +25,7 @@
         <module>auth-service</module>
         <module>auth-server</module>
         <module>permission-server</module>
+        <module>scheduled</module>
     </modules>
     <packaging>pom</packaging>
 
