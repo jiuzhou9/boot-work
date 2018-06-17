@@ -13,7 +13,7 @@ public class UUIDTest extends TestCase{
     public void test(){
         UUID uuid = UUID.randomUUID();
         String s = uuid.toString();
-        System.out.println(uuid);
+        System.out.println(s.replaceAll("-", ""));
         System.out.println(s.length());
     }
 }
