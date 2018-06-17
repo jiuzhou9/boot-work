@@ -60,15 +60,15 @@ public class TestEureka2 {
 //    @Ignore
     @Test
     public void test_sskj_eureka_api(){
-//        String key = "690da61e018a42e6a3e3b55bed84d4c8";
-//        String secret = "3176fde1c63c4a38b85cb4a9da439a8f";
-//        String keyToken = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjIxNDU4ODgwMDAsImtleSI6IjY5MGRhNjFlMDE4YTQyZTZhM2UzYjU1YmVkODRkNGM4In0.H4Oz7-ucgbVZePSwb-ErOCtHwsC3zQEDllQbSMEi8TdIMZzcG9BWtT7tpUJ7MEChZAFkZAlXaUyV_IxHbyQGKw";
-//        String url = "http://47.94.134.37:15102/eureka-api/api/v1/example/get?id=12";
+        String key = "690da61e018a42e6a3e3b55bed84d4c8";
+        String secret = "3176fde1c63c4a38b85cb4a9da439a8f";
+        String keyToken = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjIxNDU4ODgwMDAsImtleSI6IjY5MGRhNjFlMDE4YTQyZTZhM2UzYjU1YmVkODRkNGM4In0.H4Oz7-ucgbVZePSwb-ErOCtHwsC3zQEDllQbSMEi8TdIMZzcG9BWtT7tpUJ7MEChZAFkZAlXaUyV_IxHbyQGKw";
+        String url = "http://47.94.134.37:15102/eureka-api/api/v1/example/get?id=12";
 
-        String key = "341f4f6a637a4c65af55ba226c44ce46";
-        String secret = "ba7091c04ebf44808356b7eb9591c895";
-        String keyToken = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjIxNDU4ODgwMDAsImtleSI6IjM0MWY0ZjZhNjM3YTRjNjVhZjU1YmEyMjZjNDRjZTQ2In0.VnxQxodCMs3S6suRMzwsca-i3MLBGmab68dZ12eURQ3lYq4Z66g_W6zDP1sH3kn9IAJA5r7KwX3d1PgRob8rKQ";
-        String url = "http://127.0.0.1:15102/eureka-api/api/v1/example/get?id=12";
+//        String key = "341f4f6a637a4c65af55ba226c44ce46";
+//        String secret = "ba7091c04ebf44808356b7eb9591c895";
+//        String keyToken = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjIxNDU4ODgwMDAsImtleSI6IjM0MWY0ZjZhNjM3YTRjNjVhZjU1YmEyMjZjNDRjZTQ2In0.VnxQxodCMs3S6suRMzwsca-i3MLBGmab68dZ12eURQ3lYq4Z66g_W6zDP1sH3kn9IAJA5r7KwX3d1PgRob8rKQ";
+//        String url = "http://127.0.0.1:15102/eureka-api/api/v1/example/get?id=12";
 
         Map<String, String> headers = new HashMap<>();
         //时间戳

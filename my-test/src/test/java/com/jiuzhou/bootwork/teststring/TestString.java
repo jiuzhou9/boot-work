@@ -32,9 +32,9 @@ public class TestString extends TestCase{
 
 
     public void test(){
-        String type = "srn:stockgo:::";
+        String type = "srn::menu::";
         String[] split = type.split(":");
-        System.out.println(split[1]);
+        System.out.println(split[2]);
     }
 
     public void test_split(){
