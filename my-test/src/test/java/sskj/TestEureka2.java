@@ -136,4 +136,11 @@ public class TestEureka2 {
         System.out.println(body);
     }
 
+
+    @Test
+    public void test(){
+        String s = "3176fde1c63c4a38b85cb4a9da439a8f";
+        int length = s.length();
+        System.out.println(length);
+    }
 }

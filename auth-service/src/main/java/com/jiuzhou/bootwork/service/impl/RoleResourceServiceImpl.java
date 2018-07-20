@@ -598,11 +598,14 @@ public class RoleResourceServiceImpl implements RoleResourceService {
      *
      * 有付费概念
      *
+     * 不再自行匹配请求资源路径，而是使用antMatcher工具类处理
+     *
      * @param resourcePath 访问的资源
      * @param method 资源的请求方式
      * @param roleDtoMap 角色集合，可以是用户的角色集合，也可以是APP的角色集合
      * @return 有效的角色，可以进行访问资源的有效角色
      */
+    @Deprecated
     private String getPermissionWithPay(String resourcePath, String method, Map<String, RoleDto> roleDtoMap) {
         Collection<String> attributes = getAttributes(resourcePath, method);
 

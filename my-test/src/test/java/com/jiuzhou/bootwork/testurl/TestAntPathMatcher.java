@@ -7,7 +7,7 @@ import org.springframework.util.AntPathMatcher;
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
  * @date 2018/06/14
  */
-public class TestURL extends TestCase {
+public class TestAntPathMatcher extends TestCase {
 
     /**
      * URL映射器，判断URL是否符合一个映射规则
