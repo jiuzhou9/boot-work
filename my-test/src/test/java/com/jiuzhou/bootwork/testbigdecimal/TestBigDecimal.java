@@ -1,6 +1,7 @@
 package com.jiuzhou.bootwork.testbigdecimal;
 
 import junit.framework.TestCase;
+import org.assertj.core.api.BigDecimalAssert;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -10,6 +11,15 @@ import java.text.DecimalFormat;
  * @date 2018/02/28
  */
 public class TestBigDecimal extends TestCase {
+
+    public void test_compare(){
+        BigDecimal bigDecimal0 = new BigDecimal(0.1);
+        BigDecimal bigDecimal1 = new BigDecimal(0.4);
+        BigDecimal bigDecimal2 = new BigDecimal(0.1);
+        System.out.println("" + bigDecimal0);
+
+        System.out.println(bigDecimal0.compareTo(bigDecimal1));
+    }
 
     /**
      * 测试整数的除法
@@ -44,5 +54,13 @@ public class TestBigDecimal extends TestCase {
         BigDecimal bigDecimal = new BigDecimal(12345.5567);
         DecimalFormat decimalFormat = new DecimalFormat("0");
         System.out.println(decimalFormat.format(bigDecimal));
+    }
+
+    public void test_big(){
+        BigDecimal bigDecimal = new BigDecimal(12345.5547);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        System.out.println(decimalFormat.format(bigDecimal));
+        BigDecimal bigDecimal1 = new BigDecimal(decimalFormat.format(bigDecimal));
+        System.out.println(bigDecimal1);
     }
 }
