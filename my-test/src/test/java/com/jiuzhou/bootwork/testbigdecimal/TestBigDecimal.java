@@ -57,7 +57,7 @@ public class TestBigDecimal extends TestCase {
     }
 
     public void test_big(){
-        BigDecimal bigDecimal = new BigDecimal(12345.5547);
+        BigDecimal bigDecimal = new BigDecimal(0);
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         System.out.println(decimalFormat.format(bigDecimal));
         BigDecimal bigDecimal1 = new BigDecimal(decimalFormat.format(bigDecimal));
