@@ -50,4 +50,13 @@ public class TestInteger extends TestCase {
         System.out.println( i + i1);
     }
 
+    public void test6(){
+//        int maxValue = Integer.MAX_VALUE;
+//        System.out.println(maxValue);
+
+        int i = 0;
+        int ii = 1009;
+        System.out.println(i % ii);
+        System.out.println(i / ii);
+    }
 }
