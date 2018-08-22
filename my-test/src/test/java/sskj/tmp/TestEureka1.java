@@ -1,4 +1,4 @@
-package sskj;
+package sskj.tmp;
 
 import com.jiuzhou.bootwork.App;
 import com.jiuzhou.bootwork.testrest.CustomErrorHandler;

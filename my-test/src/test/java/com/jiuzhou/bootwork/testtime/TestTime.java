@@ -2,6 +2,7 @@ package com.jiuzhou.bootwork.testtime;
 
 import junit.framework.TestCase;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -13,5 +14,8 @@ public class TestTime extends TestCase {
     public void test(){
         LocalDateTime now = LocalDateTime.now();
         System.out.println(now);
+
+        LocalDate now1 = LocalDate.now();
+        System.out.println(now1.toString());
     }
 }
