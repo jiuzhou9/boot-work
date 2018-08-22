@@ -1,4 +1,4 @@
-package sskj.test;
+package sskj.test.unicorn;
 
 import com.jiuzhou.bootwork.App;
 import com.jiuzhou.bootwork.testpassword.MD5Util;
