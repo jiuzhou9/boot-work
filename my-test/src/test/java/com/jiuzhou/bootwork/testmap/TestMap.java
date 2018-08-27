@@ -24,4 +24,12 @@ public class TestMap extends TestCase {
         list.add(person);
         System.out.println(JSON.toJSONString(map));
     }
+
+    public void test1(){
+        Map<String, Person> map = new HashMap<>();
+        map.put("1", new Person());
+        Person person = map.get("1");
+        person.setName("zhangsan");
+        System.out.println(JSON.toJSONString(map));
+    }
 }

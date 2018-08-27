@@ -12,5 +12,7 @@ public class TestShort {
     public void test(){
         Short aShort = new Short("1");
         System.out.println(aShort);
+        short s = 1;
+        System.out.println(aShort.equals(s));
     }
 }
