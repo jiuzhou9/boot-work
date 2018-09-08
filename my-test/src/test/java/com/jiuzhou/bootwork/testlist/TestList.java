@@ -161,4 +161,11 @@ public class TestList extends TestCase{
         return menuListDTOS;
     }
 
+    public void test_subList(){
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        List<String> list1 = list.subList(0, 1);
+        System.out.println(list1);
+    }
+
 }
