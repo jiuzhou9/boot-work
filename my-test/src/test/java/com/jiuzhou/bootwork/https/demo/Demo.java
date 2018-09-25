@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.https;
+package com.jiuzhou.bootwork.https.demo;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;

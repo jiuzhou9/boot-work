@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.https;
+package com.jiuzhou.bootwork.https.demo;
 
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.CertificateException;
