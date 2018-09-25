@@ -60,7 +60,7 @@ public class TestUnicorn {
         String key = "690da61e018a42e6a3e3b55bed84d4c8";
         String secret = "3176fde1c63c4a38b85cb4a9da439a8f";
         String keyToken = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjIxNDU4ODgwMDAsImtleSI6IjY5MGRhNjFlMDE4YTQyZTZhM2UzYjU1YmVkODRkNGM4In0.ZsWASJLiVX4EVxQORV2PghyDD-bu0seyWX57Gs8H5I4dBquCSp4Q9jmvLxcPC_AwQT_X1ebFf5LzaPTDgHlGTw";
-        String url = "http://139.219.2.162:15102/unicorn-api/unicorn/api/v1/test/testInput?input=11111111";
+        String url = "http://dev.t.d2d.ai:15102/unicorn-api/unicorn/api/v1/test/testInput?input=11111111";
 
 //        String key = "341f4f6a637a4c65af55ba226c44ce46";
 //        String secret = "ba7091c04ebf44808356b7eb9591c895";
