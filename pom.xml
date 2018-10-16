@@ -26,6 +26,7 @@
         <module>auth-server</module>
         <module>permission-server</module>
         <module>scheduled</module>
+        <module>quartz</module>
     </modules>
     <packaging>pom</packaging>
 
