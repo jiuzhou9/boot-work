@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.https.rest;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -9,8 +10,11 @@ import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.HostnameVerifier;
@@ -20,7 +24,6 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
 
 /**
  * @author wangjiuzhou (jiuzhou@shanshu.ai)
@@ -29,6 +32,8 @@ import java.util.HashMap;
  * restTemplate https
  */
 public class RestTemplateTest {
+
+    private String url = "https://140.143.140.201:8065/TMS_UAT/v1/NoticeResultServlet";
 
     @Bean
     public RestTemplate restTemplate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
@@ -87,19 +92,24 @@ public class RestTemplateTest {
         System.out.println(resp);
     }
 
+    /**
+     * success ok
+     */
     @Test
     public void testZWY(){
-        String url = "https://140.143.140.201:8065/TMS_UAT/v1/NoticeResultServlet";
+
         ResponseEntity<String> resp = null;
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("KeyId", "7b023527-32a4-49bd-87bd-5d5a1ccee199");
-        HttpEntity<String> stringHttpEntity = new HttpEntity<>(httpHeaders);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         ZwyNotice zwyNotice = new ZwyNotice();
-        zwyNotice.setRequestId("1234567");
+        zwyNotice.setRequestId("geo-20180926000002");
+        HttpEntity<ZwyNotice> request = new HttpEntity<>(zwyNotice, httpHeaders);
 
+        System.out.println("请求request：" + JSON.toJSONString(request));
         try {
-            resp = restTemplate().postForEntity(url, stringHttpEntity, String.class, zwyNotice);
+            resp = restTemplate().postForEntity(url, request, String.class);
         } catch (KeyStoreException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -107,7 +117,34 @@ public class RestTemplateTest {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
-        System.out.println(resp.getStatusCode());
+        System.out.println("响应状态码" + resp.getStatusCode());
+    }
+
+
+    @Test
+    public void testZwy2(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.add("KeyId", "7b023527-32a4-49bd-87bd-5d5a1ccee199");
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("requestId", "geo-20180926000001");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+        System.out.println("请求体" + JSON.toJSONString(request));
+        ResponseEntity<String> response = null;
+        try {
+            response = restTemplate().postForEntity( url, request , String.class );
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("响应状态码" + response.getStatusCode());
     }
 
 }

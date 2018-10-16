@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.httpstatus;
+package com.jiuzhou.bootwork.testhttpstatus;
 
 import org.junit.Assert;
 import org.junit.Test;
