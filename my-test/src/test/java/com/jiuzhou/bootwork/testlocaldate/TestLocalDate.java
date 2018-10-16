@@ -47,4 +47,10 @@ public class TestLocalDate extends TestCase{
         Date from = Date.from(localDateTime.atZone(zoneId).toInstant());
         System.out.println(new Date());
     }
+
+
+    public void test1(){
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("" + now.getYear() + now.getMonth().getValue() + now.getDayOfMonth() + now.getHour() + now.getMinute() + now.getSecond());
+    }
 }

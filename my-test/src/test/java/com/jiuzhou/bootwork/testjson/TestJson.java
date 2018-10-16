@@ -1,6 +1,7 @@
 package com.jiuzhou.bootwork.testjson;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiuzhou.bootwork.beans.Person;
 import com.jiuzhou.bootwork.result.Result;
@@ -38,5 +39,21 @@ public class TestJson extends TestCase {
 //        Result<String> result = new Result<>();
 //        result.setData(JSON.toJSONString(person));
         System.out.println(JSON.toJSONString(person));
+    }
+
+    public void test_2(){
+        String s = "{\"status\":\"1\",\"info\":\"OK\",\"infocode\":\"10000\",\"count\":\"1\","
+                        + "\"geocodes\":[{\"formatted_address\":\"北京市朝阳区阜通东大街|6号\",\"province\":\"北京市\","
+                        + "\"citycode\":\"010\",\"city\":\"北京市\",\"district\":\"朝阳区\",\"township\":[],"
+                        + "\"neighborhood\":{\"name\":[],\"type\":[]},\"building\":{\"name\":[],\"type\":[]},"
+                        + "\"adcode\":\"110105\",\"street\":\"阜通东大街\",\"number\":\"6号\",\"location\":\"116.483038,"
+                        + "39.990633\",\"level\":\"门牌号\"}]}";
+
+        JSONObject jsonObject = JSON.parseObject(s);
+
+        JSONArray geocodes = jsonObject.getJSONArray("geocodes");
+        geocodes.size();
+        JSONObject jsonObject1 = geocodes.getJSONObject(0);
+        System.out.println(geocodes);
     }
 }
