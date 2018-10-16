@@ -13,11 +13,17 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.util.ReflectionUtils;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class SchedulerConfig {
 
     @Autowired
     private SpringJobFactory springJobFactory;
+
+    //注入数据库
+    @Autowired
+    private DataSource dataSource;
 
 
     @Bean(name="SchedulerFactory")
@@ -27,6 +33,8 @@ public class SchedulerConfig {
         //        ReflectionUtils.accessibleConstructor(String.class, String.class);
 
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
+        //注入数据库
+        factory.setDataSource(dataSource);
         factory.setAutoStartup(true);
         factory.setStartupDelay(5);//延时5秒启动
         factory.setQuartzProperties(quartzProperties());
@@ -36,14 +44,14 @@ public class SchedulerConfig {
         return factory;
     }
 
-    @Bean
+    /*@Bean
     public Properties quartzProperties() throws IOException {
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
         //在quartz.properties中的属性被读取并注入后再初始化对象
         propertiesFactoryBean.afterPropertiesSet();
         return propertiesFactoryBean.getObject();
-    }
+    }*/
 
     /*
      * quartz初始化监听器
@@ -61,4 +69,29 @@ public class SchedulerConfig {
         return schedulerFactoryBean().getScheduler();
     }
 
+    /**
+     * 设置quartz属性
+     */
+    public Properties quartzProperties() throws IOException {
+        Properties prop = new Properties();
+        prop.put("quartz.scheduler.instanceName", "ServerScheduler");
+        prop.put("org.quartz.scheduler.instanceId", "AUTO");
+        prop.put("org.quartz.scheduler.skipUpdateCheck", "true");
+        prop.put("org.quartz.scheduler.instanceId", "NON_CLUSTERED");
+        prop.put("org.quartz.scheduler.jobFactory.class", "org.quartz.simpl.SimpleJobFactory");
+        prop.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
+        prop.put("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate");
+        prop.put("org.quartz.jobStore.dataSource", "quartzDataSource");
+        prop.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
+        prop.put("org.quartz.jobStore.isClustered", "true");
+        prop.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
+        prop.put("org.quartz.threadPool.threadCount", "5");
+
+        //		prop.put("org.quartz.dataSource.quartzDataSource.driver", druidProperties.getDriverClassName());
+        //		prop.put("org.quartz.dataSource.quartzDataSource.URL", druidProperties.getUrl());
+        //		prop.put("org.quartz.dataSource.quartzDataSource.user", druidProperties.getUsername());
+        //		prop.put("org.quartz.dataSource.quartzDataSource.password", druidProperties.getPassword());
+        //		prop.put("org.quartz.dataSource.quartzDataSource.maxConnections", druidProperties.getMaxActive());
+        return prop;
+    }
 }
