@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/07/07
  */
 public class TestEncode {

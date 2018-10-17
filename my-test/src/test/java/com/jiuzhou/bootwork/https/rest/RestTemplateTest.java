@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/09/25
  *
  * restTemplate https

@@ -1,7 +1,7 @@
 package com.jiuzhou.bootwork.testdouble;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/10/13
  */
 public class TestDouble {

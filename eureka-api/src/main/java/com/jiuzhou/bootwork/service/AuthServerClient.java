@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/05/13
  */
 @FeignClient(name = "auth-server")

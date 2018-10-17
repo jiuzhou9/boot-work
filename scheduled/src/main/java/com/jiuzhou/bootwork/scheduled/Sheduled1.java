@@ -4,7 +4,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/06/02
  */
 @Component
