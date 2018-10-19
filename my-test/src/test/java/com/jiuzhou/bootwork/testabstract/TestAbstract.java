@@ -9,11 +9,19 @@ import lombok.NonNull;
  */
 public abstract class TestAbstract {
 
-    protected String pre = "a";
+    protected String pre = "pre";
 
     protected String middle;
 
-    public String get() {
+    public String getPreMiddle() {
         return this.pre + this.middle;
+    }
+
+    /**
+     * 强制要求子类必须通过此构造方法进行初始化对象
+     * @param middle
+     */
+    public TestAbstract(String middle) {
+        this.middle = middle;
     }
 }

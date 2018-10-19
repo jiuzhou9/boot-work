@@ -6,10 +6,7 @@ package com.jiuzhou.bootwork.testabstract;
  */
 public class TestSon extends TestAbstract {
 
-    public static void main(String[] args) {
-        TestSon testSon = new TestSon();
-        testSon.middle = "middle";
-        String s = testSon.get();
-        System.out.println(s);
+    public TestSon() {
+        super("middle");
     }
 }

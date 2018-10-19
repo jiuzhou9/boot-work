@@ -170,3 +170,4 @@ CREATE TABLE QRTZ_LOCKS
 commit;
 
 ```
+http://localhost:9065/JobManager.html
