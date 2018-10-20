@@ -3,14 +3,22 @@ package com.jiuzhou.bootwork.dao.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Role extends RoleKey implements Serializable {
-    private String roleCode;
+public class Accesskey extends AccesskeyKey implements Serializable {
+    private String key;
 
     private String name;
 
     private String companyCode;
 
-    private String comments;
+    private String userCode;
+
+    private String secret;
+
+    private String privateSecret;
+
+    private String constraint;
+
+    private LocalDateTime expireTime;
 
     private Boolean active;
 
@@ -20,12 +28,12 @@ public class Role extends RoleKey implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getRoleCode() {
-        return roleCode;
+    public String getKey() {
+        return key;
     }
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode == null ? null : roleCode.trim();
+    public void setKey(String key) {
+        this.key = key == null ? null : key.trim();
     }
 
     public String getName() {
@@ -44,12 +52,44 @@ public class Role extends RoleKey implements Serializable {
         this.companyCode = companyCode == null ? null : companyCode.trim();
     }
 
-    public String getComments() {
-        return comments;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments == null ? null : comments.trim();
+    public void setUserCode(String userCode) {
+        this.userCode = userCode == null ? null : userCode.trim();
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret == null ? null : secret.trim();
+    }
+
+    public String getPrivateSecret() {
+        return privateSecret;
+    }
+
+    public void setPrivateSecret(String privateSecret) {
+        this.privateSecret = privateSecret == null ? null : privateSecret.trim();
+    }
+
+    public String getConstraint() {
+        return constraint;
+    }
+
+    public void setConstraint(String constraint) {
+        this.constraint = constraint == null ? null : constraint.trim();
+    }
+
+    public LocalDateTime getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(LocalDateTime expireTime) {
+        this.expireTime = expireTime;
     }
 
     public Boolean getActive() {
@@ -87,12 +127,16 @@ public class Role extends RoleKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Role other = (Role) that;
+        Accesskey other = (Accesskey) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getRoleCode() == null ? other.getRoleCode() == null : this.getRoleCode().equals(other.getRoleCode()))
+            && (this.getKey() == null ? other.getKey() == null : this.getKey().equals(other.getKey()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getCompanyCode() == null ? other.getCompanyCode() == null : this.getCompanyCode().equals(other.getCompanyCode()))
-            && (this.getComments() == null ? other.getComments() == null : this.getComments().equals(other.getComments()))
+            && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
+            && (this.getSecret() == null ? other.getSecret() == null : this.getSecret().equals(other.getSecret()))
+            && (this.getPrivateSecret() == null ? other.getPrivateSecret() == null : this.getPrivateSecret().equals(other.getPrivateSecret()))
+            && (this.getConstraint() == null ? other.getConstraint() == null : this.getConstraint().equals(other.getConstraint()))
+            && (this.getExpireTime() == null ? other.getExpireTime() == null : this.getExpireTime().equals(other.getExpireTime()))
             && (this.getActive() == null ? other.getActive() == null : this.getActive().equals(other.getActive()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
@@ -103,10 +147,14 @@ public class Role extends RoleKey implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getRoleCode() == null) ? 0 : getRoleCode().hashCode());
+        result = prime * result + ((getKey() == null) ? 0 : getKey().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getCompanyCode() == null) ? 0 : getCompanyCode().hashCode());
-        result = prime * result + ((getComments() == null) ? 0 : getComments().hashCode());
+        result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
+        result = prime * result + ((getSecret() == null) ? 0 : getSecret().hashCode());
+        result = prime * result + ((getPrivateSecret() == null) ? 0 : getPrivateSecret().hashCode());
+        result = prime * result + ((getConstraint() == null) ? 0 : getConstraint().hashCode());
+        result = prime * result + ((getExpireTime() == null) ? 0 : getExpireTime().hashCode());
         result = prime * result + ((getActive() == null) ? 0 : getActive().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
@@ -119,10 +167,14 @@ public class Role extends RoleKey implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", roleCode=").append(roleCode);
+        sb.append(", key=").append(key);
         sb.append(", name=").append(name);
         sb.append(", companyCode=").append(companyCode);
-        sb.append(", comments=").append(comments);
+        sb.append(", userCode=").append(userCode);
+        sb.append(", secret=").append(secret);
+        sb.append(", privateSecret=").append(privateSecret);
+        sb.append(", constraint=").append(constraint);
+        sb.append(", expireTime=").append(expireTime);
         sb.append(", active=").append(active);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

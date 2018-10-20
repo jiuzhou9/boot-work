@@ -1,79 +1,18 @@
 package com.jiuzhou.bootwork.dao.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
-public class Role extends RoleKey implements Serializable {
-    private String roleCode;
-
-    private String name;
-
-    private String companyCode;
-
-    private String comments;
-
-    private Boolean active;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
+public class RoleWithBLOBs extends Role implements Serializable {
+    private String resourceacl;
 
     private static final long serialVersionUID = 1L;
 
-    public String getRoleCode() {
-        return roleCode;
+    public String getResourceacl() {
+        return resourceacl;
     }
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode == null ? null : roleCode.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode == null ? null : companyCode.trim();
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments == null ? null : comments.trim();
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
+    public void setResourceacl(String resourceacl) {
+        this.resourceacl = resourceacl == null ? null : resourceacl.trim();
     }
 
     @Override
@@ -87,7 +26,7 @@ public class Role extends RoleKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Role other = (Role) that;
+        RoleWithBLOBs other = (RoleWithBLOBs) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getRoleCode() == null ? other.getRoleCode() == null : this.getRoleCode().equals(other.getRoleCode()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
@@ -95,7 +34,8 @@ public class Role extends RoleKey implements Serializable {
             && (this.getComments() == null ? other.getComments() == null : this.getComments().equals(other.getComments()))
             && (this.getActive() == null ? other.getActive() == null : this.getActive().equals(other.getActive()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getResourceacl() == null ? other.getResourceacl() == null : this.getResourceacl().equals(other.getResourceacl()));
     }
 
     @Override
@@ -110,6 +50,7 @@ public class Role extends RoleKey implements Serializable {
         result = prime * result + ((getActive() == null) ? 0 : getActive().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getResourceacl() == null) ? 0 : getResourceacl().hashCode());
         return result;
     }
 
@@ -119,13 +60,7 @@ public class Role extends RoleKey implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", roleCode=").append(roleCode);
-        sb.append(", name=").append(name);
-        sb.append(", companyCode=").append(companyCode);
-        sb.append(", comments=").append(comments);
-        sb.append(", active=").append(active);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
+        sb.append(", resourceacl=").append(resourceacl);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

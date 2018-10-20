@@ -2,16 +2,16 @@ package com.jiuzhou.bootwork.dao.model;
 
 import java.io.Serializable;
 
-public class RoleResourceKey implements Serializable {
-    private Long id;
+public class AccesskeyKey implements Serializable {
+    private Integer id;
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -26,7 +26,7 @@ public class RoleResourceKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        RoleResourceKey other = (RoleResourceKey) that;
+        AccesskeyKey other = (AccesskeyKey) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()));
     }
 

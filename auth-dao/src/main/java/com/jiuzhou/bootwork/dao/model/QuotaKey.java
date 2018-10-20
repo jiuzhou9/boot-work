@@ -2,16 +2,16 @@ package com.jiuzhou.bootwork.dao.model;
 
 import java.io.Serializable;
 
-public class ServerKey implements Serializable {
-    private Long id;
+public class QuotaKey implements Serializable {
+    private Integer id;
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -26,7 +26,7 @@ public class ServerKey implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ServerKey other = (ServerKey) that;
+        QuotaKey other = (QuotaKey) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()));
     }
 

@@ -1,6 +1,8 @@
 package com.jiuzhou.bootwork.dao.mapper;
 
 import com.jiuzhou.bootwork.dao.mapper.base.BaseTest;
+import com.jiuzhou.bootwork.dao.model.UserRole;
+import com.jiuzhou.bootwork.dao.model.UserRoleKey;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,8 +23,11 @@ public class UserRoleMapperTest extends BaseTest{
     @Test
     public void updateRemainderById() {
 
-        int i = userRoleMapper.updateRemainderById(1L);
-        System.out.println(i);
+        UserRoleKey userRoleKey = new UserRoleKey();
+        userRoleKey.setId(1);
+
+        UserRole userRole = userRoleMapper.selectByPrimaryKey(userRoleKey);
+        System.out.println(userRole);
 
         /*
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();

@@ -43,7 +43,8 @@
         </commentGenerator>
 
         <!-- jdbc连接 -->
-        <jdbcConnection driverClass="${driverClassName}" connectionURL="${url}" userId="${username}" password="${password}" />
+        <jdbcConnection driverClass="${driverClassName}" connectionURL="${url}" userId="${username}"
+                        password="${password}"/>
         <!--
             java类型处理器
             用于处理DB中的类型到Java中的类型，默认使用JavaTypeResolverDefaultImpl；
@@ -113,39 +114,36 @@
             <property name="rootInterface" value=""/>-->
         </javaClientGenerator>
 
-        <!--<table tableName="resource">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
-        <!--<table tableName="server">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
+        <table tableName="accesskey">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="expire_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
+        <table tableName="company">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
+        <table tableName="quota">
+            <columnOverride column="begin_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="end_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
+        <table tableName="user">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
         <table tableName="role">
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
-        <!--<table tableName="role_resource">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
-        <!--<table tableName="user">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
         <table tableName="user_role">
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
-            <columnOverride column="start_time" javaType="java.time.LocalDateTime"></columnOverride>
-            <columnOverride column="end_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
-        <!--<table tableName="app">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
-        <!--<table tableName="app_role">-->
-            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
-        <!--</table>-->
+        <table tableName="resource">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
+        </table>
     </context>
 </generatorConfiguration>

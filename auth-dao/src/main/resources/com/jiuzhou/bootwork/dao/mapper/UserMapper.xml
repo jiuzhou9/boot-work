@@ -2,14 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiuzhou.bootwork.dao.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.jiuzhou.bootwork.dao.model.User">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
     <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="surname" jdbcType="VARCHAR" property="surname" />
+    <result column="givenname" jdbcType="VARCHAR" property="givenname" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="available" jdbcType="BIT" property="available" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="parent_code" jdbcType="VARCHAR" property="parentCode" />
+    <result column="comments" jdbcType="VARCHAR" property="comments" />
+    <result column="active" jdbcType="BIT" property="active" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -72,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, nick_name, password, email, address, mobile, available, create_time, 
-    update_time
+    id, user_code, username, password, surname, givenname, nickname, mobile, phone, email, 
+    company_code, type, parent_code, comments, active, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.UserExample" resultMap="BaseResultMap">
     select
@@ -93,11 +100,11 @@
     select 
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.UserKey">
     delete from user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.jiuzhou.bootwork.dao.model.UserExample">
     delete from user
@@ -106,41 +113,66 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.User">
-    insert into user (id, username, nick_name, 
-      password, email, address, 
-      mobile, available, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{available,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into user (id, user_code, username, 
+      password, surname, givenname, 
+      nickname, mobile, phone, 
+      email, company_code, type, 
+      parent_code, comments, active, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{surname,jdbcType=VARCHAR}, #{givenname,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{parentCode,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}, #{active,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.User" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
       <if test="username != null">
         username,
-      </if>
-      <if test="nickName != null">
-        nick_name,
       </if>
       <if test="password != null">
         password,
       </if>
-      <if test="email != null">
-        email,
+      <if test="surname != null">
+        surname,
       </if>
-      <if test="address != null">
-        address,
+      <if test="givenname != null">
+        givenname,
+      </if>
+      <if test="nickname != null">
+        nickname,
       </if>
       <if test="mobile != null">
         mobile,
       </if>
-      <if test="available != null">
-        available,
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="parentCode != null">
+        parent_code,
+      </if>
+      <if test="comments != null">
+        comments,
+      </if>
+      <if test="active != null">
+        active,
       </if>
       <if test="createTime != null">
         create_time,
@@ -151,28 +183,49 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=BIGINT},
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
-      <if test="nickName != null">
-        #{nickName,jdbcType=VARCHAR},
-      </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="surname != null">
+        #{surname,jdbcType=VARCHAR},
       </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
+      <if test="givenname != null">
+        #{givenname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="mobile != null">
         #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="available != null">
-        #{available,jdbcType=BIT},
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -192,28 +245,49 @@
     update user
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userCode != null">
+        user_code = #{record.userCode,jdbcType=VARCHAR},
       </if>
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.nickName != null">
-        nick_name = #{record.nickName,jdbcType=VARCHAR},
-      </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
+      <if test="record.surname != null">
+        surname = #{record.surname,jdbcType=VARCHAR},
       </if>
-      <if test="record.address != null">
-        address = #{record.address,jdbcType=VARCHAR},
+      <if test="record.givenname != null">
+        givenname = #{record.givenname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
       <if test="record.mobile != null">
         mobile = #{record.mobile,jdbcType=VARCHAR},
       </if>
-      <if test="record.available != null">
-        available = #{record.available,jdbcType=BIT},
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCode != null">
+        company_code = #{record.companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentCode != null">
+        parent_code = #{record.parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null">
+        comments = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.active != null">
+        active = #{record.active,jdbcType=BIT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -228,14 +302,21 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user
-    set id = #{record.id,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=INTEGER},
+      user_code = #{record.userCode,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
-      nick_name = #{record.nickName,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
+      surname = #{record.surname,jdbcType=VARCHAR},
+      givenname = #{record.givenname,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
-      available = #{record.available,jdbcType=BIT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      parent_code = #{record.parentCode,jdbcType=VARCHAR},
+      comments = #{record.comments,jdbcType=VARCHAR},
+      active = #{record.active,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -245,26 +326,47 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jiuzhou.bootwork.dao.model.User">
     update user
     <set>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="nickName != null">
-        nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="surname != null">
+        surname = #{surname,jdbcType=VARCHAR},
       </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
+      <if test="givenname != null">
+        givenname = #{givenname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="mobile != null">
         mobile = #{mobile,jdbcType=VARCHAR},
       </if>
-      <if test="available != null">
-        available = #{available,jdbcType=BIT},
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="active != null">
+        active = #{active,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -273,19 +375,26 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.User">
     update user
-    set username = #{username,jdbcType=VARCHAR},
-      nick_name = #{nickName,jdbcType=VARCHAR},
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
+      surname = #{surname,jdbcType=VARCHAR},
+      givenname = #{givenname,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
-      available = #{available,jdbcType=BIT},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR},
+      active = #{active,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
