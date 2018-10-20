@@ -15,12 +15,25 @@ import java.util.stream.Stream;
  * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/02/02
  */
-public class TestList extends TestCase{
+public class TestList extends TestCase {
+
+    public void test_contains() {
+        String[] strings = { "conDistanceRadius", "enableDensitySeeding", "conDensityRoughWeightLimit",
+                        "conDensityRoughVolumeLimit", "conDensityRoughNeighborSizeLimit", "conDensityRadius",
+                        "conDensitFinalWeightLimit", "minFillRateWeight", "minFillRateVolume", "conRadiusInZone1",
+                        "conRadiusInZone2", "conRadiusInZone3", "conMaxNumOfAreas", "deliveryRadius", "originRadius" };
+        List<String> list = new ArrayList<>();
+        for (String string : strings) {
+            list.add(string);
+        }
+        boolean conRadiusInZone3 = list.contains("conRadiusInZone3");
+        System.out.println(conRadiusInZone3);
+    }
 
     /**
      * list集合中可以存储null值，而且还可以存储多个null
      */
-    public void testNull(){
+    public void testNull() {
         List<String> list = new ArrayList<>();
         list.add("");
         list.add(null);
@@ -32,22 +45,21 @@ public class TestList extends TestCase{
     /**
      * 集合迭代器，是可以删除集合中指定的元素的，一边遍历一边删除
      */
-    public void test_remove(){
+    public void test_remove() {
         List<String> list = new ArrayList<>();
         list.add("-1");
 
-        ListIterator<String> stringListIterator =
-                        list.listIterator();
-        while (stringListIterator.hasNext()){
+        ListIterator<String> stringListIterator = list.listIterator();
+        while (stringListIterator.hasNext()) {
             String next = stringListIterator.next();
-            if ("-1".equals(next)){
+            if ("-1".equals(next)) {
                 stringListIterator.remove();
             }
         }
         System.out.println(JSON.toJSONString(list));
     }
 
-    public void test_sort(){
+    public void test_sort() {
         List<String> keys = new ArrayList<>();
         keys.add("sdfg");
         keys.add("dg");
@@ -60,20 +72,19 @@ public class TestList extends TestCase{
         System.out.println(keys);
     }
 
-    public void test_(){
+    public void test_() {
         List<MenuDTO> menuDTOS = newParentMenus(2);
 
         int grade = 0;
         for (MenuDTO menuDTO : menuDTOS) {
-            grade =  menuDTO.getGrade() > grade ? menuDTO.getGrade() : grade;
+            grade = menuDTO.getGrade() > grade ? menuDTO.getGrade() : grade;
         }
 
         for (int i = 0; i < grade - 1; i++) {
             menuDTOS = new ArrayList<>(getMenusWithChildren(menuDTOS));
         }
 
-        menuDTOS = menuDTOS.parallelStream().filter(menuDTO -> menuDTO.getParentId() == 0)
-                        .collect(Collectors.toList());
+        menuDTOS = menuDTOS.parallelStream().filter(menuDTO -> menuDTO.getParentId() == 0).collect(Collectors.toList());
 
         menuDTOS = sortMenuDTOs(menuDTOS);
 
@@ -82,11 +93,13 @@ public class TestList extends TestCase{
     }
 
     /**
-     *  创建0级别按钮
+     * 创建0级别按钮
+     *
      * @param count
+     *
      * @return
      */
-    private List<MenuDTO> newParentMenus(int count){
+    private List<MenuDTO> newParentMenus(int count) {
         List<MenuDTO> menuDTOS = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             MenuDTO menuDTO = new MenuDTO();
@@ -108,17 +121,19 @@ public class TestList extends TestCase{
 
     /**
      * 获取所有按钮，这些按钮有子按钮集合
+     *
      * @param menuDTOS
+     *
      * @return
      */
-    private Set<MenuDTO> getMenusWithChildren(List<MenuDTO> menuDTOS){
+    private Set<MenuDTO> getMenusWithChildren(List<MenuDTO> menuDTOS) {
         //所有子节点,进行分类,
         Map<Integer, List<MenuDTO>> collect = menuDTOS.parallelStream().filter(menuDTO -> menuDTO.getParentId() > 0)
                         .collect(Collectors.groupingBy(MenuDTO::getParentId));
 
         Set<MenuDTO> menuDTOsWithChildren = new HashSet<>();
         //父子关系
-        menuDTOS.forEach( menuDTO -> {
+        menuDTOS.forEach(menuDTO -> {
             MenuDTO dto = new MenuDTO();
             dto.setName(menuDTO.getName());
             dto.setUri(menuDTO.getUri());
@@ -132,10 +147,9 @@ public class TestList extends TestCase{
         return menuDTOsWithChildren;
     }
 
-
     private List<MenuDTO> sortMenuDTOs(List<MenuDTO> menuDTOS) {
         menuDTOS.forEach(menuDTO -> {
-            if (!CollectionUtils.isEmpty(menuDTO.getSubMenus())){
+            if (!CollectionUtils.isEmpty(menuDTO.getSubMenus())) {
                 menuDTO.setSubMenus(sortMenuDTOs(menuDTO.getSubMenus()));
             }
         });
@@ -144,16 +158,15 @@ public class TestList extends TestCase{
         return collect;
     }
 
-
-    private List<MenuListDTO> dealMenus(List<MenuDTO> menuDTOS){
+    private List<MenuListDTO> dealMenus(List<MenuDTO> menuDTOS) {
         List<MenuListDTO> menuListDTOS = new ArrayList<>();
-        menuDTOS.forEach( menuDTO -> {
+        menuDTOS.forEach(menuDTO -> {
             MenuListDTO menuListDTO = new MenuListDTO();
-            if (!CollectionUtils.isEmpty(menuDTO.getSubMenus())){
+            if (!CollectionUtils.isEmpty(menuDTO.getSubMenus())) {
                 List<MenuListDTO> menuVOList = dealMenus(menuDTO.getSubMenus());
                 BeanUtils.copyProperties(menuDTO, menuListDTO, "subMenus");
                 menuListDTO.setSubMenus(menuVOList);
-            }else {
+            } else {
                 BeanUtils.copyProperties(menuDTO, menuListDTO);
             }
             menuListDTOS.add(menuListDTO);
@@ -161,7 +174,7 @@ public class TestList extends TestCase{
         return menuListDTOS;
     }
 
-    public void test_subList(){
+    public void test_subList() {
         List<String> list = new ArrayList<>();
         list.add("a");
         List<String> list1 = list.subList(0, 1);

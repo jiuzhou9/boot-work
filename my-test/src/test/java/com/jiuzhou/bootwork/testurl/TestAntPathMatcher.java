@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.springframework.util.AntPathMatcher;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/06/14
  */
 public class TestAntPathMatcher extends TestCase {

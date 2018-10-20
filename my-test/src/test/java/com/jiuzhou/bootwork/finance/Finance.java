@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.finance;
 import java.time.LocalDate;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/10/14
  */
 public class Finance {

@@ -5,7 +5,7 @@ import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/10/12
  */
 public class TestVertx extends TestCase {

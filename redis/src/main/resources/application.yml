@@ -1,0 +1,7 @@
+jedis:
+  pool:
+    host: localhost
+    port: 6379
+    password:
+redis:
+  preKey: GATEWAY_AUTH_SERVER_

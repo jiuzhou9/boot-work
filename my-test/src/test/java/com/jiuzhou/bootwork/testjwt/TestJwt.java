@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.testjwt;
 import junit.framework.TestCase;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/05/17
  */
 public class TestJwt extends TestCase {
