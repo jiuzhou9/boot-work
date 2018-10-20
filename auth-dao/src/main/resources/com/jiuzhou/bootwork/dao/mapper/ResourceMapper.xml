@@ -105,6 +105,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.Resource">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into resource (id, resource_code, name, 
       uri, type, action, 
       comments, active, create_time, 
@@ -115,11 +118,12 @@
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Resource">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+      id,
       <if test="resourceCode != null">
         resource_code,
       </if>
@@ -149,9 +153,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+      #{id,jdbcType=INTEGER},
       <if test="resourceCode != null">
         #{resourceCode,jdbcType=VARCHAR},
       </if>

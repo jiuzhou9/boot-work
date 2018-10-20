@@ -110,6 +110,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.Company">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into company (id, company_code, business_code, 
       name, business_license, fax, 
       address, zipcode, website, 
@@ -124,11 +127,12 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Company">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into company
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+      id,
       <if test="companyCode != null">
         company_code,
       </if>
@@ -170,9 +174,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+      #{id,jdbcType=INTEGER},
       <if test="companyCode != null">
         #{companyCode,jdbcType=VARCHAR},
       </if>

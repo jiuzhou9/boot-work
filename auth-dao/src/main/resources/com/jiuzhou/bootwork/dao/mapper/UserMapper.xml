@@ -113,6 +113,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.User">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into user (id, user_code, username, 
       password, surname, givenname, 
       nickname, mobile, phone, 
@@ -127,11 +130,12 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.User">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+      id,
       <if test="userCode != null">
         user_code,
       </if>
@@ -182,9 +186,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+      #{id,jdbcType=INTEGER},
       <if test="userCode != null">
         #{userCode,jdbcType=VARCHAR},
       </if>

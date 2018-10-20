@@ -127,6 +127,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into role (id, role_code, name, 
       company_code, comments, active, 
       create_time, update_time, resourceacl
@@ -137,11 +140,12 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+      id,
       <if test="roleCode != null">
         role_code,
       </if>
@@ -168,9 +172,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+      #{id,jdbcType=INTEGER},
       <if test="roleCode != null">
         #{roleCode,jdbcType=VARCHAR},
       </if>

@@ -108,6 +108,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.Accesskey">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into accesskey (id, key, name, 
       company_code, user_code, secret, 
       private_secret, constraint, expire_time, 
@@ -120,11 +123,12 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Accesskey">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into accesskey
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
+      id,
       <if test="key != null">
         key,
       </if>
@@ -160,9 +164,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
+      #{id,jdbcType=INTEGER},
       <if test="key != null">
         #{key,jdbcType=VARCHAR},
       </if>

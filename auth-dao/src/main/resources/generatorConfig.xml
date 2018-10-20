@@ -115,33 +115,40 @@
         </javaClientGenerator>
 
         <table tableName="accesskey">
+            <generatedKey column="id" sqlStatement="MySql" identity="false"></generatedKey>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="expire_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
         <table tableName="company">
+            <generatedKey column="id" sqlStatement="MySql" identity="false"></generatedKey>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
         <table tableName="quota">
+            <generatedKey column="id" sqlStatement="MySql" identity="false"></generatedKey>
             <columnOverride column="begin_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="end_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
         <table tableName="user">
+            <generatedKey column="id" sqlStatement="MySql" identity="false"></generatedKey>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
         <table tableName="role">
+            <generatedKey column="id" sqlStatement="MySql" identity="false"></generatedKey>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
         <table tableName="user_role">
+            <generatedKey column="id" sqlStatement="MySql" identity="false"></generatedKey>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
         <table tableName="resource">
+            <generatedKey column="id" sqlStatement="MySql" identity="false"></generatedKey>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
