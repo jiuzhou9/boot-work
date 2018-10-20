@@ -38,7 +38,7 @@
                 <configuration>
                     <!--配置文件，打包的时候不包含-->
                     <excludes>
-                        <!--<exclude>application*.properties</exclude>-->
+                        <!--<exclude>application*.yml</exclude>-->
                         <!--<exclude>logback-spring.xml</exclude>-->
                     </excludes>
                 </configuration>

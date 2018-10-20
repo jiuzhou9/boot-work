@@ -24,7 +24,7 @@
         <module>auth-dao</module>
         <module>auth-service</module>
         <module>auth-server</module>
-        <module>permission-server</module>
+        <!--<module>permission-server</module>-->
         <module>scheduled</module>
         <module>quartz</module>
         <module>redis</module>
