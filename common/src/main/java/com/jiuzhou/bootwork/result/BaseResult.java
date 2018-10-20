@@ -3,7 +3,7 @@ package com.jiuzhou.bootwork.result;
 /**
  * 业务层的返回结果
  *
- * @author wangchuan (wangchuan@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2017/11/22
  */
 public class BaseResult<T> {

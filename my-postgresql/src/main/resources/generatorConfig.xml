@@ -17,7 +17,7 @@
             2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
         introspectedColumnImpl：类全限定名，用于扩展MBG
     -->
-    <context id="shanshu" defaultModelType="hierarchical" targetRuntime="MyBatis3">
+    <context id="jiuzhou" defaultModelType="hierarchical" targetRuntime="MyBatis3">
         <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖-->
         <property name="autoDelimitKeywords" value="false"/>
         <!-- 生成的Java文件的编码 -->
