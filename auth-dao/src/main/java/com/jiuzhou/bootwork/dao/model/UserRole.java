@@ -4,17 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class UserRole extends UserRoleKey implements Serializable {
-    private Long userId;
+    private String userCode;
 
-    private Long roleId;
+    private String roleCode;
 
-    private Long remainder;
+    private String companyCode;
 
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
-
-    private Boolean available;
+    private Boolean active;
 
     private LocalDateTime createTime;
 
@@ -22,52 +18,36 @@ public class UserRole extends UserRoleKey implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getUserId() {
-        return userId;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserCode(String userCode) {
+        this.userCode = userCode == null ? null : userCode.trim();
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode == null ? null : roleCode.trim();
     }
 
-    public Long getRemainder() {
-        return remainder;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setRemainder(Long remainder) {
-        this.remainder = remainder;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode == null ? null : companyCode.trim();
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public LocalDateTime getCreateTime() {
@@ -99,12 +79,10 @@ public class UserRole extends UserRoleKey implements Serializable {
         }
         UserRole other = (UserRole) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
-            && (this.getRemainder() == null ? other.getRemainder() == null : this.getRemainder().equals(other.getRemainder()))
-            && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
-            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
-            && (this.getAvailable() == null ? other.getAvailable() == null : this.getAvailable().equals(other.getAvailable()))
+            && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
+            && (this.getRoleCode() == null ? other.getRoleCode() == null : this.getRoleCode().equals(other.getRoleCode()))
+            && (this.getCompanyCode() == null ? other.getCompanyCode() == null : this.getCompanyCode().equals(other.getCompanyCode()))
+            && (this.getActive() == null ? other.getActive() == null : this.getActive().equals(other.getActive()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
@@ -114,12 +92,10 @@ public class UserRole extends UserRoleKey implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
-        result = prime * result + ((getRemainder() == null) ? 0 : getRemainder().hashCode());
-        result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
-        result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
-        result = prime * result + ((getAvailable() == null) ? 0 : getAvailable().hashCode());
+        result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
+        result = prime * result + ((getRoleCode() == null) ? 0 : getRoleCode().hashCode());
+        result = prime * result + ((getCompanyCode() == null) ? 0 : getCompanyCode().hashCode());
+        result = prime * result + ((getActive() == null) ? 0 : getActive().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         return result;
@@ -131,12 +107,10 @@ public class UserRole extends UserRoleKey implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", userId=").append(userId);
-        sb.append(", roleId=").append(roleId);
-        sb.append(", remainder=").append(remainder);
-        sb.append(", startTime=").append(startTime);
-        sb.append(", endTime=").append(endTime);
-        sb.append(", available=").append(available);
+        sb.append(", userCode=").append(userCode);
+        sb.append(", roleCode=").append(roleCode);
+        sb.append(", companyCode=").append(companyCode);
+        sb.append(", active=").append(active);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);

@@ -2,13 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiuzhou.bootwork.dao.mapper.UserRoleMapper">
   <resultMap id="BaseResultMap" type="com.jiuzhou.bootwork.dao.model.UserRole">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="role_id" jdbcType="BIGINT" property="roleId" />
-    <result column="remainder" jdbcType="BIGINT" property="remainder" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="available" jdbcType="BIT" property="available" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="active" jdbcType="BIT" property="active" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -71,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, role_id, remainder, start_time, end_time, available, create_time, update_time
+    id, user_code, role_code, company_code, active, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.UserRoleExample" resultMap="BaseResultMap">
     select
@@ -91,11 +89,11 @@
     select 
     <include refid="Base_Column_List" />
     from user_role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.UserRoleKey">
     delete from user_role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.jiuzhou.bootwork.dao.model.UserRoleExample">
     delete from user_role
@@ -104,38 +102,34 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.UserRole">
-    insert into user_role (id, user_id, role_id, 
-      remainder, start_time, end_time, 
-      available, create_time, update_time
-      )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, 
-      #{remainder,jdbcType=BIGINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{available,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_role (id, user_code, role_code, 
+      company_code, active, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, 
+      #{companyCode,jdbcType=VARCHAR}, #{active,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.UserRole">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      id,
+      <if test="userCode != null">
+        user_code,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="roleCode != null">
+        role_code,
       </if>
-      <if test="roleId != null">
-        role_id,
+      <if test="companyCode != null">
+        company_code,
       </if>
-      <if test="remainder != null">
-        remainder,
-      </if>
-      <if test="startTime != null">
-        start_time,
-      </if>
-      <if test="endTime != null">
-        end_time,
-      </if>
-      <if test="available != null">
-        available,
+      <if test="active != null">
+        active,
       </if>
       <if test="createTime != null">
         create_time,
@@ -145,26 +139,18 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
+      #{id,jdbcType=INTEGER},
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=BIGINT},
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
       </if>
-      <if test="remainder != null">
-        #{remainder,jdbcType=BIGINT},
-      </if>
-      <if test="startTime != null">
-        #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="available != null">
-        #{available,jdbcType=BIT},
+      <if test="active != null">
+        #{active,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -184,25 +170,19 @@
     update user_role
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=BIGINT},
+      <if test="record.userCode != null">
+        user_code = #{record.userCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=BIGINT},
+      <if test="record.roleCode != null">
+        role_code = #{record.roleCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.remainder != null">
-        remainder = #{record.remainder,jdbcType=BIGINT},
+      <if test="record.companyCode != null">
+        company_code = #{record.companyCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.startTime != null">
-        start_time = #{record.startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.endTime != null">
-        end_time = #{record.endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.available != null">
-        available = #{record.available,jdbcType=BIT},
+      <if test="record.active != null">
+        active = #{record.active,jdbcType=BIT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -217,13 +197,11 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user_role
-    set id = #{record.id,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT},
-      role_id = #{record.roleId,jdbcType=BIGINT},
-      remainder = #{record.remainder,jdbcType=BIGINT},
-      start_time = #{record.startTime,jdbcType=TIMESTAMP},
-      end_time = #{record.endTime,jdbcType=TIMESTAMP},
-      available = #{record.available,jdbcType=BIT},
+    set id = #{record.id,jdbcType=INTEGER},
+      user_code = #{record.userCode,jdbcType=VARCHAR},
+      role_code = #{record.roleCode,jdbcType=VARCHAR},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      active = #{record.active,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -233,23 +211,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jiuzhou.bootwork.dao.model.UserRole">
     update user_role
     <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=BIGINT},
+      <if test="roleCode != null">
+        role_code = #{roleCode,jdbcType=VARCHAR},
       </if>
-      <if test="remainder != null">
-        remainder = #{remainder,jdbcType=BIGINT},
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
       </if>
-      <if test="startTime != null">
-        start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="available != null">
-        available = #{available,jdbcType=BIT},
+      <if test="active != null">
+        active = #{active,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -258,24 +230,16 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.UserRole">
     update user_role
-    set user_id = #{userId,jdbcType=BIGINT},
-      role_id = #{roleId,jdbcType=BIGINT},
-      remainder = #{remainder,jdbcType=BIGINT},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      available = #{available,jdbcType=BIT},
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      role_code = #{roleCode,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      active = #{active,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-
-  <update id="updateRemainderById" parameterType="java.lang.Long">
-    UPDATE user_role ur
-    SET ur.remainder = ur.remainder - 1
-    WHERE ur.id = #{id,jdbcType=BIGINT} AND ur.remainder &gt; 0;
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

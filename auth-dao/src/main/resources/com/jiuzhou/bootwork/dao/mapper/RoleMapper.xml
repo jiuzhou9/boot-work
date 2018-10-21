@@ -2,14 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiuzhou.bootwork.dao.mapper.RoleMapper">
   <resultMap id="BaseResultMap" type="com.jiuzhou.bootwork.dao.model.Role">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="cents_one_time" jdbcType="BIGINT" property="centsOneTime" />
-    <result column="time_slot" jdbcType="INTEGER" property="timeSlot" />
-    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="comments" jdbcType="VARCHAR" property="comments" />
+    <result column="active" jdbcType="BIT" property="active" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="available" jdbcType="BIT" property="available" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
+    <result column="resourceacl" jdbcType="LONGVARCHAR" property="resourceacl" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,8 +73,27 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, cents_one_time, time_slot, type, create_time, update_time, available
+    id, role_code, name, company_code, comments, active, create_time, update_time
   </sql>
+  <sql id="Blob_Column_List">
+    resourceacl
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.jiuzhou.bootwork.dao.model.RoleExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.RoleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -86,15 +108,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.RoleKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.RoleKey" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.RoleKey">
     delete from role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.jiuzhou.bootwork.dao.model.RoleExample">
     delete from role
@@ -102,31 +126,40 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.Role">
-    insert into role (id, name, cents_one_time,
-      time_slot, type, create_time, 
-      update_time, available)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{centsOneTime,jdbcType=BIGINT},
-      #{timeSlot,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{available,jdbcType=BIT})
+  <insert id="insert" parameterType="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into role (id, role_code, name, 
+      company_code, comments, active, 
+      create_time, update_time, resourceacl
+      )
+    values (#{id,jdbcType=INTEGER}, #{roleCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{companyCode,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}, #{active,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{resourceacl,jdbcType=LONGVARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.Role">
+  <insert id="insertSelective" parameterType="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      id,
+      <if test="roleCode != null">
+        role_code,
       </if>
       <if test="name != null">
         name,
       </if>
-      <if test="centsOneTime != null">
-        cents_one_time,
+      <if test="companyCode != null">
+        company_code,
       </if>
-      <if test="timeSlot != null">
-        time_slot,
+      <if test="comments != null">
+        comments,
       </if>
-      <if test="type != null">
-        type,
+      <if test="active != null">
+        active,
       </if>
       <if test="createTime != null">
         create_time,
@@ -134,25 +167,26 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="available != null">
-        available,
+      <if test="resourceacl != null">
+        resourceacl,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
+      #{id,jdbcType=INTEGER},
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="centsOneTime != null">
-        #{centsOneTime,jdbcType=BIGINT},
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
       </if>
-      <if test="timeSlot != null">
-        #{timeSlot,jdbcType=INTEGER},
+      <if test="comments != null">
+        #{comments,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
+      <if test="active != null">
+        #{active,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -160,8 +194,8 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="available != null">
-        #{available,jdbcType=BIT},
+      <if test="resourceacl != null">
+        #{resourceacl,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -175,19 +209,22 @@
     update role
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleCode != null">
+        role_code = #{record.roleCode,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.centsOneTime != null">
-        cents_one_time = #{record.centsOneTime,jdbcType=BIGINT},
+      <if test="record.companyCode != null">
+        company_code = #{record.companyCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.timeSlot != null">
-        time_slot = #{record.timeSlot,jdbcType=INTEGER},
+      <if test="record.comments != null">
+        comments = #{record.comments,jdbcType=VARCHAR},
       </if>
-      <if test="record.type != null">
-        type = #{record.type,jdbcType=INTEGER},
+      <if test="record.active != null">
+        active = #{record.active,jdbcType=BIT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -195,42 +232,60 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.available != null">
-        available = #{record.available,jdbcType=BIT},
+      <if test="record.resourceacl != null">
+        resourceacl = #{record.resourceacl,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExampleWithBLOBs" parameterType="map">
     update role
-    set id = #{record.id,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=INTEGER},
+      role_code = #{record.roleCode,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      cents_one_time = #{record.centsOneTime,jdbcType=BIGINT},
-      time_slot = #{record.timeSlot,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=INTEGER},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      comments = #{record.comments,jdbcType=VARCHAR},
+      active = #{record.active,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      available = #{record.available,jdbcType=BIT}
+      resourceacl = #{record.resourceacl,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jiuzhou.bootwork.dao.model.Role">
+  <update id="updateByExample" parameterType="map">
+    update role
+    set id = #{record.id,jdbcType=INTEGER},
+      role_code = #{record.roleCode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      comments = #{record.comments,jdbcType=VARCHAR},
+      active = #{record.active,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
     update role
     <set>
+      <if test="roleCode != null">
+        role_code = #{roleCode,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="centsOneTime != null">
-        cents_one_time = #{centsOneTime,jdbcType=BIGINT},
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
       </if>
-      <if test="timeSlot != null">
-        time_slot = #{timeSlot,jdbcType=INTEGER},
+      <if test="comments != null">
+        comments = #{comments,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
+      <if test="active != null">
+        active = #{active,jdbcType=BIT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -238,21 +293,33 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="available != null">
-        available = #{available,jdbcType=BIT},
+      <if test="resourceacl != null">
+        resourceacl = #{resourceacl,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
+    update role
+    set role_code = #{roleCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR},
+      active = #{active,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      resourceacl = #{resourceacl,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Role">
     update role
-    set name = #{name,jdbcType=VARCHAR},
-      cents_one_time = #{centsOneTime,jdbcType=BIGINT},
-      time_slot = #{timeSlot,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
+    set role_code = #{roleCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      comments = #{comments,jdbcType=VARCHAR},
+      active = #{active,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      available = #{available,jdbcType=BIT}
-    where id = #{id,jdbcType=BIGINT}
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

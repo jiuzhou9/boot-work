@@ -1,14 +1,9 @@
-/*
- * Copyright (c) 2017, Cardinal Operations and/or its affiliates. All rights reserved.
- * CARDINAL OPERATIONS PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
-
 package com.jiuzhou.bootwork.result;
 
 /**
  * 业务层的返回结果
  *
- * @author wangchuan (wangchuan@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2017/11/22
  */
 public class BaseResult<T> {

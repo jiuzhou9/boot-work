@@ -3,6 +3,7 @@ package com.jiuzhou.bootwork.dao.mapper;
 import com.jiuzhou.bootwork.dao.model.Role;
 import com.jiuzhou.bootwork.dao.model.RoleExample;
 import com.jiuzhou.bootwork.dao.model.RoleKey;
+import com.jiuzhou.bootwork.dao.model.RoleWithBLOBs;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,19 +14,25 @@ public interface RoleMapper {
 
     int deleteByPrimaryKey(RoleKey key);
 
-    int insert(Role record);
+    int insert(RoleWithBLOBs record);
 
-    int insertSelective(Role record);
+    int insertSelective(RoleWithBLOBs record);
+
+    List<RoleWithBLOBs> selectByExampleWithBLOBs(RoleExample example);
 
     List<Role> selectByExample(RoleExample example);
 
-    Role selectByPrimaryKey(RoleKey key);
+    RoleWithBLOBs selectByPrimaryKey(RoleKey key);
 
-    int updateByExampleSelective(@Param("record") Role record, @Param("example") RoleExample example);
+    int updateByExampleSelective(@Param("record") RoleWithBLOBs record, @Param("example") RoleExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") RoleWithBLOBs record, @Param("example") RoleExample example);
 
     int updateByExample(@Param("record") Role record, @Param("example") RoleExample example);
 
-    int updateByPrimaryKeySelective(Role record);
+    int updateByPrimaryKeySelective(RoleWithBLOBs record);
+
+    int updateByPrimaryKeyWithBLOBs(RoleWithBLOBs record);
 
     int updateByPrimaryKey(Role record);
 }

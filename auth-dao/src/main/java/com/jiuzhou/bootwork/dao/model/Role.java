@@ -4,21 +4,29 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Role extends RoleKey implements Serializable {
+    private String roleCode;
+
     private String name;
 
-    private Long centsOneTime;
+    private String companyCode;
 
-    private Integer timeSlot;
+    private String comments;
 
-    private Integer type;
+    private Boolean active;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
-    private Boolean available;
-
     private static final long serialVersionUID = 1L;
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode == null ? null : roleCode.trim();
+    }
 
     public String getName() {
         return name;
@@ -28,28 +36,28 @@ public class Role extends RoleKey implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
-    public Long getTimes() {
-        return centsOneTime;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setTimes(Long times) {
-        this.centsOneTime = times;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode == null ? null : companyCode.trim();
     }
 
-    public Integer getTimeSlot() {
-        return timeSlot;
+    public String getComments() {
+        return comments;
     }
 
-    public void setTimeSlot(Integer timeSlot) {
-        this.timeSlot = timeSlot;
+    public void setComments(String comments) {
+        this.comments = comments == null ? null : comments.trim();
     }
 
-    public Integer getType() {
-        return type;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public LocalDateTime getCreateTime() {
@@ -68,14 +76,6 @@ public class Role extends RoleKey implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -89,13 +89,13 @@ public class Role extends RoleKey implements Serializable {
         }
         Role other = (Role) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getRoleCode() == null ? other.getRoleCode() == null : this.getRoleCode().equals(other.getRoleCode()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getTimes() == null ? other.getTimes() == null : this.getTimes().equals(other.getTimes()))
-            && (this.getTimeSlot() == null ? other.getTimeSlot() == null : this.getTimeSlot().equals(other.getTimeSlot()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
+            && (this.getCompanyCode() == null ? other.getCompanyCode() == null : this.getCompanyCode().equals(other.getCompanyCode()))
+            && (this.getComments() == null ? other.getComments() == null : this.getComments().equals(other.getComments()))
+            && (this.getActive() == null ? other.getActive() == null : this.getActive().equals(other.getActive()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getAvailable() == null ? other.getAvailable() == null : this.getAvailable().equals(other.getAvailable()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
     }
 
     @Override
@@ -103,13 +103,13 @@ public class Role extends RoleKey implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getRoleCode() == null) ? 0 : getRoleCode().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getTimes() == null) ? 0 : getTimes().hashCode());
-        result = prime * result + ((getTimeSlot() == null) ? 0 : getTimeSlot().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getCompanyCode() == null) ? 0 : getCompanyCode().hashCode());
+        result = prime * result + ((getComments() == null) ? 0 : getComments().hashCode());
+        result = prime * result + ((getActive() == null) ? 0 : getActive().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getAvailable() == null) ? 0 : getAvailable().hashCode());
         return result;
     }
 
@@ -119,13 +119,13 @@ public class Role extends RoleKey implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
+        sb.append(", roleCode=").append(roleCode);
         sb.append(", name=").append(name);
-        sb.append(", times=").append(centsOneTime);
-        sb.append(", timeSlot=").append(timeSlot);
-        sb.append(", type=").append(type);
+        sb.append(", companyCode=").append(companyCode);
+        sb.append(", comments=").append(comments);
+        sb.append(", active=").append(active);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
-        sb.append(", available=").append(available);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
