@@ -1,29 +1,20 @@
 package com.jiuzhou.bootwork.service;
 
+import com.jiuzhou.bootwork.excep.ApiGateWayException;
+import com.jiuzhou.bootwork.service.dto.ApiRequestDTO;
+import com.jiuzhou.bootwork.service.dto.AuthenticateResultDTO;
+
 /**
  * @author wangjiuzhou (835540436@qq.com)
- * @date 2018/04/01
+ * @date 2018/05/20
  */
 public interface AuthService {
 
     /**
-     * 校验时间戳是否合法，校验签名是否合法
-     * @param timestamp 时间戳
-     * @param autograph 签名
-     * @param appCode   APP code
-     * @param appToken  APP 令牌
+     * 校验请求是否合法
      * @return
-     * @throws ServiceException
+     * @throws ApiGateWayException
      */
-    boolean checkTimestampAndAutograph(String timestamp, String autograph, String appCode, String appToken) throws ServiceException;
+    AuthenticateResultDTO authenticate(ApiRequestDTO apiRequestDTO) throws ApiGateWayException;
 
-    /**
-     * 校验身份正确性，权限
-     * @param appToken
-     * @param code
-     * @param serverResource
-     * @param method
-     * @return
-     */
-    boolean checkAuthAndPermission(String appToken, String code, String serverResource, String method) throws ServiceException;
 }

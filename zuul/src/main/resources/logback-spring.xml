@@ -28,9 +28,9 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <File>${LOG_PATH}/zuul-info.log</File>
+        <File>${LOG_PATH}/gateway-server-info.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/zuul-info.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/gateway-server-info.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -46,9 +46,9 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>
-        <File>${LOG_PATH}/zuul-error.log</File>
+        <File>${LOG_PATH}/gateway-server-error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/zuul-error.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/gateway-server-error.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -60,16 +60,39 @@
     </appender>
 
 
-    <!--测试环境, 本地环境和开发环境-->
+    <!--开发环境-->
     <springProfile name="dev">
         <!--关闭spring框架启动的日志信息-->
         <logger name="org.springframework" level="ERROR"/>
         <logger name="org.apache.ibatis.io" level="ERROR"/>
         <root level="DEBUG">
+            <!--<appender-ref ref="CONSOLE"/>-->
+            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="INFO_FILE"/>
+        </root>
+    </springProfile>
+
+    <!--本地环境-->
+    <springProfile name="local">
+        <!--关闭spring框架启动的日志信息-->
+        <logger name="org.springframework" level="ERROR"/>
+        <logger name="org.apache.ibatis.io" level="ERROR"/>
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="ERROR_FILE"/>
         </root>
     </springProfile>
+
+    <!--开发环境-->
+    <!--<springProfile name="dev">-->
+        <!--&lt;!&ndash;关闭spring框架启动的日志信息&ndash;&gt;-->
+        <!--<logger name="org.springframework" level="ERROR"/>-->
+        <!--<logger name="org.apache.ibatis.io" level="ERROR"/>-->
+        <!--<root level="DEBUG">-->
+            <!--<appender-ref ref="CONSOLE"/>-->
+            <!--<appender-ref ref="ERROR_FILE"/>-->
+        <!--</root>-->
+    <!--</springProfile>-->
 
     <!--线上环境-->
     <springProfile name="pro">
