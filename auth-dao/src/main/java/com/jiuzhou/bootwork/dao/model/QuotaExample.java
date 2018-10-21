@@ -166,72 +166,72 @@ public class QuotaExample {
         }
 
         public Criteria andKeyIsNull() {
-            addCriterion("key is null");
+            addCriterion("`key` is null");
             return (Criteria) this;
         }
 
         public Criteria andKeyIsNotNull() {
-            addCriterion("key is not null");
+            addCriterion("`key` is not null");
             return (Criteria) this;
         }
 
         public Criteria andKeyEqualTo(String value) {
-            addCriterion("key =", value, "key");
+            addCriterion("`key` =", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyNotEqualTo(String value) {
-            addCriterion("key <>", value, "key");
+            addCriterion("`key` <>", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyGreaterThan(String value) {
-            addCriterion("key >", value, "key");
+            addCriterion("`key` >", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyGreaterThanOrEqualTo(String value) {
-            addCriterion("key >=", value, "key");
+            addCriterion("`key` >=", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyLessThan(String value) {
-            addCriterion("key <", value, "key");
+            addCriterion("`key` <", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyLessThanOrEqualTo(String value) {
-            addCriterion("key <=", value, "key");
+            addCriterion("`key` <=", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyLike(String value) {
-            addCriterion("key like", value, "key");
+            addCriterion("`key` like", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyNotLike(String value) {
-            addCriterion("key not like", value, "key");
+            addCriterion("`key` not like", value, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyIn(List<String> values) {
-            addCriterion("key in", values, "key");
+            addCriterion("`key` in", values, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyNotIn(List<String> values) {
-            addCriterion("key not in", values, "key");
+            addCriterion("`key` not in", values, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyBetween(String value1, String value2) {
-            addCriterion("key between", value1, value2, "key");
+            addCriterion("`key` between", value1, value2, "key");
             return (Criteria) this;
         }
 
         public Criteria andKeyNotBetween(String value1, String value2) {
-            addCriterion("key not between", value1, value2, "key");
+            addCriterion("`key` not between", value1, value2, "key");
             return (Criteria) this;
         }
 
@@ -606,62 +606,62 @@ public class QuotaExample {
         }
 
         public Criteria andTypeIsNull() {
-            addCriterion("type is null");
+            addCriterion("`type` is null");
             return (Criteria) this;
         }
 
         public Criteria andTypeIsNotNull() {
-            addCriterion("type is not null");
+            addCriterion("`type` is not null");
             return (Criteria) this;
         }
 
         public Criteria andTypeEqualTo(Integer value) {
-            addCriterion("type =", value, "type");
+            addCriterion("`type` =", value, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeNotEqualTo(Integer value) {
-            addCriterion("type <>", value, "type");
+            addCriterion("`type` <>", value, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeGreaterThan(Integer value) {
-            addCriterion("type >", value, "type");
+            addCriterion("`type` >", value, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("type >=", value, "type");
+            addCriterion("`type` >=", value, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeLessThan(Integer value) {
-            addCriterion("type <", value, "type");
+            addCriterion("`type` <", value, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeLessThanOrEqualTo(Integer value) {
-            addCriterion("type <=", value, "type");
+            addCriterion("`type` <=", value, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeIn(List<Integer> values) {
-            addCriterion("type in", values, "type");
+            addCriterion("`type` in", values, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeNotIn(List<Integer> values) {
-            addCriterion("type not in", values, "type");
+            addCriterion("`type` not in", values, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeBetween(Integer value1, Integer value2) {
-            addCriterion("type between", value1, value2, "type");
+            addCriterion("`type` between", value1, value2, "type");
             return (Criteria) this;
         }
 
         public Criteria andTypeNotBetween(Integer value1, Integer value2) {
-            addCriterion("type not between", value1, value2, "type");
+            addCriterion("`type` not between", value1, value2, "type");
             return (Criteria) this;
         }
 

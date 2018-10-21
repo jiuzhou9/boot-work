@@ -14,8 +14,8 @@ public class ServiceExceptionTest {
     @Test
     public void setHttpError() {
         try {
-            throw new ServiceException(HttpErrorEnum.USERNAME_HAS_ALREADY_EXISTED);
-        } catch (ServiceException e) {
+            throw new ApiGateWayException(HttpErrorEnum.USERNAME_HAS_ALREADY_EXISTED);
+        } catch (ApiGateWayException e) {
             e.printStackTrace();
             HttpError httpError = e.getHttpError();
             System.out.println(httpError);

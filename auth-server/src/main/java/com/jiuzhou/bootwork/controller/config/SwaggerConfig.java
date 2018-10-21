@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.swagger;
+package com.jiuzhou.bootwork.controller.config;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
@@ -18,13 +18,12 @@ import java.util.List;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
- * @date 2017/12/26
- *
- * swagger配置
+ * @date 2018/04/13
  */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
     public Docket createRestApi() {
         //Header
@@ -42,14 +41,12 @@ public class SwaggerConfig {
                         .select()
                         .paths(
                                         Predicates.or(
-                                        //这里添加你需要展示的接口
-                                        PathSelectors.ant("/api/**")
-                               )
+                                                        PathSelectors.ant("/api/**")
+                                        )
                         ).build()
                         .globalOperationParameters(pars)
                         .apiInfo(apiInfo());
 
-//                        .paths(Predicates.not(PathSelectors.regex("/error"))).build();
     }
 
     private ApiInfo apiInfo() {

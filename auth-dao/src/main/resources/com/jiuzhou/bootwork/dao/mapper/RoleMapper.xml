@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, role_code, name, company_code, comments, active, create_time, update_time
+    id, role_code, `name`, company_code, comments, active, create_time, update_time
   </sql>
   <sql id="Blob_Column_List">
     resourceacl
@@ -130,7 +130,7 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into role (id, role_code, name, 
+    insert into role (id, role_code, `name`, 
       company_code, comments, active, 
       create_time, update_time, resourceacl
       )
@@ -150,7 +150,7 @@
         role_code,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="companyCode != null">
         company_code,
@@ -215,7 +215,7 @@
         role_code = #{record.roleCode,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.companyCode != null">
         company_code = #{record.companyCode,jdbcType=VARCHAR},
@@ -244,7 +244,7 @@
     update role
     set id = #{record.id,jdbcType=INTEGER},
       role_code = #{record.roleCode,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       company_code = #{record.companyCode,jdbcType=VARCHAR},
       comments = #{record.comments,jdbcType=VARCHAR},
       active = #{record.active,jdbcType=BIT},
@@ -259,7 +259,7 @@
     update role
     set id = #{record.id,jdbcType=INTEGER},
       role_code = #{record.roleCode,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       company_code = #{record.companyCode,jdbcType=VARCHAR},
       comments = #{record.comments,jdbcType=VARCHAR},
       active = #{record.active,jdbcType=BIT},
@@ -276,7 +276,7 @@
         role_code = #{roleCode,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="companyCode != null">
         company_code = #{companyCode,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jiuzhou.bootwork.dao.model.RoleWithBLOBs">
     update role
     set role_code = #{roleCode,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       company_code = #{companyCode,jdbcType=VARCHAR},
       comments = #{comments,jdbcType=VARCHAR},
       active = #{active,jdbcType=BIT},
@@ -314,7 +314,7 @@
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Role">
     update role
     set role_code = #{roleCode,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       company_code = #{companyCode,jdbcType=VARCHAR},
       comments = #{comments,jdbcType=VARCHAR},
       active = #{active,jdbcType=BIT},
