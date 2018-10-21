@@ -1,20 +1,21 @@
 package com.jiuzhou.bootwork.service;
 
 import com.jiuzhou.bootwork.result.Result;
-import com.jiuzhou.bootwork.service.dto.AppTokenDto;
+import com.jiuzhou.bootwork.service.dto.ApiRequestDTO;
+import com.jiuzhou.bootwork.service.dto.AuthenticateResultDTO;
+import com.jiuzhou.bootwork.service.impl.FallBack;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
- * @date 2018/04/01
+ * @date 2018/05/13
  */
-@FeignClient(name = "auth-server")
+@FeignClient(name = "auth-server", fallback = FallBack.class)
 public interface AuthServerClient {
 
-    @RequestMapping(value = "/api/v1/app/check", method = RequestMethod.POST)
-    ResponseEntity<Result<AppTokenDto>> checkAppToken(@RequestBody AppTokenDto appTokenDto);
+    @PostMapping(value = "/api/v1/access-key/authenticate")
+    Result<AuthenticateResultDTO> authenticate(@RequestBody ApiRequestDTO apiRequestDTO);
+
 }
