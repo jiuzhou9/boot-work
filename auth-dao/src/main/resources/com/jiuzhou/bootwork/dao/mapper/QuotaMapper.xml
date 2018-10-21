@@ -76,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, key, resource_code, quota, dailyquota, concurrency_limit, begin_time, end_time, 
-    type, company_code, user_code, active, create_time, update_time
+    id, `key`, resource_code, quota, dailyquota, concurrency_limit, begin_time, end_time, 
+    `type`, company_code, user_code, active, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.QuotaExample" resultMap="BaseResultMap">
     select
@@ -113,9 +113,9 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into quota (id, key, resource_code, 
+    insert into quota (id, `key`, resource_code, 
       quota, dailyquota, concurrency_limit, 
-      begin_time, end_time, type, 
+      begin_time, end_time, `type`, 
       company_code, user_code, active, 
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, #{resourceCode,jdbcType=VARCHAR}, 
@@ -132,7 +132,7 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       id,
       <if test="key != null">
-        key,
+        `key`,
       </if>
       <if test="resourceCode != null">
         resource_code,
@@ -153,7 +153,7 @@
         end_time,
       </if>
       <if test="type != null">
-        type,
+        `type`,
       </if>
       <if test="companyCode != null">
         company_code,
@@ -227,7 +227,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.key != null">
-        key = #{record.key,jdbcType=VARCHAR},
+        `key` = #{record.key,jdbcType=VARCHAR},
       </if>
       <if test="record.resourceCode != null">
         resource_code = #{record.resourceCode,jdbcType=VARCHAR},
@@ -248,7 +248,7 @@
         end_time = #{record.endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.type != null">
-        type = #{record.type,jdbcType=INTEGER},
+        `type` = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.companyCode != null">
         company_code = #{record.companyCode,jdbcType=VARCHAR},
@@ -273,14 +273,14 @@
   <update id="updateByExample" parameterType="map">
     update quota
     set id = #{record.id,jdbcType=INTEGER},
-      key = #{record.key,jdbcType=VARCHAR},
+      `key` = #{record.key,jdbcType=VARCHAR},
       resource_code = #{record.resourceCode,jdbcType=VARCHAR},
       quota = #{record.quota,jdbcType=BIGINT},
       dailyquota = #{record.dailyquota,jdbcType=BIGINT},
       concurrency_limit = #{record.concurrencyLimit,jdbcType=BIGINT},
       begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
-      type = #{record.type,jdbcType=INTEGER},
+      `type` = #{record.type,jdbcType=INTEGER},
       company_code = #{record.companyCode,jdbcType=VARCHAR},
       user_code = #{record.userCode,jdbcType=VARCHAR},
       active = #{record.active,jdbcType=BIT},
@@ -294,7 +294,7 @@
     update quota
     <set>
       <if test="key != null">
-        key = #{key,jdbcType=VARCHAR},
+        `key` = #{key,jdbcType=VARCHAR},
       </if>
       <if test="resourceCode != null">
         resource_code = #{resourceCode,jdbcType=VARCHAR},
@@ -315,7 +315,7 @@
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
+        `type` = #{type,jdbcType=INTEGER},
       </if>
       <if test="companyCode != null">
         company_code = #{companyCode,jdbcType=VARCHAR},
@@ -337,14 +337,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Quota">
     update quota
-    set key = #{key,jdbcType=VARCHAR},
+    set `key` = #{key,jdbcType=VARCHAR},
       resource_code = #{resourceCode,jdbcType=VARCHAR},
       quota = #{quota,jdbcType=BIGINT},
       dailyquota = #{dailyquota,jdbcType=BIGINT},
       concurrency_limit = #{concurrencyLimit,jdbcType=BIGINT},
       begin_time = #{beginTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
-      type = #{type,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=INTEGER},
       company_code = #{companyCode,jdbcType=VARCHAR},
       user_code = #{userCode,jdbcType=VARCHAR},
       active = #{active,jdbcType=BIT},

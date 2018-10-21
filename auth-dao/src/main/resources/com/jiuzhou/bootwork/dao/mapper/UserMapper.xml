@@ -79,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_code, username, password, surname, givenname, nickname, mobile, phone, email, 
-    company_code, type, parent_code, comments, active, create_time, update_time
+    id, user_code, username, `password`, surname, givenname, nickname, mobile, phone, 
+    email, company_code, `type`, parent_code, comments, active, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.UserExample" resultMap="BaseResultMap">
     select
@@ -117,9 +117,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into user (id, user_code, username, 
-      password, surname, givenname, 
+      `password`, surname, givenname, 
       nickname, mobile, phone, 
-      email, company_code, type, 
+      email, company_code, `type`, 
       parent_code, comments, active, 
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
@@ -143,7 +143,7 @@
         username,
       </if>
       <if test="password != null">
-        password,
+        `password`,
       </if>
       <if test="surname != null">
         surname,
@@ -167,7 +167,7 @@
         company_code,
       </if>
       <if test="type != null">
-        type,
+        `type`,
       </if>
       <if test="parentCode != null">
         parent_code,
@@ -256,7 +256,7 @@
         username = #{record.username,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
+        `password` = #{record.password,jdbcType=VARCHAR},
       </if>
       <if test="record.surname != null">
         surname = #{record.surname,jdbcType=VARCHAR},
@@ -280,7 +280,7 @@
         company_code = #{record.companyCode,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null">
-        type = #{record.type,jdbcType=VARCHAR},
+        `type` = #{record.type,jdbcType=VARCHAR},
       </if>
       <if test="record.parentCode != null">
         parent_code = #{record.parentCode,jdbcType=VARCHAR},
@@ -307,7 +307,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       user_code = #{record.userCode,jdbcType=VARCHAR},
       username = #{record.username,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
+      `password` = #{record.password,jdbcType=VARCHAR},
       surname = #{record.surname,jdbcType=VARCHAR},
       givenname = #{record.givenname,jdbcType=VARCHAR},
       nickname = #{record.nickname,jdbcType=VARCHAR},
@@ -315,7 +315,7 @@
       phone = #{record.phone,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       company_code = #{record.companyCode,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=VARCHAR},
       parent_code = #{record.parentCode,jdbcType=VARCHAR},
       comments = #{record.comments,jdbcType=VARCHAR},
       active = #{record.active,jdbcType=BIT},
@@ -335,7 +335,7 @@
         username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=VARCHAR},
       </if>
       <if test="surname != null">
         surname = #{surname,jdbcType=VARCHAR},
@@ -359,7 +359,7 @@
         company_code = #{companyCode,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
+        `type` = #{type,jdbcType=VARCHAR},
       </if>
       <if test="parentCode != null">
         parent_code = #{parentCode,jdbcType=VARCHAR},
@@ -383,7 +383,7 @@
     update user
     set user_code = #{userCode,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
       surname = #{surname,jdbcType=VARCHAR},
       givenname = #{givenname,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
@@ -391,7 +391,7 @@
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       company_code = #{companyCode,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
       parent_code = #{parentCode,jdbcType=VARCHAR},
       comments = #{comments,jdbcType=VARCHAR},
       active = #{active,jdbcType=BIT},

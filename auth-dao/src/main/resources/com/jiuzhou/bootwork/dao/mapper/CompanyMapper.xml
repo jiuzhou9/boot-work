@@ -76,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, company_code, business_code, name, business_license, fax, address, zipcode, website, 
-    business_license_path, parent_company_code, active, create_time, update_time
+    id, company_code, business_code, `name`, business_license, fax, address, zipcode, 
+    website, business_license_path, parent_company_code, active, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.CompanyExample" resultMap="BaseResultMap">
     select
@@ -114,7 +114,7 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into company (id, company_code, business_code, 
-      name, business_license, fax, 
+      `name`, business_license, fax, 
       address, zipcode, website, 
       business_license_path, parent_company_code, 
       active, create_time, update_time
@@ -140,7 +140,7 @@
         business_code,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="businessLicense != null">
         business_license,
@@ -235,7 +235,7 @@
         business_code = #{record.businessCode,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.businessLicense != null">
         business_license = #{record.businessLicense,jdbcType=VARCHAR},
@@ -277,7 +277,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       company_code = #{record.companyCode,jdbcType=VARCHAR},
       business_code = #{record.businessCode,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       business_license = #{record.businessLicense,jdbcType=VARCHAR},
       fax = #{record.fax,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
         business_code = #{businessCode,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="businessLicense != null">
         business_license = #{businessLicense,jdbcType=VARCHAR},
@@ -341,7 +341,7 @@
     update company
     set company_code = #{companyCode,jdbcType=VARCHAR},
       business_code = #{businessCode,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       business_license = #{businessLicense,jdbcType=VARCHAR},
       fax = #{fax,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},

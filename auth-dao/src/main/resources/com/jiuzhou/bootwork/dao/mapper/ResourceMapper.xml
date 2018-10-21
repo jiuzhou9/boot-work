@@ -72,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, resource_code, name, uri, type, action, comments, active, create_time, update_time
+    id, resource_code, `name`, uri, `type`, `action`, comments, active, create_time, 
+    update_time
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.ResourceExample" resultMap="BaseResultMap">
     select
@@ -108,8 +109,8 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into resource (id, resource_code, name, 
-      uri, type, action, 
+    insert into resource (id, resource_code, `name`, 
+      uri, `type`, `action`, 
       comments, active, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{resourceCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
@@ -128,16 +129,16 @@
         resource_code,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="uri != null">
         uri,
       </if>
       <if test="type != null">
-        type,
+        `type`,
       </if>
       <if test="action != null">
-        action,
+        `action`,
       </if>
       <if test="comments != null">
         comments,
@@ -199,16 +200,16 @@
         resource_code = #{record.resourceCode,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.uri != null">
         uri = #{record.uri,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null">
-        type = #{record.type,jdbcType=VARCHAR},
+        `type` = #{record.type,jdbcType=VARCHAR},
       </if>
       <if test="record.action != null">
-        action = #{record.action,jdbcType=VARCHAR},
+        `action` = #{record.action,jdbcType=VARCHAR},
       </if>
       <if test="record.comments != null">
         comments = #{record.comments,jdbcType=VARCHAR},
@@ -231,10 +232,10 @@
     update resource
     set id = #{record.id,jdbcType=INTEGER},
       resource_code = #{record.resourceCode,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       uri = #{record.uri,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR},
-      action = #{record.action,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=VARCHAR},
+      `action` = #{record.action,jdbcType=VARCHAR},
       comments = #{record.comments,jdbcType=VARCHAR},
       active = #{record.active,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -250,16 +251,16 @@
         resource_code = #{resourceCode,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="uri != null">
         uri = #{uri,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
+        `type` = #{type,jdbcType=VARCHAR},
       </if>
       <if test="action != null">
-        action = #{action,jdbcType=VARCHAR},
+        `action` = #{action,jdbcType=VARCHAR},
       </if>
       <if test="comments != null">
         comments = #{comments,jdbcType=VARCHAR},
@@ -279,10 +280,10 @@
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Resource">
     update resource
     set resource_code = #{resourceCode,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       uri = #{uri,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      action = #{action,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `action` = #{action,jdbcType=VARCHAR},
       comments = #{comments,jdbcType=VARCHAR},
       active = #{active,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

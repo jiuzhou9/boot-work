@@ -74,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, key, name, company_code, user_code, secret, private_secret, constraint, expire_time, 
-    active, create_time, update_time
+    id, `key`, `name`, company_code, user_code, secret, private_secret, `constraint`, 
+    expire_time, active, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.jiuzhou.bootwork.dao.model.AccesskeyExample" resultMap="BaseResultMap">
     select
@@ -111,9 +111,9 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into accesskey (id, key, name, 
+    insert into accesskey (id, `key`, `name`, 
       company_code, user_code, secret, 
-      private_secret, constraint, expire_time, 
+      private_secret, `constraint`, expire_time, 
       active, create_time, update_time
       )
     values (#{id,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
@@ -130,10 +130,10 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       id,
       <if test="key != null">
-        key,
+        `key`,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="companyCode != null">
         company_code,
@@ -148,7 +148,7 @@
         private_secret,
       </if>
       <if test="constraint != null">
-        constraint,
+        `constraint`,
       </if>
       <if test="expireTime != null">
         expire_time,
@@ -213,10 +213,10 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.key != null">
-        key = #{record.key,jdbcType=VARCHAR},
+        `key` = #{record.key,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.companyCode != null">
         company_code = #{record.companyCode,jdbcType=VARCHAR},
@@ -231,7 +231,7 @@
         private_secret = #{record.privateSecret,jdbcType=VARCHAR},
       </if>
       <if test="record.constraint != null">
-        constraint = #{record.constraint,jdbcType=VARCHAR},
+        `constraint` = #{record.constraint,jdbcType=VARCHAR},
       </if>
       <if test="record.expireTime != null">
         expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
@@ -253,13 +253,13 @@
   <update id="updateByExample" parameterType="map">
     update accesskey
     set id = #{record.id,jdbcType=INTEGER},
-      key = #{record.key,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
+      `key` = #{record.key,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       company_code = #{record.companyCode,jdbcType=VARCHAR},
       user_code = #{record.userCode,jdbcType=VARCHAR},
       secret = #{record.secret,jdbcType=VARCHAR},
       private_secret = #{record.privateSecret,jdbcType=VARCHAR},
-      constraint = #{record.constraint,jdbcType=VARCHAR},
+      `constraint` = #{record.constraint,jdbcType=VARCHAR},
       expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
       active = #{record.active,jdbcType=BIT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -272,10 +272,10 @@
     update accesskey
     <set>
       <if test="key != null">
-        key = #{key,jdbcType=VARCHAR},
+        `key` = #{key,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="companyCode != null">
         company_code = #{companyCode,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
         private_secret = #{privateSecret,jdbcType=VARCHAR},
       </if>
       <if test="constraint != null">
-        constraint = #{constraint,jdbcType=VARCHAR},
+        `constraint` = #{constraint,jdbcType=VARCHAR},
       </if>
       <if test="expireTime != null">
         expire_time = #{expireTime,jdbcType=TIMESTAMP},
@@ -309,13 +309,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiuzhou.bootwork.dao.model.Accesskey">
     update accesskey
-    set key = #{key,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+    set `key` = #{key,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
       company_code = #{companyCode,jdbcType=VARCHAR},
       user_code = #{userCode,jdbcType=VARCHAR},
       secret = #{secret,jdbcType=VARCHAR},
       private_secret = #{privateSecret,jdbcType=VARCHAR},
-      constraint = #{constraint,jdbcType=VARCHAR},
+      `constraint` = #{constraint,jdbcType=VARCHAR},
       expire_time = #{expireTime,jdbcType=TIMESTAMP},
       active = #{active,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
