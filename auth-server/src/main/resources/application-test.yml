@@ -1,22 +1,49 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/20180301?useUnicode=true&characterEncoding=utf8
+#    local环境暂时使用dev数据库
+    url: jdbc:mysql://127.0.0.1:3306/openauth?useUnicode=true&characterEncoding=utf8
     username: root
     password: 12345
   application:
     name: auth-server
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  profiles:
+    active: local
 server:
-  port: 15050
+  port: 15101
+  tomcat:
+    uri-encoding: UTF-8
 
-# mybatis配置
 mybatis:
-#  type-aliases-package: com.jiuzhou.bootwork.dao.model
   mapper-locations: classpath:com/jiuzhou/bootwork/dao/mapper/*.xml
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
+      defaultZone: http://127.0.0.1:15100/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: false
 logging:
   config: classpath:logback-spring.xml
   path: logs/
+
+#  ---------------redis配置------------------------------------------
+#jedis:
+#  pool:
+#    host: 40.73.37.35
+#    port: 6379
+#    password: ShanshuRedisDev12018$
+#    local
+jedis:
+  pool:
+    host: localhost
+    port: 6379
+    password:
+redis:
+  preKey: GATEWAY_AUTH_SERVER_

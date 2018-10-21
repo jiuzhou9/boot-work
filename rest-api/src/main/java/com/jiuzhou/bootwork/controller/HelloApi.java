@@ -22,6 +22,6 @@ public class HelloApi extends BaseController {
 
     @GetMapping(value = "test-exception")
     public String testException() throws ApiException {
-        throw new ApiException(HttpErrorEnum.USER_ID_ROLE_ID_QUERY_MANY_RESULTS);
+        throw new ApiException(HttpErrorEnum.USER_LOGIN_IS_ERROR);
     }
 }

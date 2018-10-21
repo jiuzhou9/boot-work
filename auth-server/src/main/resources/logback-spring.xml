@@ -60,16 +60,40 @@
     </appender>
 
 
-    <!--测试环境, 本地环境和开发环境-->
+    <!--开发环境-->
     <springProfile name="dev">
         <!--关闭spring框架启动的日志信息-->
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.apache.ibatis.io" level="INFO"/>
+        <root level="DEBUG">
+            <!--<appender-ref ref="CONSOLE"/>-->
+            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="INFO_FILE"/>
+        </root>
+    </springProfile>
+
+    <!--本地环境-->
+    <springProfile name="local">
+        <!--开启spring框架启动的日志信息-->
+        <logger name="org.springframework" level="info"/>
+        <logger name="org.apache.ibatis.io" level="info"/>
+        <root level="debug">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ERROR_FILE"/>
+            <appender-ref ref="INFO_FILE"/>
+        </root>
+    </springProfile>
+
+    <!--&lt;!&ndash;开发环境&ndash;&gt;
+    <springProfile name="dev">
+        &lt;!&ndash;关闭spring框架启动的日志信息&ndash;&gt;
         <logger name="org.springframework" level="ERROR"/>
         <logger name="org.apache.ibatis.io" level="ERROR"/>
         <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="ERROR_FILE"/>
         </root>
-    </springProfile>
+    </springProfile>-->
 
     <!--线上环境-->
     <springProfile name="pro">

@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.excep_new;
+package com.jiuzhou.bootwork.excep;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
