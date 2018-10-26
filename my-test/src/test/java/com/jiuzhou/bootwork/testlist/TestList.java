@@ -3,6 +3,7 @@ package com.jiuzhou.bootwork.testlist;
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.beans.MenuDTO;
 import com.jiuzhou.bootwork.beans.MenuListDTO;
+import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
@@ -16,6 +17,36 @@ import java.util.stream.Stream;
  * @date 2018/02/02
  */
 public class TestList extends TestCase {
+
+    public void test_stream(){
+        Person person = new Person();
+        person.setId(1);
+        person.setName("a");
+        person.setAge(1);
+
+        Person person2 = new Person();
+        person2.setId(2);
+        person2.setName("b");
+        person2.setAge(2);
+
+        Person person3 = new Person();
+        person3.setId(3);
+        person3.setName("c");
+        person3.setAge(3);
+
+        List<Person> list = new ArrayList<>();
+        list.add(person);
+        list.add(person2);
+        list.add(person3);
+
+        for (int i = 0; i < list.size() - 1; i++) {
+            System.out.println("外");
+            for (int j = i + 1; j < list.size(); j++) {
+                System.out.println(list.get(i));
+                System.out.println(list.get(j));
+            }
+        }
+    }
 
     public void test_contains() {
         String[] strings = { "conDistanceRadius", "enableDensitySeeding", "conDensityRoughWeightLimit",

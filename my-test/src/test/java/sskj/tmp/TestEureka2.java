@@ -3,9 +3,7 @@ package sskj.tmp;
 import com.jiuzhou.bootwork.App;
 import com.jiuzhou.bootwork.testpassword.MD5Util;
 import com.jiuzhou.bootwork.testrest.CustomErrorHandler;
-import com.jiuzhou.bootwork.testrest.RequestTool;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,15 +17,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)

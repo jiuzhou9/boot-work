@@ -4,7 +4,6 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
-import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerRequest;
 
 import java.util.function.Consumer;

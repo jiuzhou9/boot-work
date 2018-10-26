@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jiuzhou.bootwork.beans.Person;
-import com.jiuzhou.bootwork.result.Result;
 import junit.framework.TestCase;
 
 import java.util.HashMap;

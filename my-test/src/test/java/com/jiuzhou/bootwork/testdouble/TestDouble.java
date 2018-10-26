@@ -7,9 +7,14 @@ package com.jiuzhou.bootwork.testdouble;
 public class TestDouble {
 
     public static void main(String[] args) {
-        String s = "39.948859";
+//        String s = "12";
 //        Double aDouble = new Double(s);
 //        double aDouble = (double) s;
-//        System.out.println(aDouble);
+//        System.out.println(aDouble == null);
+//        System.out.println(aDouble.compareTo(0d) > 0);
+
+        double d = 12;
+        double d1 = 7;
+        System.out.println(d/d1);
     }
 }

@@ -1,10 +1,10 @@
 package com.jiuzhou.bootwork.job;
 
-import java.util.Date;
-
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;  
+import org.quartz.JobExecutionException;
+
+import java.util.Date;
 
 @Slf4j
 public class NewJob implements BaseJob {  

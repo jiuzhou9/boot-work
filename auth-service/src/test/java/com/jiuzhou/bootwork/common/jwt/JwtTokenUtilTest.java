@@ -2,10 +2,6 @@ package com.jiuzhou.bootwork.common.jwt;
 
 import org.junit.Test;
 
-import javax.sound.midi.Soundbank;
-
-import static org.junit.Assert.*;
-
 /**
  * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/30

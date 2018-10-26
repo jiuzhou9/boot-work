@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.junit.Assert.*;
-
 /**
  * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/04/25
@@ -29,7 +27,6 @@ public class UserRoleMapperTest extends BaseTest{
         UserRole userRole = userRoleMapper.selectByPrimaryKey(userRoleKey);
         System.out.println(userRole);
 
-        /*
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
         for (int i = 0; i < 1000; i++) {
             final int index = i;
@@ -40,8 +37,8 @@ public class UserRoleMapperTest extends BaseTest{
             //            }
             cachedThreadPool.execute(new Runnable() {
                 public void run() {
-                    int i = userRoleMapper.updateRemainderById(1L);
-                    System.out.println(i);
+//                    int i = userRoleMapper.selectByPrimaryKey(1L);
+                    System.out.println("1");
                 }
             });
         }
@@ -49,6 +46,6 @@ public class UserRoleMapperTest extends BaseTest{
             Thread.sleep(1000 * 5);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }

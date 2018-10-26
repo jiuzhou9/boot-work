@@ -1,7 +1,6 @@
 package com.jiuzhou.bootwork.testbigdecimal;
 
 import junit.framework.TestCase;
-import org.assertj.core.api.BigDecimalAssert;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

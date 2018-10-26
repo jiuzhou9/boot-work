@@ -1,7 +1,6 @@
 package com.jiuzhou.bootwork.service;
 
 import com.jiuzhou.bootwork.result.Result;
-import com.jiuzhou.bootwork.service.dto.ProductDTO;
 import com.jiuzhou.bootwork.vo.ProductVO;
 
 /**

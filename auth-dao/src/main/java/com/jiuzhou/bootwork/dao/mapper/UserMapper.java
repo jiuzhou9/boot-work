@@ -3,8 +3,9 @@ package com.jiuzhou.bootwork.dao.mapper;
 import com.jiuzhou.bootwork.dao.model.User;
 import com.jiuzhou.bootwork.dao.model.UserExample;
 import com.jiuzhou.bootwork.dao.model.UserKey;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     long countByExample(UserExample example);
