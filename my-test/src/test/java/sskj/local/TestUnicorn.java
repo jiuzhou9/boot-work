@@ -18,13 +18,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.client.RestTemplate;
 import sskj.local.tmp.Company;
 import sskj.local.tmp.User;
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)

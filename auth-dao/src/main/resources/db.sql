@@ -2,13 +2,6 @@
  Navicat Premium Data Transfer
 
  Source Server         : 网关Dev(new)
- Source Server Type    : MySQL
- Source Server Version : 50641
- Source Host           : 40.73.34.31
- Source Database       : openauth
-
- Target Server Type    : MySQL
- Target Server Version : 50641
  File Encoding         : utf-8
 
  Date: 10/19/2018 15:01:21 PM

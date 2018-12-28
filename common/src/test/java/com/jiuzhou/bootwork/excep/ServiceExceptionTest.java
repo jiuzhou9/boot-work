@@ -1,9 +1,6 @@
 package com.jiuzhou.bootwork.excep;
 
 import org.junit.Test;
-import org.springframework.http.HttpStatus;
-
-import static org.junit.Assert.*;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)

@@ -4,8 +4,9 @@ import com.jiuzhou.bootwork.dao.model.Role;
 import com.jiuzhou.bootwork.dao.model.RoleExample;
 import com.jiuzhou.bootwork.dao.model.RoleKey;
 import com.jiuzhou.bootwork.dao.model.RoleWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RoleMapper {
     long countByExample(RoleExample example);

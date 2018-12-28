@@ -3,8 +3,9 @@ package com.jiuzhou.bootwork.dao.mapper;
 import com.jiuzhou.bootwork.dao.model.Resource;
 import com.jiuzhou.bootwork.dao.model.ResourceExample;
 import com.jiuzhou.bootwork.dao.model.ResourceKey;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResourceMapper {
     long countByExample(ResourceExample example);

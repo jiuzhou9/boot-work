@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.csv;
+package com.jiuzhou.bootwork.testfile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,19 +10,18 @@ import java.io.IOException;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
- * @date 2018/09/19
+ * @date 2018/10/27
  */
-public class CSVUtils {
-
+public class TestFile {
     public static void read(String fileName) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));//换成你的文件名
             reader.readLine();//第一行信息，为标题信息，不用,如果需要，注释掉
             String line = null;
-            while((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 String item[] = line.split(",");//CSV格式文件为逗号分隔符文件，这里根据逗号切分
 
-                String last = item[item.length-1];//这就是你要的数据了
+                String last = item[item.length - 1];//这就是你要的数据了
                 //int value = Integer.parseInt(last);//如果是数值，可以转化为数值
                 System.out.println(last);
             }
@@ -30,7 +29,6 @@ public class CSVUtils {
             e.printStackTrace();
         }
     }
-
 
     public static void write(String fileName) {
         try {
@@ -51,25 +49,26 @@ public class CSVUtils {
         }
     }
 
-
-    public static void writeAndRead(){
+    public static void writeAndRead() {
         try {
             File csv = new File("/Users/wangjiuzhou/Desktop/mar/111.csv"); // CSV数据文件'
-            if (!csv.exists()){
+            if (!csv.exists()) {
                 csv.createNewFile();
             }
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(csv, true)); // 附加
 
-            BufferedReader reader = new BufferedReader(new FileReader("/Users/wangjiuzhou/Desktop/mar/MatirxOutPut_20180918132833_MINI_VAN.csv"));//换成你的文件名
+            BufferedReader reader = new BufferedReader(
+                            new FileReader("/Users/wangjiuzhou/Desktop/mar/MatirxOutPut_20180918132833_MINI_VAN.csv")
+            );//换成你的文件名
             reader.readLine();//第一行信息，为标题信息，不用,如果需要，注释掉
             String line = null;
-            while((line=reader.readLine())!=null){
-//                String item[] = line.split(",");//CSV格式文件为逗号分隔符文件，这里根据逗号切分
+            while ((line = reader.readLine()) != null) {
+                //                String item[] = line.split(",");//CSV格式文件为逗号分隔符文件，这里根据逗号切分
 
-//                String last = item[item.length-1];//这就是你要的数据了
+                //                String last = item[item.length-1];//这就是你要的数据了
                 //int value = Integer.parseInt(last);//如果是数值，可以转化为数值
-//                System.out.println(last);
+                //                System.out.println(last);
 
                 // 添加新的数据行
                 bw.write(line);
@@ -82,8 +81,6 @@ public class CSVUtils {
             e.printStackTrace();
         }
 
-
-
     }
 
     public static void main(String[] args) {
@@ -91,5 +88,4 @@ public class CSVUtils {
         writeAndRead();
         System.out.println(System.currentTimeMillis() - l);
     }
-
 }

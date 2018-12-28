@@ -3,8 +3,6 @@ package com.jiuzhou.bootwork.teststring;
 import junit.framework.TestCase;
 import org.springframework.util.StringUtils;
 
-import javax.sound.midi.Soundbank;
-
 /**
  * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/03/07
@@ -34,7 +32,7 @@ public class TestString extends TestCase{
     public void test(){
         String type = "srn::menu::";
         String[] split = type.split(":");
-        System.out.println(split[2]);
+        System.out.println(split.length);
     }
 
     public void test_split(){

@@ -5,7 +5,6 @@ import com.jiuzhou.bootwork.testrest.CustomErrorHandler;
 import com.jiuzhou.bootwork.testrest.RequestTool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

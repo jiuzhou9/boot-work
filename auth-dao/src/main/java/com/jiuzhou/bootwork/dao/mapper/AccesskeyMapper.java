@@ -3,8 +3,9 @@ package com.jiuzhou.bootwork.dao.mapper;
 import com.jiuzhou.bootwork.dao.model.Accesskey;
 import com.jiuzhou.bootwork.dao.model.AccesskeyExample;
 import com.jiuzhou.bootwork.dao.model.AccesskeyKey;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AccesskeyMapper {
     long countByExample(AccesskeyExample example);

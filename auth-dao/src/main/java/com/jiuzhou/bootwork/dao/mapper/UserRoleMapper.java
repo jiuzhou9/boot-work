@@ -3,8 +3,9 @@ package com.jiuzhou.bootwork.dao.mapper;
 import com.jiuzhou.bootwork.dao.model.UserRole;
 import com.jiuzhou.bootwork.dao.model.UserRoleExample;
 import com.jiuzhou.bootwork.dao.model.UserRoleKey;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserRoleMapper {
     long countByExample(UserRoleExample example);

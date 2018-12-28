@@ -3,8 +3,9 @@ package com.jiuzhou.bootwork.dao.mapper;
 import com.jiuzhou.bootwork.dao.model.Quota;
 import com.jiuzhou.bootwork.dao.model.QuotaExample;
 import com.jiuzhou.bootwork.dao.model.QuotaKey;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface QuotaMapper {
     long countByExample(QuotaExample example);

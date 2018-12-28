@@ -1,9 +1,7 @@
 package com.jiuzhou.bootwork.testrest;
 
-import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.App;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

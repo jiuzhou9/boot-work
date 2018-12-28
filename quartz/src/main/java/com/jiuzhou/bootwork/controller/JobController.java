@@ -1,18 +1,10 @@
 package com.jiuzhou.bootwork.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.github.pagehelper.PageInfo;
 import com.jiuzhou.bootwork.dao.model.JobAndTrigger;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.TriggerBuilder;
-import org.quartz.TriggerKey;
+import com.jiuzhou.bootwork.job.BaseJob;
+import com.jiuzhou.bootwork.service.IJobAndTriggerService;
+import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jiuzhou.bootwork.job.BaseJob;
-import com.jiuzhou.bootwork.service.IJobAndTriggerService;
-import com.github.pagehelper.PageInfo;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
