@@ -32,7 +32,7 @@ public class TestString extends TestCase{
     public void test(){
         String type = "srn::menu::";
         String[] split = type.split(":");
-        System.out.println(split[2]);
+        System.out.println(split.length);
     }
 
     public void test_split(){
