@@ -4,12 +4,22 @@ import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/01/08
  */
 public class TestNull extends TestCase {
+
+    public void testNull(){
+        String s = null;
+        String s2 = null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(s);
+        sb.append(s2);
+        boolean empty = StringUtils.isEmpty(sb);
+    }
 
 
     public void test_set_null(){

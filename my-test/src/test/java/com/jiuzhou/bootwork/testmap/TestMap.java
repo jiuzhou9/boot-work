@@ -3,6 +3,7 @@ package com.jiuzhou.bootwork.testmap;
 import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.beans.Person;
 import junit.framework.TestCase;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,5 +59,33 @@ public class TestMap extends TestCase {
         concurrentHashMap.put("2", person2);
 
         System.out.println(JSON.toJSONString(concurrentHashMap));
+    }
+
+    public void test3(){
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "a,b");
+        map.put(2, "a");
+        map.put(3, "a");
+        map.put(4, null);
+        map.put(5, null);
+        map.put(6, "");
+
+        System.out.println(map);
+
+        List<Person> personList = new ArrayList<>();
+
+        map.forEach((id, value)->{
+            if (!StringUtils.isEmpty(value)){
+                String[] timeModelIdArr = value.split(",");
+                for (String string : timeModelIdArr) {
+                    Person scp = new Person();
+                    scp.setName(string);
+                    scp.setId(id);
+                    personList.add(scp);
+                }
+            }
+        });
+
+        System.out.println(personList);
     }
 }
