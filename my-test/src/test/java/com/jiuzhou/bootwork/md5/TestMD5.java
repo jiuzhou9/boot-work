@@ -6,7 +6,7 @@ import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 /**
- * @author wangjiuzhou (jiuzhou@shanshu.ai)
+ * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/11/23
  */
 public class TestMD5 extends TestCase {

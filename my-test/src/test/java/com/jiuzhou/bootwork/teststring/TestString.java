@@ -77,4 +77,22 @@ public class TestString extends TestCase{
         String a = " ";
         System.out.println(StringUtils.isEmpty(a));
     }
+
+    public static void main(String[] args) {
+        String string = new String("aa");
+        StringBuffer sb = new StringBuffer("sb");
+        Integer i = 0;
+        TestString test = new TestString();
+        test.method(string, i, sb);
+        System.out.println(string);
+        System.out.println(i);
+        System.out.println(sb.toString());
+    }
+
+    private void method(String string, int i, StringBuffer sb){
+        string = string.concat("aa");
+        i = i + 1;
+        sb.append("sb");
+    }
+
 }

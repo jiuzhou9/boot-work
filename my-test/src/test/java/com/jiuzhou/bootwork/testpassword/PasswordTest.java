@@ -28,4 +28,5 @@ public class PasswordTest extends TestCase {
         String qwertyui = MD5Util.MD5("qwertyui" + "123456");
         System.out.println(qwertyui);
     }
+
 }
