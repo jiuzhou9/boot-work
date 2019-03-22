@@ -58,6 +58,9 @@ public class TestList extends TestCase {
 //        List<Person> newList = new ArrayList<>(personList.getPersonList());
         test(personList1.getPersonList());
         System.out.println(personList.getPersonList());
+
+//        list转map
+        Map<Integer, List<Person>> collect = list.stream().collect(Collectors.groupingBy(Person::getId));
     }
 
     private void test(List<Person> list){

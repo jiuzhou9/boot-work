@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
@@ -64,5 +66,35 @@ public class TestBigDecimal extends TestCase {
         System.out.println(decimalFormat.format(bigDecimal));
         BigDecimal bigDecimal1 = new BigDecimal(decimalFormat.format(bigDecimal));
         System.out.println(bigDecimal1);
+    }
+
+    /**
+     * 百分号转小数
+     * 保留两位小数
+     *
+     * @param percentage
+     * @return
+     */
+    public static String getDecimal(String percentage){
+        NumberFormat nf= NumberFormat.getPercentInstance();
+        try {
+            Number parse = nf.parse(percentage);
+
+            String s = parse.toString();
+
+            BigDecimal bigDecimal = new BigDecimal(s);
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            String format = decimalFormat.format(bigDecimal);
+
+            return format;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public void testPercentageToString() {
+        String decimal = getDecimal("290.999%");
+        System.out.println(decimal);
     }
 }
