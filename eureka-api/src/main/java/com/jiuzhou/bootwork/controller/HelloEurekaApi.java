@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.result.Result;
 import com.jiuzhou.bootwork.service.AuthServerClient;
 import com.jiuzhou.bootwork.service.dto.UpdateQuotaDTO;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
@@ -27,7 +29,7 @@ import java.util.logging.Logger;
  * @date 2018/02/16
  */
 @RestController
-@RequestMapping(value = "/api/v1/example")
+@RequestMapping(value = "/api/v1/schedule")
 @Slf4j
 @Api(value = "eureka-api 第一个服务接口")
 public class HelloEurekaApi {
@@ -90,6 +92,21 @@ public class HelloEurekaApi {
     public Result<String> post(@RequestBody ProductVO productVO){
         Result result = new Result<>();
         result = Result.buildSuccess("你真棒！");
+        return result;
+    }
+
+    @GetMapping(value = "")
+    public Result<String> hello(HttpServletRequest request) /*throws Exception*/ {
+        String requestId = request.getHeader("requestId");
+        log.info("接到请求：" + JSON.toJSONString(requestId));
+        try {
+            Thread.sleep(3000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        throw new Exception("异常");
+        Result<String> result = new Result<>();
+        result.setData(requestId);
         return result;
     }
 

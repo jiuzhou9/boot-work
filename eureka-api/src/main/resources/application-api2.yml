@@ -6,9 +6,18 @@ eureka:
 #    register-with-eureka: false
 #    fetch-registry: false
     service-url:
-      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
+      defaultZone: http://127.0.0.1:15011/eureka/
+#      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
+  instance:
+    ip-address: 127.0.0.1:15022
+    prefer-ip-address: false
+#      defaultZone: http://47.94.134.37:15100/eureka/
+#      defaultZone: http://172.17.84.212:15100/eureka/
+#      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
 spring:
   application:
-    name: eureka-api
-#logging:
-#  level: info
+      name: fuyou
+#      name: eureka-api
+
+logging:
+  level: debug

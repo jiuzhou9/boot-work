@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.beans.MenuDTO;
 import com.jiuzhou.bootwork.beans.MenuListDTO;
 import com.jiuzhou.bootwork.beans.Person;
+import com.jiuzhou.bootwork.beans.PersonList;
 import junit.framework.TestCase;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
@@ -33,6 +34,9 @@ public class TestList extends TestCase {
         person3.setId(3);
         person3.setName("c");
         person3.setAge(3);
+        ArrayList<String> companyList = new ArrayList<>();
+        companyList.add("aaaa");
+        person3.setCompanyList(companyList);
 
         List<Person> list = new ArrayList<>();
         list.add(person);
@@ -46,6 +50,21 @@ public class TestList extends TestCase {
                 System.out.println(list.get(j));
             }
         }
+
+        PersonList personList = new PersonList();
+        personList.setPersonList(list);
+        PersonList personList1 = new PersonList();
+        BeanUtils.copyProperties(personList, personList1);
+//        List<Person> newList = new ArrayList<>(personList.getPersonList());
+        test(personList1.getPersonList());
+        System.out.println(personList.getPersonList());
+    }
+
+    private void test(List<Person> list){
+        list.forEach(person -> {
+            List<String> companyList = person.getCompanyList();
+            person.setCompanyList(null);
+        });
     }
 
     public void test_contains() {
