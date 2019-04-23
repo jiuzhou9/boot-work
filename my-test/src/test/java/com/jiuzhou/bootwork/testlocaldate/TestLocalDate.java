@@ -13,7 +13,7 @@ import java.util.Date;
  * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/02/08
  */
-public class TestLocalDate extends TestCase{
+public class TestLocalDate extends TestCase {
 
     public void test(){
         //当前天
