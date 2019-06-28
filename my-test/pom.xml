@@ -152,5 +152,13 @@
             <artifactId>opencsv</artifactId>
             <version>4.5</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.razorvine/pyrolite -->
+        <!--<dependency>
+            <groupId>net.razorvine</groupId>
+            <artifactId>pyrolite</artifactId>
+            <version>4.23</version>
+        </dependency>-->
+
     </dependencies>
 </project>
