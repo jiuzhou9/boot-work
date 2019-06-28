@@ -6,7 +6,7 @@ eureka:
 #    register-with-eureka: false
 #    fetch-registry: false
     service-url:
-      defaultZone: http://127.0.0.1:15100/eureka/
+      defaultZone: http://localhost:15100/eureka/
   instance:
     ip-address: 127.0.0.1:15022
     prefer-ip-address: false

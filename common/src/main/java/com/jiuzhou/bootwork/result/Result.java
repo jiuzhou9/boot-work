@@ -1,5 +1,6 @@
 package com.jiuzhou.bootwork.result;
 
+import com.alibaba.fastjson.JSON;
 import com.jiuzhou.bootwork.excep.HttpError;
 
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class Result<T> implements Serializable {
     }
 
     public void setData(T data) {
+        this.code = "0";
         this.data = data;
     }
 
@@ -64,12 +66,10 @@ public class Result<T> implements Serializable {
         return r;
     }
 
-//    --------------
     public void setHttpError(HttpError httpError) {
         if (httpError != null){
             this.code = httpError.getCode();
             this.message = httpError.getMessage();
         }
     }
-
 }

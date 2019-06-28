@@ -7,13 +7,15 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author wangjiuzhou (835540436@qq.com)
  * @date 2018/02/08
  */
-public class TestLocalDate extends TestCase{
+public class TestLocalDate extends TestCase {
 
     public void test(){
         //当前天
@@ -36,7 +38,7 @@ public class TestLocalDate extends TestCase{
         //比较时间
         LocalDate of1 = LocalDate.of(2018, 12, 12);
         LocalDate of2 = LocalDate.of(2018, 12, 12);
-        System.out.println(of1.equals(of2));
+        System.out.println("是否相等" + of1.isEqual(of2));
 
         System.out.println(localDateTime);
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
@@ -52,5 +54,15 @@ public class TestLocalDate extends TestCase{
     public void test1(){
         LocalDateTime now = LocalDateTime.now();
         System.out.println("" + now.getYear() + now.getMonth().getValue() + now.getDayOfMonth() + now.getHour() + now.getMinute() + now.getSecond());
+
+        Calendar c = new GregorianCalendar();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.setMinimalDaysInFirstWeek(7);
+        c.setTime(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+        int i = c.get(Calendar.WEEK_OF_YEAR);
+        System.out.println(i);
+
+        LocalDate now1 = LocalDate.now();
+        System.out.println(now1.atStartOfDay());
     }
 }

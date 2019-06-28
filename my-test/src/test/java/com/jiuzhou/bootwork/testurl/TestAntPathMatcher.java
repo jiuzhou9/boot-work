@@ -14,7 +14,7 @@ public class TestAntPathMatcher extends TestCase {
      */
     public void test(){
         AntPathMatcher antPathMatcher = new AntPathMatcher();
-        boolean match = antPathMatcher.match("/hello/{id}", "/hello/1");
+        boolean match = antPathMatcher.match("/hello/{id}/**", "/hello/1/1/2/3/4");
         System.out.println(match);
     }
 }
