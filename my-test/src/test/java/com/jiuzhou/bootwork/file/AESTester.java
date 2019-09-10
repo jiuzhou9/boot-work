@@ -15,7 +15,7 @@ public class AESTester {
 
     public static void main(String[] args) throws Exception {
         long begin = System.currentTimeMillis();
-//        encryptFile();
+        encryptFile();
         decryptFile();
         test();
         long end = System.currentTimeMillis();
@@ -23,14 +23,20 @@ public class AESTester {
     }
 
     static void encryptFile() throws Exception {
-        String sourceFilePath = "/Users/wangjiuzhou/Desktop/bookmarks_2019_9_10.html";
-        String destFilePath = "/Users/wangjiuzhou/Desktop/encrypted_bookmarks_2019_9_10.html";
+//        String sourceFilePath = "/Users/wangjiuzhou/Desktop/bookmarks_2019_9_10.html";
+//        String destFilePath = "/Users/wangjiuzhou/Desktop/encrypted_bookmarks_2019_9_10.html";
+
+        String sourceFilePath = "/Users/wangjiuzhou/Desktop/Chrome 密码.csv";
+        String destFilePath = "/Users/wangjiuzhou/Desktop/encrypted_Chrome 密码.csv";
         AESUtils.encryptFile(key, sourceFilePath, destFilePath);
     }
 
     static void decryptFile() throws Exception {
-        String sourceFilePath = "/Users/wangjiuzhou/Desktop/encrypted_bookmarks_2019_9_10.html";
-        String destFilePath = "/Users/wangjiuzhou/Desktop/decrypted_bookmarks_2019_9_10.html";
+//        String sourceFilePath = "/Users/wangjiuzhou/Desktop/encrypted_bookmarks_2019_9_10.html";
+//        String destFilePath = "/Users/wangjiuzhou/Desktop/decrypted_bookmarks_2019_9_10.html";
+
+        String sourceFilePath = "/Users/wangjiuzhou/Desktop/encrypted_Chrome 密码.csv";
+        String destFilePath = "/Users/wangjiuzhou/Desktop/decrypted_Chrome 密码.csv";
         AESUtils.decryptFile(key, sourceFilePath, destFilePath);
     }
 
