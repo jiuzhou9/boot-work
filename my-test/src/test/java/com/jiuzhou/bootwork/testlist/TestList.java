@@ -61,6 +61,9 @@ public class TestList extends TestCase {
 
 //        list转map
         Map<Integer, List<Person>> collect = list.stream().collect(Collectors.groupingBy(Person::getId));
+        Map<String, List<Person>> collect1 = list.stream()
+                        .collect(Collectors.groupingBy(per -> per.getAge() + per.getName()));
+        System.out.println(collect1);
     }
 
     private void test(List<Person> list){
@@ -232,6 +235,8 @@ public class TestList extends TestCase {
         list.add("a");
         List<String> list1 = list.subList(0, 1);
         System.out.println(list1);
+        list.remove(null);
+
     }
 
 }

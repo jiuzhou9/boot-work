@@ -15,7 +15,7 @@ eureka:
 #      defaultZone: http://127.0.0.1:15011/eureka/,http://127.0.0.1:15012/eureka/
 spring:
   application:
-      name: fuyou
+      name: unicorn-api-v2
 #      name: eureka-api
 
 logging:
