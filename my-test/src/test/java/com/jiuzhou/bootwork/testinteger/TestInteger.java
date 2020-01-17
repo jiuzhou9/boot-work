@@ -59,4 +59,12 @@ public class TestInteger extends TestCase {
         System.out.println(i % ii);
         System.out.println(i / ii);
     }
+
+    public void test7(){
+        Integer integer = new Integer(0);
+        System.out.println(integer);
+
+        Integer a = 300, b = 300;
+        System.out.println(a == b);
+    }
 }

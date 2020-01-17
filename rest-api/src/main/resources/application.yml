@@ -3,6 +3,3 @@ server:
 spring:
   application:
     name: hello
-management:
-  security:
-    enabled: false
