@@ -28,6 +28,7 @@
         <module>scheduled</module>
         <module>quartz</module>
         <module>redis</module>
+        <module>db</module>
     </modules>
     <packaging>pom</packaging>
 
