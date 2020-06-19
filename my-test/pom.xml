@@ -159,6 +159,13 @@
             <artifactId>pyrolite</artifactId>
             <version>4.23</version>
         </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.google.ortools/ortools -->
+        <dependency>
+            <groupId>com.google.ortools</groupId>
+            <artifactId>ortools</artifactId>
+            <version>v2015-09</version>
+        </dependency>
+
 
     </dependencies>
 </project>
