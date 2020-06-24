@@ -1,4 +1,4 @@
-package backup;
+package db.backup.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +36,11 @@ public class SqlUtils {
      * @return
      */
     public static List<String> getMysqlInsertSqlList(Statement statement, String table, int start, int end){
+        switch (table){
+            case "example_data":
+                System.out.println();
+                break;
+        }
         ResultSet results = null;
         //计数
         int recordsCount = 0;
@@ -86,6 +91,7 @@ public class SqlUtils {
                         columnNameBuffer.append(columnName + ",");
                         if (value == null) {
                             columnValueBuffer.append("null,");
+                            continue;
                         }
 
                         if (Types.CHAR == columnType

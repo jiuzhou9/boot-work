@@ -1,8 +1,9 @@
-package backup;
+package db.backup.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,14 +46,75 @@ public abstract class DataBackUpUtils {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public static String backupData(String uploadPath, String jdbcDriver, String jdbcUrl, String jdbcUserName,
-                             String jdbcPassword, List<String> tables) throws IOException, ClassNotFoundException, SQLException {
+    public static String backupData(String uploadPath, String jdbcDriver,
+                                    String jdbcUrl,
+                                    String jdbcUserName,
+                                    String jdbcPassword,
+                                    List<String> tables) throws IOException,
+                    ClassNotFoundException, SQLException {
         File file = new File(uploadPath);
         if (!file.exists()) {
             file.mkdir();
         }
 
-        return backUpMysqlFastNew(uploadPath, jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword, tables);
+        long startGo = System.currentTimeMillis();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_TIME_PATTERN);
+        String timeStr = LocalDateTime.now().format(dateTimeFormatter);
+
+        List<String> tableNames = getMysqlTables(jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword);
+
+        //过滤想要的table
+        if (tables != null && tables.size() > 0){
+            if (!tableNames.containsAll(tables)){
+                throw new SQLException("所选表的集合中，含有不合法的表");
+            }
+            tableNames = tables;
+        }
+        String format = LocalDateTime.now().format(dateTimeFormatter);
+        File dataFile = new File(uploadPath + "/" + format + "-data.sql");
+
+        if (!dataFile.exists()) {
+            /* 创建文件*/
+            dataFile.createNewFile();
+        }
+        FileWriter dataFw = new FileWriter(dataFile, true);
+        for (String table : tableNames) {
+            long totalRecord = getRecordCount(jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword, table);
+            long totalPage = totalRecord % SqlUtils.MAX_RECORDS == 0 ? totalRecord / SqlUtils.MAX_RECORDS : totalRecord / SqlUtils.MAX_RECORDS + 1 ;
+
+            for (int page = 0; page < totalPage; page++) {
+                Class.forName(jdbcDriver);
+                Connection contmp = DriverManager.getConnection(jdbcUrl, jdbcUserName, jdbcPassword);
+
+                long cellStart = System.currentTimeMillis();
+                Statement statementTmp = contmp.createStatement();
+
+                List<String> mysqlInsertSqlList =
+                                SqlUtils.getMysqlInsertSqlList(statementTmp,
+                                                               table,
+                                                               page * SqlUtils.MAX_RECORDS,
+                                                       SqlUtils.MAX_RECORDS);
+                log.info("{}查询{}耗时：{}ms",
+                         Thread.currentThread().getName(),
+                         table,
+                         System.currentTimeMillis() - cellStart);
+
+                statementTmp.close();
+
+                if (mysqlInsertSqlList != null && mysqlInsertSqlList.size() > 0) {
+                    for (String insertSqlStr : mysqlInsertSqlList) {
+                        dataFw.write(insertSqlStr);
+                    }
+                }
+                contmp.close();
+                log.info("{}备份{}耗时：{}ms,connection is closed！",
+                         Thread.currentThread().getName(), table, System.currentTimeMillis() - cellStart);
+            }
+        }
+        dataFw.flush();
+        dataFw.close();
+        log.info("备份数据，总耗时：{}ms", System.currentTimeMillis() - startGo);
+        return uploadPath + timeStr + "mysql数据" + ".sql";
     }
 
     /**
@@ -275,8 +337,10 @@ public abstract class DataBackUpUtils {
      * @param jdbcPassword
      * @throws SQLException
      */
-    public static String backUpMysqlDDL(String uploadPath, String jdbcDriver, String jdbcUrl, String jdbcUserName,
-                                        String jdbcPassword) throws SQLException, ClassNotFoundException, IOException {
+    public static String backUpMysqlDDL(String uploadPath,
+                                        String jdbcDriver,
+                                        String jdbcUrl, String jdbcUserName,
+                                        String jdbcPassword, List<String> tableNames) throws SQLException, ClassNotFoundException, IOException {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_TIME_PATTERN);
         String timeStr = LocalDateTime.now().format(dateTimeFormatter);
 
@@ -298,10 +362,12 @@ public abstract class DataBackUpUtils {
         }
         con.getMetaData().getDatabaseProductName();
         ResultSet rs = dbmd.getTables(dbName, null, null, new String[] { "TABLE" });
-        List<String> tableNames = new ArrayList<>();
-        while (rs.next()) {
-            String tableName = rs.getString("TABLE_NAME");
-            tableNames.add(tableName);
+        if (tableNames == null || tableNames.size() == 0){
+            tableNames = new ArrayList<>();
+            while (rs.next()) {
+                String tableName = rs.getString("TABLE_NAME");
+                tableNames.add(tableName);
+            }
         }
         if (tableNames != null && tableNames.size() > 0) {
             dataFile = new File(uploadPath + "/" + timeStr + "mysql-ddl" + ".sql");
@@ -317,6 +383,7 @@ public abstract class DataBackUpUtils {
                     String sql = String.format("SHOW CREATE TABLE %s", table);
                     ResultSet tableInfo = statement.executeQuery(sql);
                     List<String> ddls = new ArrayList<>();
+                    ddls.add(String.format("drop table if exists %s;\n", table));
                     try {
                         while (tableInfo.next()) {
                             //第一个参数获取的是tableName
@@ -342,6 +409,11 @@ public abstract class DataBackUpUtils {
         rs.close();
         statement.close();
         con.close();
+//        return toZip(uploadPath, timeStr, dataFile);
+        return uploadPath + "/" + timeStr + "mysql-ddl" + ".sql";
+    }
+
+    private static String toZip(String uploadPath, String timeStr, File dataFile) throws FileNotFoundException {
         /** 压缩方法2  */
         List<File> fileList = new ArrayList<>();
         if (dataFile != null) {

@@ -1,0 +1,42 @@
+server:
+  port: 8081
+#数据源配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:10.10.0.70}:${MYSQL_PORT:3306}/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&allowMultiQueries=true
+    username: ${MYSQL_USERNAME:dev}
+    password: ${MYSQL_PASSWORD:ShanshuDev2018$}
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      stat-view-servlet:
+        enabled: true
+        #        login-username: druid
+        #        login-password: 123456
+        reset-enable: true
+        url-pattern: "/druid/*"
+        allow: ${DRUID_WHITELIST:10.10.0.0/16}
+      filters: stat,wall,slf4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      useGlobalDataSourceStat: true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        profile-enable: true
+      aop-patterns: ai.shanshu.liuguo.web.*,ai.shanshu.liuguo.service.*,ai.shanshu.liuguo.dao.mapper.*
+      filter:
+        slf4j:
+          enabled: true
+          statement-executable-sql-log-enable: true
+upload:
+  path: /Users/wangjiuzhou/Desktop/六国库备份
