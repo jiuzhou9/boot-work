@@ -36,10 +36,10 @@ public class Sheduled1 {
 
     private List<String> tables;
 
-    @Scheduled(cron = "0 0 0/1 * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void doIt(){
 //        System.out.println("*");
-        getMysqlTables();
+//        getMysqlTables();
         backUpDDL();
         backupData();
     }
