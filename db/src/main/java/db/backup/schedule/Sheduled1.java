@@ -48,7 +48,7 @@ public class Sheduled1 {
 //        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
 //        jdbcDriver = "com.mysql.jdbc.Driver";
 //        jdbcUserName = "dev";
-//        jdbcPassword = "ShanshuDev2018$";
+//        jdbcPassword = "---";
 //        uploadPath = "/Users/wangjiuzhou/Desktop/六国库备份";
         getMysqlTables();
 
@@ -70,7 +70,7 @@ public class Sheduled1 {
 //        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
 //        jdbcDriver = "com.mysql.jdbc.Driver";
 //        jdbcUserName = "dev";
-//        jdbcPassword = "ShanshuDev2018$";
+//        jdbcPassword = "---";
 //        uploadPath = "/Users/wangjiuzhou/Desktop/六国库备份";
         getMysqlTables();
 
@@ -93,7 +93,7 @@ public class Sheduled1 {
 //        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
 //        jdbcDriver = "com.mysql.jdbc.Driver";
 //        jdbcUserName = "dev";
-//        jdbcPassword = "ShanshuDev2018$";
+//        jdbcPassword = "---";
 
         try {
             tables = DataBackUpUtils.getMysqlTables(jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword);

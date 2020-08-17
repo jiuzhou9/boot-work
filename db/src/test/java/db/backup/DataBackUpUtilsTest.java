@@ -45,7 +45,7 @@ public class DataBackUpUtilsTest {
 //        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
         jdbcDriver = "com.mysql.jdbc.Driver";
         jdbcUserName = "dev";
-        jdbcPassword = "ShanshuDev2018$";
+        jdbcPassword = "---";
 //        uploadPath = "/Users/wangjiuzhou/工作包/富士康/数据库脚本";
 
         String s = null;
@@ -71,7 +71,7 @@ public class DataBackUpUtilsTest {
 //        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
         jdbcDriver = "com.mysql.jdbc.Driver";
         jdbcUserName = "dev";
-        jdbcPassword = "ShanshuDev2018$";
+        jdbcPassword = "---";
 //        uploadPath = "/Users/wangjiuzhou/工作包/富士康/数据库脚本";
 //        getMysqlTables();
 
@@ -99,7 +99,7 @@ public class DataBackUpUtilsTest {
 
         jdbcDriver = "com.mysql.jdbc.Driver";
         jdbcUserName = "dev";
-        jdbcPassword = "ShanshuDev2018$";
+        jdbcPassword = "---";
 
         try {
             tables = DataBackUpUtils.getMysqlTables(jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword);
