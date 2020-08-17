@@ -1,4 +1,4 @@
-package com.jiuzhou.bootwork.file;
+package com.jiuzhou.bootwork.file.aes;
 
 import org.springframework.security.crypto.codec.Base64;
 

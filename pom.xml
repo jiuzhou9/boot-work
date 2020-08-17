@@ -28,6 +28,7 @@
         <module>scheduled</module>
         <module>quartz</module>
         <module>redis</module>
+        <module>db</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -99,6 +100,10 @@
             <id>spring-milestones</id>
             <url>http://repo.spring.io/milestone</url>
         </repository>
+        <repository>
+            <id>maven-edu</id>
+            <url>http://maven.icm.edu.pl/artifactory/repo</url>
+        </repository>
         <!--<repository>-->
             <!--<id>spring-milestones</id>-->
             <!--<name>Spring Milestones</name>-->
@@ -116,6 +121,10 @@
         <pluginRepository>
             <id>spring-milestones</id>
             <url>http://repo.spring.io/milestone</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>maven-edu</id>
+            <url>http://maven.icm.edu.pl/artifactory/repo</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
