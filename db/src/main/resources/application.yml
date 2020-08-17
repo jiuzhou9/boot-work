@@ -4,6 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://${MYSQL_HOST:10.10.0.70}:${MYSQL_PORT:3306}/mafia_aps?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&allowMultiQueries=true
     url: jdbc:mysql://${MYSQL_HOST:10.10.0.70}:${MYSQL_PORT:3306}/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&allowMultiQueries=true
     username: ${MYSQL_USERNAME:dev}
     password: ${MYSQL_PASSWORD:ShanshuDev2018$}

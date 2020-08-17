@@ -71,7 +71,15 @@ public abstract class DataBackUpUtils {
             tableNames = tables;
         }
         String format = LocalDateTime.now().format(dateTimeFormatter);
-        File dataFile = new File(uploadPath + "/" + format + "-data.sql");
+        String dbName = "";
+        Integer index = jdbcUrl.lastIndexOf("/");
+        String before = jdbcUrl.substring(0, index);
+        String after = jdbcUrl.substring(index + 1);
+        if (after.contains("?")) {
+            index = after.lastIndexOf("?");
+            dbName = after.substring(0, index);
+        }
+        File dataFile = new File(uploadPath + "/" + format + "-" + dbName + "-data.sql");
 
         if (!dataFile.exists()) {
             /* 创建文件*/
@@ -369,8 +377,10 @@ public abstract class DataBackUpUtils {
                 tableNames.add(tableName);
             }
         }
+
+        String fileName = uploadPath + "/" + timeStr + "mysql-" +dbName+ "-ddl" + ".sql";
         if (tableNames != null && tableNames.size() > 0) {
-            dataFile = new File(uploadPath + "/" + timeStr + "mysql-ddl" + ".sql");
+            dataFile = new File(fileName);
 
             if (!dataFile.exists()) {
                 /* 创建文件*/
@@ -410,7 +420,8 @@ public abstract class DataBackUpUtils {
         statement.close();
         con.close();
 //        return toZip(uploadPath, timeStr, dataFile);
-        return uploadPath + "/" + timeStr + "mysql-ddl" + ".sql";
+
+        return fileName;
     }
 
     private static String toZip(String uploadPath, String timeStr, File dataFile) throws FileNotFoundException {

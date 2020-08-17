@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -20,27 +21,41 @@ public class DataBackUpUtilsTest {
 
     private String jdbcUrl;
 
-    private String uploadPath;
-
     private String jdbcUserName;
 
     private String jdbcPassword;
 
     private List<String> tables;
 
+    String[] jdbcArr = {
+                    "jdbc:mysql://10.10.0.70:3306/foxconn_data?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true",
+                    "jdbc:mysql://10.10.0.70:3306/aw?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true",
+                    "jdbc:mysql://10.10.0.70:3306/mac?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true",
+                    "jdbc:mysql://10.10.0.70:3306/foxconn_quartz?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true"
+    };
+
+    private static String uploadPath;
+
+    static {
+        uploadPath = "/Users/wangjiuzhou/工作包/富士康/数据库脚本/" + LocalDate.now();
+    }
+
     @Test
     public void backupData() {
-        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
+//        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
         jdbcDriver = "com.mysql.jdbc.Driver";
         jdbcUserName = "dev";
         jdbcPassword = "ShanshuDev2018$";
-        uploadPath = "/Users/wangjiuzhou/Desktop/六国库备份";
-        getMysqlTables();
-
+//        uploadPath = "/Users/wangjiuzhou/工作包/富士康/数据库脚本";
 
         String s = null;
         try {
-            s = DataBackUpUtils.backupData(uploadPath, jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword, tables);
+            for (int i = 0; i < jdbcArr.length; i++) {
+                jdbcUrl = jdbcArr[i];
+                getMysqlTables();
+                s = DataBackUpUtils.backupData(uploadPath, jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword, tables);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -53,18 +68,22 @@ public class DataBackUpUtilsTest {
 
     @Test
     public void backUpDDL() {
-        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
+//        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
         jdbcDriver = "com.mysql.jdbc.Driver";
         jdbcUserName = "dev";
         jdbcPassword = "ShanshuDev2018$";
-        uploadPath = "/Users/wangjiuzhou/Desktop/六国库备份";
-        getMysqlTables();
+//        uploadPath = "/Users/wangjiuzhou/工作包/富士康/数据库脚本";
+//        getMysqlTables();
 
         String s = null;
         try {
-            s = DataBackUpUtils.backUpMysqlDDL(uploadPath, jdbcDriver,
-                                               jdbcUrl, jdbcUserName,
-                                               jdbcPassword, tables);
+            for (int i = 0; i < jdbcArr.length; i++) {
+                jdbcUrl = jdbcArr[i];
+                getMysqlTables();
+                s = DataBackUpUtils.backUpMysqlDDL(uploadPath, jdbcDriver,
+                                                   jdbcUrl, jdbcUserName,
+                                                   jdbcPassword, tables);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -77,19 +96,15 @@ public class DataBackUpUtilsTest {
 
     @Test
     public void getMysqlTables() {
-        jdbcUrl = "jdbc:mysql://10.10.0.70:3306/liuguo_mafia?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true";
+
         jdbcDriver = "com.mysql.jdbc.Driver";
         jdbcUserName = "dev";
         jdbcPassword = "ShanshuDev2018$";
 
         try {
             tables = DataBackUpUtils.getMysqlTables(jdbcDriver, jdbcUrl, jdbcUserName, jdbcPassword);
-            tables.removeIf(table->table.startsWith("QRTZ")
-                            || table.startsWith("mafia")
-                            || table.startsWith("sms")
-                            || table.startsWith("sap")
-                            || table.startsWith("sys_"));
             log.info(JSON.toJSONString(tables));
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
