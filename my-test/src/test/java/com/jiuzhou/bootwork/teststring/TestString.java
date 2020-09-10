@@ -79,20 +79,33 @@ public class TestString extends TestCase{
     }
 
     public static void main(String[] args) {
-        String string = new String("aa");
+        //值传递 引用传递
+        /*String string = new String("aa");
         StringBuffer sb = new StringBuffer("sb");
         Integer i = 0;
         TestString test = new TestString();
         test.method(string, i, sb);
         System.out.println(string);
         System.out.println(i);
-        System.out.println(sb.toString());
+        System.out.println(sb.toString());*/
+
+        TestString test = new TestString();
+        test.compareIgnore();
     }
 
     private void method(String string, int i, StringBuffer sb){
         string = string.concat("aa");
         i = i + 1;
         sb.append("sb");
+    }
+
+    /**
+     * 比较
+     */
+    private void compareIgnore(){
+        String a = "Ab";
+        String A = "ab";
+        System.out.println(a.equalsIgnoreCase(A));
     }
 
 }
